@@ -1,7 +1,15 @@
 -cp src
--main MonkeeLoad
--js docs/monkee_load.js
 -D js-es=6
 -dce full
 # -D source-map-content
 # -debug
+
+--each
+
+-main MonkeeLoad
+-js docs/monkee_load.js
+
+--next
+
+-main MonkeeReact
+-js docs/monkee_react.js

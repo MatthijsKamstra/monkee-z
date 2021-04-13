@@ -28,6 +28,15 @@ So `<div data-load="components/nav.html"></div>` will become `<nav>navigation</n
 
 ## Monkee react
 
+```html
+<div data-wrapper="form">
+  <input data-in="" type="text" />
+  <span data-out=""></span>
+</div>
+```
+
+#### sidenote
+
 I was looking for a simplistic react code that would "repeat" what was said in an input field.
 
 And thought I would try to build one myself.
