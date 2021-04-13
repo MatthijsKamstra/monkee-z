@@ -37,7 +37,7 @@ class MonkeeLoadInner {
 		this.loadingArr = [];
 		this.dataAtr = "data-load-inner";
 		this.req = new XMLHttpRequest();
-		this.DEBUG = true;
+		this.DEBUG = false;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
@@ -57,8 +57,8 @@ class MonkeeLoadInner {
 			let target = wrapper.getAttribute("data-target");
 			let nameArr = wrapper.querySelectorAll("[data-name]");
 			if(this.DEBUG) {
-				console.log("src/MonkeeLoadInner.hx:37:",target);
-				console.log("src/MonkeeLoadInner.hx:38:",nameArr);
+				console.log("src/MonkeeLoadInner.hx:39:",target);
+				console.log("src/MonkeeLoadInner.hx:40:",nameArr);
 			}
 			this.loadingArr.push({ el : wrapper, url : url, target : target, names : nameArr});
 		}
@@ -92,7 +92,12 @@ class MonkeeLoadInner {
 			if(body == "") {
 				body = _gthis.req.response;
 			}
-			if(obj.names.length > 0) {
+			if(obj.url.indexOf("json") != -1) {
+				if(_gthis.DEBUG) {
+					$global.console.warn(obj.url);
+				}
+				_gthis.jsonConvert(obj,_gthis.req.response);
+			} else if(obj.names.length > 0) {
 				let _g = 0;
 				let _g1 = obj.names.length;
 				while(_g < _g1) {
@@ -115,6 +120,23 @@ class MonkeeLoadInner {
 			}
 		};
 		this.req.send();
+	}
+	jsonConvert(obj,str) {
+		let json = JSON.parse(str);
+		if(this.DEBUG) {
+			console.log("src/MonkeeLoadInner.hx:122:",json["lastname"]);
+		}
+		if(obj.names.length > 0) {
+			let _g = 0;
+			let _g1 = obj.names.length;
+			while(_g < _g1) {
+				let i = _g++;
+				let input = obj.names[i];
+				input.value = json[input.getAttribute("data-name")];
+			}
+		} else {
+			Html.processHTML(str,obj.el,true);
+		}
 	}
 	static main() {
 		let app = new MonkeeLoadInner();

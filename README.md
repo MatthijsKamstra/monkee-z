@@ -2,6 +2,8 @@
 
 It;s not alpha, not bravo, but zulu ... the last library you should use (and my personal playground)
 
+performance is weak: again don't use this
+
 ![](icon.png)
 
 ## 🐵 monkee-load
@@ -58,6 +60,46 @@ Als possible to use more then one target
 ```
 
 it will replace all the content form that `<p>`
+
+### JSON
+
+create a json like this
+
+```json
+{
+  "firstname": "Matthijs",
+  "lastname": "Kamstra",
+  "email": "matthijskamstra@fake.nl"
+}
+```
+
+`input` value will be populated by the json
+
+```html
+<div class="container mt-5">
+  <h1>Inner data json</h1>
+  <form data-load-inner="data/data.json">
+    <input
+      data-name="firstname"
+      type="text"
+      class="form-control"
+      placeholder="test"
+    />
+    <input
+      data-name="lastname"
+      type="text"
+      class="form-control"
+      placeholder="test"
+    />
+    <input
+      data-name="email"
+      type="email"
+      class="form-control"
+      placeholder="name@example.com"
+    />
+  </form>
+</div>
+```
 
 ## 🐵 monkee-react
 

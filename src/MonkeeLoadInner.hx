@@ -1,5 +1,7 @@
 package;
 
+import js.html.InputElement;
+import haxe.Json;
 import utils.Time;
 import js.html.Element;
 import js.Browser.*;
@@ -7,7 +9,7 @@ import js.html.XMLHttpRequest;
 import AST.LoadObj;
 
 class MonkeeLoadInner {
-	var DEBUG = true;
+	var DEBUG = false;
 
 	var req = new XMLHttpRequest();
 	var dataAtr = "data-load-inner";
@@ -63,11 +65,11 @@ class MonkeeLoadInner {
 			console.log('start loading: ' + obj.url + ' into element');
 			console.log(obj);
 		}
-		loadHTML(obj);
+		loadData(obj);
 		loadingId++;
 	}
 
-	function loadHTML(obj:LoadObj) {
+	function loadData(obj:LoadObj) {
 		req.open('GET', obj.url);
 		req.onload = function() {
 			// if(DEBUG)trace(req.response);
@@ -77,14 +79,20 @@ class MonkeeLoadInner {
 				body = req.response;
 			// if(DEBUG)trace(body);
 
-			// inject code
-			if (obj.names.length > 0) {
-				for (i in 0...obj.names.length) {
-					var el = obj.names[i];
-					Html.processHTML(body, el, true);
-				}
+			if (obj.url.indexOf('json') != -1) {
+				if (DEBUG)
+					console.warn(obj.url);
+				jsonConvert(obj, req.response);
 			} else {
-				Html.processHTML(body, obj.el, true);
+				// inject code
+				if (obj.names.length > 0) {
+					for (i in 0...obj.names.length) {
+						var el = obj.names[i];
+						Html.processHTML(body, el, true);
+					}
+				} else {
+					Html.processHTML(body, obj.el, true);
+				}
 			}
 			if (DEBUG) {
 				console.log('- end loading and parsing url: ' + obj.url + ' into element');
@@ -101,6 +109,27 @@ class MonkeeLoadInner {
 		};
 
 		req.send();
+	}
+
+	function jsonConvert(obj:LoadObj, str:String) {
+		var json = Json.parse(str);
+
+		if (DEBUG) {
+			// console.warn(json);
+			// trace(json.firstname);
+			// trace(Reflect.getProperty(json, 'firstname'));
+
+			trace(untyped json['lastname']);
+		}
+		if (obj.names.length > 0) {
+			for (i in 0...obj.names.length) {
+				var input:InputElement = cast obj.names[i];
+				// input.value = Reflect.getProperty(json, input.getAttribute('data-name'));
+				input.value = untyped json[input.getAttribute('data-name')];
+			}
+		} else {
+			Html.processHTML(str, obj.el, true);
+		}
 	}
 
 	static public function main() {
