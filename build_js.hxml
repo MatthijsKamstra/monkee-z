@@ -11,5 +11,10 @@
 
 --next
 
+-main MonkeeLoadInner
+-js docs/monkee_load_inner.js
+
+--next
+
 -main MonkeeReact
 -js docs/monkee_react.js

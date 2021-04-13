@@ -25,7 +25,7 @@
 	<div data-load="components/nav.html"></div>
 	<div data-load="components/main.html"></div>
 
-	<div class="container">
+	<div class="container mt-5">
 		<div class="row">
 			<div class="col">
 				<h1>Input reactive</h1>
@@ -43,6 +43,18 @@
 
 			</div>
 		</div>
+	</div>
+
+	<div class="container mt-5">
+		<h1>Inner data</h1>
+		<p data-load-inner="data/data.txt" class="text-secondary"></p>
+	</div>
+
+	<div class="container mt-5">
+		<h1>Inner data</h1>
+		<p data-load-inner="data/data.txt" data-target="out" class="text-secondary">
+			<code data-name="out"></code>
+		</p>
 	</div>
 
 	<div data-load="components/footer.html"></div>
@@ -66,6 +78,7 @@
 
 	<!-- custom -->
 	<script src="./monkee_load.js"></script>
+	<script src="./monkee_load_inner.js"></script>
 	<script src="./monkee_react.js"></script>
 
 </body>
