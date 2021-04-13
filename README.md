@@ -1,17 +1,19 @@
-# monkee-z
+# 🐵 monkee-z
 
 It;s not alpha, not bravo, but zulu ... the last library you should use (and my personal playground)
 
-# 🐵 Monkee Load
+![](icon.png)
+
+## 🐵 monkee-load
 
 simple way to load templates with vanille js.
 
 ```
 + docs
-	+ components
-		- nav.html
-		- main.html
-		- footer.html
+  + components
+    - nav.html
+    - main.html
+    - footer.html
 ```
 
 for example `nav.html` is: `<nav>navigation</nav>`
@@ -26,7 +28,7 @@ it will load the file `components/nav.html` and when its done, it will replace t
 
 So `<div data-load="components/nav.html"></div>` will become `<nav>navigation</nav>`.
 
-## Monkee react
+## 🐵 monkee-react
 
 ```html
 <div data-wrapper="form">
