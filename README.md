@@ -101,6 +101,39 @@ create a json like this
 </div>
 ```
 
+```json
+{
+  "chapter": [
+    { "title": "title 0", "body": "body 0" },
+    { "title": "title 1", "body": "body 1" },
+    { "title": "title 2", "body": "body 2" },
+    { "title": "title 3", "body": "body 3" },
+    { "title": "title 4", "body": "body 4" },
+    { "title": "title 5", "body": "body 5" }
+  ]
+}
+```
+
+just show the json in a pre element
+
+```html
+<div class="container mt-5">
+  <h1>Inner data json</h1>
+  <pre data-load-inner="data/content.json" class="text-secondary"></pre>
+</div>
+```
+
+get specific data from the json
+
+```html
+<div class="container mt-5">
+  <h1>Inner data json</h1>
+  <div data-load-inner="data/content.json" class="">
+    <pre data-name="chapter[2]"></pre>
+  </div>
+</div>
+```
+
 ## 🐵 monkee-react
 
 ```html
