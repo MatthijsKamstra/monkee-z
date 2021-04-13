@@ -21,7 +21,7 @@ class MonkeeLoad {
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
 			if (DEBUG)
-				console.log('🐵 [MonkeeLoad] template loading');
+				console.log('[MonkeeLoad] template loading');
 			init();
 		});
 	}
@@ -37,6 +37,10 @@ class MonkeeLoad {
 				el: wrapper,
 				url: url,
 			});
+
+			var _div = document.createDivElement();
+			_div.className = 'loader';
+			wrapper.appendChild(_div);
 		}
 		timeStart = Date.now().getTime();
 		startLoading(loadingId);

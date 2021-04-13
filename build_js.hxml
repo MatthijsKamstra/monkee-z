@@ -18,3 +18,8 @@
 
 -main MonkeeReact
 -js docs/monkee_react.js
+
+--next
+
+-main MonkeeJson
+-js docs/monkee_json.js

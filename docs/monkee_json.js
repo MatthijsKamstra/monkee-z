@@ -31,56 +31,46 @@ class Html {
 		}
 	}
 }
-class MonkeeLoadInner {
+class MonkeeJson {
 	constructor() {
 		this.loadingId = 0;
 		this.loadingArr = [];
-		this.dataAtr = "data-load-inner";
+		this.dataAttributesArr = ["data-load","data-load-inner"];
 		this.req = new XMLHttpRequest();
 		this.DEBUG = false;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.log("[MonkeeLoadInner] template loading");
+				$global.console.log("[MonkeeJson]");
 			}
 			_gthis.init();
 		});
 	}
 	init() {
-		let arr = window.document.querySelectorAll("[" + this.dataAtr + "]");
 		let _g = 0;
-		let _g1 = arr.length;
+		let _g1 = this.dataAttributesArr.length;
 		while(_g < _g1) {
 			let i = _g++;
-			let wrapper = arr[i];
-			let url = wrapper.getAttribute(this.dataAtr);
-			let target = wrapper.getAttribute("data-target");
-			let nameArr = wrapper.querySelectorAll("[data-name]");
-			if(this.DEBUG) {
-				console.log("src/MonkeeLoadInner.hx:39:",target);
-				console.log("src/MonkeeLoadInner.hx:40:",nameArr);
+			let dataAtr = this.dataAttributesArr[i];
+			let arr = window.document.querySelectorAll("[" + dataAtr + "]");
+			let _g1 = 0;
+			let _g2 = arr.length;
+			while(_g1 < _g2) {
+				let i = _g1++;
+				let wrapper = arr[i];
+				let url = wrapper.getAttribute(dataAtr);
+				let target = wrapper.getAttribute("data-target");
+				let nameArr = wrapper.querySelectorAll("[data-name]");
+				this.loadingArr.push({ el : wrapper, url : url, target : target, names : nameArr, throbber : utils_Throbber.set(wrapper), starttime : new Date().getTime(), type : dataAtr, isInner : dataAtr == "data-load-inner"});
 			}
-			this.loadingArr.push({ el : wrapper, url : url, target : target, names : nameArr});
-		}
-		this.timer = new utils_Time();
-		this.timer.start();
-		if(this.DEBUG) {
-			$global.console.group("Monkee Loader Inner");
 		}
 		this.startLoading(this.loadingId);
 	}
 	startLoading(nr) {
 		if(nr >= this.loadingArr.length) {
-			if(this.DEBUG) {
-				$global.console.groupEnd();
-			}
 			return;
 		}
 		let obj = this.loadingArr[nr];
-		if(this.DEBUG) {
-			$global.console.log("start loading: " + obj.url + " into element");
-			$global.console.log(obj);
-		}
 		this.loadData(obj);
 		this.loadingId++;
 	}
@@ -88,10 +78,13 @@ class MonkeeLoadInner {
 		let _gthis = this;
 		this.req.open("GET",obj.url);
 		this.req.onload = function() {
+			obj.endtime = new Date().getTime();
+			obj.throbber.parentElement.removeChild(obj.throbber);
 			let body = Html.getBody(_gthis.req.response);
 			if(body == "") {
 				body = _gthis.req.response;
 			}
+			$global.console.log("" + obj.url + ": " + (obj.endtime - obj.starttime) + "ms");
 			if(obj.url.indexOf("json") != -1) {
 				if(_gthis.DEBUG) {
 					$global.console.warn(obj.url);
@@ -103,14 +96,10 @@ class MonkeeLoadInner {
 				while(_g < _g1) {
 					let i = _g++;
 					let el = obj.names[i];
-					Html.processHTML(body,el,true);
+					Html.processHTML(body,el,obj.isInner);
 				}
 			} else {
-				Html.processHTML(body,obj.el,true);
-			}
-			if(_gthis.DEBUG) {
-				$global.console.log("- end loading and parsing url: " + obj.url + " into element");
-				$global.console.log(_gthis.timer.total());
+				Html.processHTML(body,obj.el,obj.isInner);
 			}
 			_gthis.startLoading(_gthis.loadingId);
 		};
@@ -123,23 +112,62 @@ class MonkeeLoadInner {
 	}
 	jsonConvert(obj,str) {
 		let json = JSON.parse(str);
-		if(this.DEBUG) {
-			console.log("src/MonkeeLoadInner.hx:122:",json["lastname"]);
-		}
 		if(obj.names.length > 0) {
 			let _g = 0;
 			let _g1 = obj.names.length;
 			while(_g < _g1) {
 				let i = _g++;
-				let input = obj.names[i];
-				input.value = json[input.getAttribute("data-name")];
+				let tag = obj.names[i].tagName.toLowerCase();
+				switch(tag) {
+				case "input":
+					let input = obj.names[i];
+					input.value = json[input.getAttribute("data-name")];
+					break;
+				case "pre":
+					let el = obj.names[i];
+					let attr = el.getAttribute("data-name");
+					let nrString = StringTools.replace(attr.split("[")[1],"]","");
+					let chapter = attr.split("[")[0];
+					let nr = Std.parseInt(nrString);
+					el.innerHTML = json[chapter][nr].title;
+					break;
+				default:
+					console.log("src/MonkeeJson.hx:138:","case '" + tag + "': trace ('" + tag + "');");
+				}
 			}
 		} else {
 			Html.processHTML(str,obj.el,true);
 		}
 	}
 	static main() {
-		let app = new MonkeeLoadInner();
+		let app = new MonkeeJson();
+	}
+}
+class Std {
+	static parseInt(x) {
+		if(x != null) {
+			let _g = 0;
+			let _g1 = x.length;
+			while(_g < _g1) {
+				let i = _g++;
+				let c = x.charCodeAt(i);
+				if(c <= 8 || c >= 14 && c != 32 && c != 45) {
+					let nc = x.charCodeAt(i + 1);
+					let v = parseInt(x,nc == 120 || nc == 88 ? 16 : 10);
+					if(isNaN(v)) {
+						return null;
+					} else {
+						return v;
+					}
+				}
+			}
+		}
+		return null;
+	}
+}
+class StringTools {
+	static replace(s,sub,by) {
+		return s.split(sub).join(by);
 	}
 }
 class haxe_iterators_ArrayIterator {
@@ -154,22 +182,13 @@ class haxe_iterators_ArrayIterator {
 		return this.array[this.current++];
 	}
 }
-class utils_Time {
-	constructor() {
-		this.endtime = .0;
-		this.starttime = .0;
-		this.starttime = utils_Time.get();
-	}
-	start() {
-		this.starttime = utils_Time.get();
-	}
-	total() {
-		this.endtime = utils_Time.get();
-		return this.endtime - this.starttime + "ms";
-	}
-	static get() {
-		return new Date().getTime();
+class utils_Throbber {
+	static set(el) {
+		let _div = window.document.createElement("div");
+		_div.className = "loader";
+		el.appendChild(_div);
+		return _div;
 	}
 }
-MonkeeLoadInner.main();
+MonkeeJson.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

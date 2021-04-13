@@ -12,7 +12,7 @@ class MonkeeLoad {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.log("🐵 [MonkeeLoad] template loading");
+				$global.console.log("[MonkeeLoad] template loading");
 			}
 			_gthis.init();
 		});
@@ -29,6 +29,9 @@ class MonkeeLoad {
 				$global.console.log("templates url: " + url);
 			}
 			this.loadingArr.push({ el : wrapper, url : url});
+			let _div = window.document.createElement("div");
+			_div.className = "loader";
+			wrapper.appendChild(_div);
 		}
 		this.timeStart = new Date().getTime();
 		this.startLoading(this.loadingId);
