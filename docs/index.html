@@ -6,50 +6,46 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+	<link rel="icon"
+		href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🙈</text></svg>">
+
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-	<link rel="icon"
-		href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌡</text></svg>">
+	<!-- footer related styling -->
+	<link rel="stylesheet" href="style.css">
 
-	<title>Monkee Load - Template loading in js</title>
+	<title>🐵 Monkee - z</title>
 
-	<style>
-		body,
-		html {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-		}
-
-		/* Custom page CSS
-		-------------------------------------------------- */
-		/* Not required for template or sticky footer method. */
-
-		main>.container {
-			padding: 60px 15px 0;
-		}
-
-		.footer {
-			background-color: #f5f5f5;
-		}
-
-		.footer>.container {
-			padding-right: 15px;
-			padding-left: 15px;
-		}
-
-		code {
-			font-size: 80%;
-		}
-	</style>
 </head>
 
 <body class="d-flex flex-column h-100">
 
 	<div data-load="components/nav.html"></div>
 	<div data-load="components/main.html"></div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>Hello, world!</h1>
+
+
+				<div data-wrapper="form">
+					<input data-in="" type="text">
+					<span data-out=""></span>
+				</div>
+
+				<div data-wrapper="test">
+					<input data-in="" type="text">
+					<span data-out=""></span>:<span data-out=""></span>:<span data-out=""></span>:<span
+						data-out=""></span>:<span data-out=""></span>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 	<div data-load="components/footer.html"></div>
 
 	<!-- Optional JavaScript; choose one of the two! -->
