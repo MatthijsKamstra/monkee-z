@@ -10,6 +10,7 @@ import js.html.XMLHttpRequest;
 import AST.LoadObj;
 
 using StringTools;
+using Lambda;
 
 class MonkeeJson {
 	var DEBUG = false;
@@ -146,7 +147,19 @@ class MonkeeJson {
 						// trace(untyped __arr[key]);
 
 						el.innerHTML = untyped __arr[key];
+					case 'code':
+						// trace('code');
+						var result = json; // cloning the existing obj
+						var give = 'i.want.it';
 
+						// now split the give and iterate through keys
+						give.split(".").foreach(function(key) {
+							trace(key);
+							// trace(result);
+							// result = result[key];
+							return true;
+						});
+						console.log(result);
 					default:
 						trace("case '" + tag + "': trace ('" + tag + "');");
 				}

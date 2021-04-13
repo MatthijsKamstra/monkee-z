@@ -31,6 +31,18 @@ class Html {
 		}
 	}
 }
+class Lambda {
+	static foreach(it,f) {
+		let x = $getIterator(it);
+		while(x.hasNext()) {
+			let x1 = x.next();
+			if(!f(x1)) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
 class MonkeeJson {
 	constructor() {
 		this.loadingId = 0;
@@ -119,6 +131,15 @@ class MonkeeJson {
 				let i = _g++;
 				let tag = obj.names[i].tagName.toLowerCase();
 				switch(tag) {
+				case "code":
+					let result = json;
+					let give = "i.want.it";
+					Lambda.foreach(give.split("."),function(key) {
+						console.log("src/MonkeeJson.hx:157:",key);
+						return true;
+					});
+					$global.console.log(result);
+					break;
 				case "input":
 					let input = obj.names[i];
 					input.value = json[input.getAttribute("data-name")];
@@ -135,7 +156,7 @@ class MonkeeJson {
 					el.innerHTML = __arr[key];
 					break;
 				default:
-					console.log("src/MonkeeJson.hx:151:","case '" + tag + "': trace ('" + tag + "');");
+					console.log("src/MonkeeJson.hx:164:","case '" + tag + "': trace ('" + tag + "');");
 				}
 			}
 		} else {
@@ -193,5 +214,6 @@ class utils_Throbber {
 		return _div;
 	}
 }
+function $getIterator(o) { if( o instanceof Array ) return new haxe_iterators_ArrayIterator(o); else return o.iterator(); }
 MonkeeJson.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
