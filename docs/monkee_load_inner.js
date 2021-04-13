@@ -33,15 +33,16 @@ class Html {
 }
 class MonkeeLoadInner {
 	constructor() {
-		this.timeEnd = .0;
-		this.timeStart = .0;
 		this.loadingId = 0;
 		this.loadingArr = [];
 		this.dataAtr = "data-load-inner";
 		this.req = new XMLHttpRequest();
+		this.DEBUG = true;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.log("🐵 [MonkeeLoadInner] template loading");
+			if(_gthis.DEBUG) {
+				$global.console.log("[MonkeeLoadInner] template loading");
+			}
 			_gthis.init();
 		});
 	}
@@ -53,40 +54,65 @@ class MonkeeLoadInner {
 			let i = _g++;
 			let wrapper = arr[i];
 			let url = wrapper.getAttribute(this.dataAtr);
-			$global.console.log("templates url: " + url);
-			this.loadingArr.push({ el : wrapper, url : url});
+			let target = wrapper.getAttribute("data-target");
+			let nameArr = wrapper.querySelectorAll("[data-name]");
+			if(this.DEBUG) {
+				console.log("src/MonkeeLoadInner.hx:37:",target);
+				console.log("src/MonkeeLoadInner.hx:38:",nameArr);
+			}
+			this.loadingArr.push({ el : wrapper, url : url, target : target, names : nameArr});
 		}
-		this.timeStart = new Date().getTime();
+		this.timer = new utils_Time();
+		this.timer.start();
+		if(this.DEBUG) {
+			$global.console.group("Monkee Loader Inner");
+		}
 		this.startLoading(this.loadingId);
-	}
-	getCurrentTime() {
-		this.timeEnd = new Date().getTime();
-		$global.console.log(this.timeEnd - this.timeStart + "ms");
 	}
 	startLoading(nr) {
 		if(nr >= this.loadingArr.length) {
+			if(this.DEBUG) {
+				$global.console.groupEnd();
+			}
 			return;
 		}
 		let obj = this.loadingArr[nr];
-		$global.console.log("start loading: " + obj.url + " into element");
-		this.loadHTML(obj.url,obj.el);
+		if(this.DEBUG) {
+			$global.console.log("start loading: " + obj.url + " into element");
+			$global.console.log(obj);
+		}
+		this.loadHTML(obj);
 		this.loadingId++;
 	}
-	loadHTML(url,el) {
+	loadHTML(obj) {
 		let _gthis = this;
-		this.req.open("GET",url);
+		this.req.open("GET",obj.url);
 		this.req.onload = function() {
 			let body = Html.getBody(_gthis.req.response);
 			if(body == "") {
 				body = _gthis.req.response;
 			}
-			Html.processHTML(body,el,true);
-			$global.console.log("- end loading and parsing url: " + url + " into element");
-			_gthis.getCurrentTime();
+			if(obj.names.length > 0) {
+				let _g = 0;
+				let _g1 = obj.names.length;
+				while(_g < _g1) {
+					let i = _g++;
+					let el = obj.names[i];
+					Html.processHTML(body,el,true);
+				}
+			} else {
+				Html.processHTML(body,obj.el,true);
+			}
+			if(_gthis.DEBUG) {
+				$global.console.log("- end loading and parsing url: " + obj.url + " into element");
+				$global.console.log(_gthis.timer.total());
+			}
 			_gthis.startLoading(_gthis.loadingId);
 		};
 		this.req.onerror = function(error) {
-			$global.console.error("[JS] error: " + error);
+			if(_gthis.DEBUG) {
+				$global.console.error("[JS] error: " + error);
+			}
 		};
 		this.req.send();
 	}
@@ -104,6 +130,23 @@ class haxe_iterators_ArrayIterator {
 	}
 	next() {
 		return this.array[this.current++];
+	}
+}
+class utils_Time {
+	constructor() {
+		this.endtime = .0;
+		this.starttime = .0;
+		this.starttime = utils_Time.get();
+	}
+	start() {
+		this.starttime = utils_Time.get();
+	}
+	total() {
+		this.endtime = utils_Time.get();
+		return this.endtime - this.starttime + "ms";
+	}
+	static get() {
+		return new Date().getTime();
 	}
 }
 MonkeeLoadInner.main();

@@ -28,6 +28,37 @@ it will load the file `components/nav.html` and when its done, it will replace t
 
 So `<div data-load="components/nav.html"></div>` will become `<nav>navigation</nav>`.
 
+## 🐵 monkee-load-inner
+
+Same as monkee-load this will load a file, but use the `innerHTML` to parse the data
+
+for example content from `data.txt` is `foobar`
+
+```html
+<p data-load-inner="data/data.txt" class="text-secondary"></p>
+```
+
+So `<p data-load-inner="data/data.txt" class="text-secondary"></p>` will become `<p data-load-inner="data/data.txt" class="text-secondary">foobar</p>`.
+
+Als possible to use more then one target
+
+```html
+<div data-load-inner="data/data.txt" data-target="out" class="text-secondary">
+  <p data-name="out" class="text-primary">.text-primary</p>
+  <p data-name="out" class="text-secondary">.text-secondary</p>
+  <p data-name="out" class="text-success">.text-success</p>
+  <p data-name="out" class="text-danger">.text-danger</p>
+  <p data-name="out" class="text-warning">.text-warning</p>
+  <p data-name="out" class="text-info">.text-info</p>
+  <p data-name="out" class="text-light bg-dark">.text-light</p>
+  <p data-name="out" class="text-dark">.text-dark</p>
+  <p data-name="out" class="text-muted">.text-muted</p>
+  <p data-name="out" class="text-white bg-dark">.text-white</p>
+</div>
+```
+
+it will replace all the content form that `<p>`
+
 ## 🐵 monkee-react
 
 ```html

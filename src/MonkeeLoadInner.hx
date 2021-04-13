@@ -1,24 +1,27 @@
 package;
 
+import utils.Time;
 import js.html.Element;
 import js.Browser.*;
 import js.html.XMLHttpRequest;
+import AST.LoadObj;
 
 class MonkeeLoadInner {
+	var DEBUG = true;
+
 	var req = new XMLHttpRequest();
 	var dataAtr = "data-load-inner";
 	var loadingArr:Array<LoadObj> = [];
 	var loadingId = 0;
-	var time = 0;
-	var timeStart = .0;
-	var timeEnd = .0;
+	var timer:Time;
 
 	// modern solution
 	// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
-			console.log('🐵 [MonkeeLoadInner] template loading');
+			if (DEBUG)
+				console.log('[MonkeeLoadInner] template loading');
 			init();
 		});
 	}
@@ -28,50 +31,73 @@ class MonkeeLoadInner {
 		for (i in 0...arr.length) {
 			var wrapper:Element = cast arr[i];
 			var url = wrapper.getAttribute(dataAtr);
-			console.log('templates url: ' + url);
+			var target = wrapper.getAttribute('data-target');
+			var nameArr:Array<Element> = cast wrapper.querySelectorAll('[data-name]');
+			if (DEBUG) {
+				trace(target);
+				trace(nameArr);
+			}
+			// if(DEBUG)console.log('templates url: ' + url);
 			loadingArr.push({
 				el: wrapper,
 				url: url,
+				target: target,
+				names: nameArr,
 			});
 		}
-		timeStart = Date.now().getTime();
+		timer = new Time();
+		timer.start();
+		if (DEBUG)
+			console.group('Monkee Loader Inner');
 		startLoading(loadingId);
 	}
 
-	function getCurrentTime() {
-		timeEnd = Date.now().getTime();
-		console.log((timeEnd - timeStart) + 'ms');
-	}
-
 	function startLoading(nr:Int) {
-		if (nr >= loadingArr.length)
+		if (nr >= loadingArr.length) {
+			if (DEBUG)
+				console.groupEnd();
 			return;
+		}
 		var obj = loadingArr[nr];
-		console.log('start loading: ' + obj.url + ' into element');
-		loadHTML(obj.url, obj.el);
+		if (DEBUG) {
+			console.log('start loading: ' + obj.url + ' into element');
+			console.log(obj);
+		}
+		loadHTML(obj);
 		loadingId++;
 	}
 
-	function loadHTML(url:String, el:js.html.Element) {
-		req.open('GET', url);
+	function loadHTML(obj:LoadObj) {
+		req.open('GET', obj.url);
 		req.onload = function() {
-			// trace(req.response);
+			// if(DEBUG)trace(req.response);
 			var body = Html.getBody(req.response);
-			// trace(body);
+			// if(DEBUG)trace(body);
 			if (body == "")
 				body = req.response;
-			// trace(body);
+			// if(DEBUG)trace(body);
 
 			// inject code
-			Html.processHTML(body, el, true);
-			console.log('- end loading and parsing url: ' + url + ' into element');
-			getCurrentTime();
+			if (obj.names.length > 0) {
+				for (i in 0...obj.names.length) {
+					var el = obj.names[i];
+					Html.processHTML(body, el, true);
+				}
+			} else {
+				Html.processHTML(body, obj.el, true);
+			}
+			if (DEBUG) {
+				console.log('- end loading and parsing url: ' + obj.url + ' into element');
+				console.log(timer.total());
+			}
+
 			// load the next
 			startLoading(loadingId);
 		};
 
 		req.onerror = function(error) {
-			console.error('[JS] error: $error');
+			if (DEBUG)
+				console.error('[JS] error: $error');
 		};
 
 		req.send();
@@ -80,10 +106,4 @@ class MonkeeLoadInner {
 	static public function main() {
 		var app = new MonkeeLoadInner();
 	}
-}
-
-typedef LoadObj = {
-	@:optional var _id:String;
-	var url:String;
-	var el:Element;
 }

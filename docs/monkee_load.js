@@ -8,9 +8,12 @@ class MonkeeLoad {
 		this.loadingArr = [];
 		this.dataAtr = "data-load";
 		this.req = new XMLHttpRequest();
+		this.DEBUG = false;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.log("🐵 [MonkeeLoad] template loading");
+			if(_gthis.DEBUG) {
+				$global.console.log("🐵 [MonkeeLoad] template loading");
+			}
 			_gthis.init();
 		});
 	}
@@ -22,7 +25,9 @@ class MonkeeLoad {
 			let i = _g++;
 			let wrapper = arr[i];
 			let url = wrapper.getAttribute(this.dataAtr);
-			$global.console.log("templates url: " + url);
+			if(this.DEBUG) {
+				$global.console.log("templates url: " + url);
+			}
 			this.loadingArr.push({ el : wrapper, url : url});
 		}
 		this.timeStart = new Date().getTime();
@@ -30,14 +35,18 @@ class MonkeeLoad {
 	}
 	getCurrentTime() {
 		this.timeEnd = new Date().getTime();
-		$global.console.log(this.timeEnd - this.timeStart + "ms");
+		if(this.DEBUG) {
+			$global.console.log(this.timeEnd - this.timeStart + "ms");
+		}
 	}
 	startLoading(nr) {
 		if(nr >= this.loadingArr.length) {
 			return;
 		}
 		let obj = this.loadingArr[nr];
-		$global.console.log("start loading: " + obj.url + " into element");
+		if(this.DEBUG) {
+			$global.console.log("start loading: " + obj.url + " into element");
+		}
 		this.loadHTML(obj.url,obj.el);
 		this.loadingId++;
 	}
@@ -50,12 +59,16 @@ class MonkeeLoad {
 				body = _gthis.req.response;
 			}
 			_gthis.processHTML(body,el);
-			$global.console.log("- end loading and parsing url: " + url + " into element");
+			if(_gthis.DEBUG) {
+				$global.console.log("- end loading and parsing url: " + url + " into element");
+			}
 			_gthis.getCurrentTime();
 			_gthis.startLoading(_gthis.loadingId);
 		};
 		this.req.onerror = function(error) {
-			$global.console.error("[JS] error: " + error);
+			if(_gthis.DEBUG) {
+				$global.console.error("[JS] error: " + error);
+			}
 		};
 		this.req.send();
 	}

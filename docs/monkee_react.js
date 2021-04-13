@@ -2,8 +2,12 @@
 (function ($global) { "use strict";
 class MonkeeReact {
 	constructor() {
+		this.DEBUG = false;
+		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			console.log("src/MonkeeReact.hx:10:","MonkeeReact");
+			if(_gthis.DEBUG) {
+				console.log("src/MonkeeReact.hx:13:","MonkeeReact");
+			}
 		});
 		let arr = window.document.querySelectorAll("[data-wrapper]");
 		let _g = 0;

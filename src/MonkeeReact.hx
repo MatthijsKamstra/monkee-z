@@ -5,9 +5,12 @@ import js.Browser;
 import js.html.*;
 
 class MonkeeReact {
+	var DEBUG = false;
+
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
-			trace('MonkeeReact');
+			if (DEBUG)
+				trace('MonkeeReact');
 		});
 
 		var arr = document.querySelectorAll('[data-wrapper]');
@@ -18,7 +21,7 @@ class MonkeeReact {
 			var dataOutArr = wrapper.querySelectorAll('[data-out]');
 			// for (j in 0...dataOutArr.length) {
 			// 	var el = dataOutArr[j];
-			// 	trace(el);
+			// 	if(DEBUG)trace(el);
 			// }
 			// get all data-out from wrapper
 			var dataInArr = wrapper.querySelectorAll('[data-in]');

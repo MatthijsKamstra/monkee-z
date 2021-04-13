@@ -3,8 +3,10 @@ package;
 import js.html.Element;
 import js.Browser.*;
 import js.html.XMLHttpRequest;
+import AST.LoadObj;
 
 class MonkeeLoad {
+	var DEBUG = false;
 	var req = new XMLHttpRequest();
 	var dataAtr = "data-load";
 	var loadingArr:Array<LoadObj> = [];
@@ -18,7 +20,8 @@ class MonkeeLoad {
 
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
-			console.log('🐵 [MonkeeLoad] template loading');
+			if (DEBUG)
+				console.log('🐵 [MonkeeLoad] template loading');
 			init();
 		});
 	}
@@ -28,7 +31,8 @@ class MonkeeLoad {
 		for (i in 0...arr.length) {
 			var wrapper:Element = cast arr[i];
 			var url = wrapper.getAttribute(dataAtr);
-			console.log('templates url: ' + url);
+			if (DEBUG)
+				console.log('templates url: ' + url);
 			loadingArr.push({
 				el: wrapper,
 				url: url,
@@ -40,14 +44,16 @@ class MonkeeLoad {
 
 	function getCurrentTime() {
 		timeEnd = Date.now().getTime();
-		console.log((timeEnd - timeStart) + 'ms');
+		if (DEBUG)
+			console.log((timeEnd - timeStart) + 'ms');
 	}
 
 	function startLoading(nr:Int) {
 		if (nr >= loadingArr.length)
 			return;
 		var obj = loadingArr[nr];
-		console.log('start loading: ' + obj.url + ' into element');
+		if (DEBUG)
+			console.log('start loading: ' + obj.url + ' into element');
 		loadHTML(obj.url, obj.el);
 		loadingId++;
 	}
@@ -55,23 +61,25 @@ class MonkeeLoad {
 	function loadHTML(url:String, el:js.html.Element) {
 		req.open('GET', url);
 		req.onload = function() {
-			// trace(req.response);
+			// if (DEBUG) trace(req.response);
 			var body = getBody(req.response);
-			// trace(body);
+			// if (DEBUG) trace(body);
 			if (body == "")
 				body = req.response;
-			// trace(body);
+			// if (DEBUG) trace(body);
 
 			// inject code
 			processHTML(body, el);
-			console.log('- end loading and parsing url: ' + url + ' into element');
+			if (DEBUG)
+				console.log('- end loading and parsing url: ' + url + ' into element');
 			getCurrentTime();
 			// load the next
 			startLoading(loadingId);
 		};
 
 		req.onerror = function(error) {
-			console.error('[JS] error: $error');
+			if (DEBUG)
+				console.error('[JS] error: $error');
 		};
 
 		req.send();
@@ -113,10 +121,4 @@ class MonkeeLoad {
 	static public function main() {
 		var app = new MonkeeLoad();
 	}
-}
-
-typedef LoadObj = {
-	@:optional var _id:String;
-	var url:String;
-	var el:Element;
 }
