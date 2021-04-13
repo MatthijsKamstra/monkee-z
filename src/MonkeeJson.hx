@@ -130,10 +130,23 @@ class MonkeeJson {
 						var el = cast obj.names[i];
 						var attr:String = el.getAttribute('data-name');
 						var nrString = attr.split('[')[1].replace(']', '');
-						var chapter = attr.split('[')[0];
+						var arrName = attr.split('[')[0];
+						var key = attr.split('].')[1];
+						// trace('key: ' + key);
 						var nr = Std.parseInt(nrString);
-						// trace(untyped json[chapter][nr]);
-						el.innerHTML = untyped json[chapter][nr].title;
+						var _obj = untyped json[arrName][nr];
+						// trace(_obj);
+						// trace(untyped json[arrName][nr]);
+						// trace(untyped obj[key]);
+						// trace(untyped obj.key);
+						// trace(untyped obj.title);
+						// trace(untyped json.chapter[1].title);
+
+						var __arr = untyped json[arrName][nr];
+						// trace(untyped __arr[key]);
+
+						el.innerHTML = untyped __arr[key];
+
 					default:
 						trace("case '" + tag + "': trace ('" + tag + "');");
 				}

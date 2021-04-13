@@ -127,12 +127,15 @@ class MonkeeJson {
 					let el = obj.names[i];
 					let attr = el.getAttribute("data-name");
 					let nrString = StringTools.replace(attr.split("[")[1],"]","");
-					let chapter = attr.split("[")[0];
+					let arrName = attr.split("[")[0];
+					let key = attr.split("].")[1];
 					let nr = Std.parseInt(nrString);
-					el.innerHTML = json[chapter][nr].title;
+					let _obj = json[arrName][nr];
+					let __arr = json[arrName][nr];
+					el.innerHTML = __arr[key];
 					break;
 				default:
-					console.log("src/MonkeeJson.hx:138:","case '" + tag + "': trace ('" + tag + "');");
+					console.log("src/MonkeeJson.hx:151:","case '" + tag + "': trace ('" + tag + "');");
 				}
 			}
 		} else {
