@@ -149,17 +149,18 @@ class MonkeeJson {
 						el.innerHTML = untyped __arr[key];
 					case 'code':
 						// trace('code');
+						var el = cast obj.names[i];
 						var result = json; // cloning the existing obj
-						var give = 'i.want.it';
-
+						var attr:String = el.getAttribute('data-name');
+						// var give = 'i.want.it';
+						var give = attr;
 						// now split the give and iterate through keys
 						give.split(".").foreach(function(key) {
-							trace(key);
-							// trace(result);
-							// result = result[key];
+							result = untyped result[key];
 							return true;
 						});
 						console.log(result);
+						el.innerHTML = result;
 					default:
 						trace("case '" + tag + "': trace ('" + tag + "');");
 				}

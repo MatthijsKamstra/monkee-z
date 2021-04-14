@@ -132,31 +132,34 @@ class MonkeeJson {
 				let tag = obj.names[i].tagName.toLowerCase();
 				switch(tag) {
 				case "code":
+					let el = obj.names[i];
 					let result = json;
-					let give = "i.want.it";
+					let attr = el.getAttribute("data-name");
+					let give = attr;
 					Lambda.foreach(give.split("."),function(key) {
-						console.log("src/MonkeeJson.hx:157:",key);
+						result = result[key];
 						return true;
 					});
 					$global.console.log(result);
+					el.innerHTML = result;
 					break;
 				case "input":
 					let input = obj.names[i];
 					input.value = json[input.getAttribute("data-name")];
 					break;
 				case "pre":
-					let el = obj.names[i];
-					let attr = el.getAttribute("data-name");
-					let nrString = StringTools.replace(attr.split("[")[1],"]","");
-					let arrName = attr.split("[")[0];
-					let key = attr.split("].")[1];
+					let el1 = obj.names[i];
+					let attr1 = el1.getAttribute("data-name");
+					let nrString = StringTools.replace(attr1.split("[")[1],"]","");
+					let arrName = attr1.split("[")[0];
+					let key = attr1.split("].")[1];
 					let nr = Std.parseInt(nrString);
 					let _obj = json[arrName][nr];
 					let __arr = json[arrName][nr];
-					el.innerHTML = __arr[key];
+					el1.innerHTML = __arr[key];
 					break;
 				default:
-					console.log("src/MonkeeJson.hx:164:","case '" + tag + "': trace ('" + tag + "');");
+					console.log("src/MonkeeJson.hx:165:","case '" + tag + "': trace ('" + tag + "');");
 				}
 			}
 		} else {
