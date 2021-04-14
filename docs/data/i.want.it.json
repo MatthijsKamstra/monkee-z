@@ -5,6 +5,13 @@
       "to": {
         "believe": "You should watch X-files"
       }
+    },
+    "watch": {
+      "films": [
+        { "title": "foo", "year": "2001" },
+        { "title": "bar", "year": "2002" },
+        { "title": "yoo", "year": "2003" }
+      ]
     }
   }
 }
