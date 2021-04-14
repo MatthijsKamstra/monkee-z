@@ -15,6 +15,7 @@ class Research {
 		search(content, 'i.watch.films'); // [{year: 2001, title: foo}, {year: 2002, title: bar}, {year: 2003, title: yoo}]
 		search(content, 'i.watch.films[1]'); // {year: 2002, title: bar}
 		search(content, 'i.watch.films[1].year'); // 2002
+		search(content, 'i.watch.films[1000].year'); // null
 
 		var arr = search(content, 'i.watch.films');
 		trace(arr[2].title); // yoo
@@ -24,14 +25,14 @@ class Research {
 	 * search in json for the correct value, return null if not
 	 *
 	 * @param jsonStr
-	 * @param search
+	 * @param path
 	 */
-	function search(jsonStr:String, search:String) {
+	function search(jsonStr:String, path:String) {
 		var result = Json.parse(jsonStr); // cloning the existing json
 		// var result = json; // cloning the existing obj
 
-		// now split the searchString and iterate through keys
-		search.split(".").foreach(function(key) {
+		// now split the path and iterate through keys
+		path.split(".").foreach(function(key) {
 			// check for array, if not use the normal way
 			if (key.indexOf('[') != -1) {
 				// get the number in the string `films[1]`

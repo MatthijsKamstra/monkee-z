@@ -1,3 +1,5 @@
+-lib buddy
+
 -cp src
 -D js-es=6
 -dce full

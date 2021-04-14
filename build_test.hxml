@@ -1,7 +1,6 @@
+
 -lib buddy
 -cp src
 -D analyzer-optimize
--main Research
+-main test.ResearchTest
 --interp
-
-
