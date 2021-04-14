@@ -1,5 +1,6 @@
 package;
 
+import utils.JsonPath;
 import haxe.Json;
 import js.html.InputElement;
 import utils.Time;
@@ -126,43 +127,14 @@ class MonkeeJson {
 						var input:InputElement = cast obj.names[i];
 						// input.value = Reflect.getProperty(json, input.getAttribute('data-name'));
 						input.value = untyped json[input.getAttribute('data-name')];
-					case 'pre':
-						// trace('pre');
-						var el = cast obj.names[i];
-						var attr:String = el.getAttribute('data-name');
-						var nrString = attr.split('[')[1].replace(']', '');
-						var arrName = attr.split('[')[0];
-						var key = attr.split('].')[1];
-						// trace('key: ' + key);
-						var nr = Std.parseInt(nrString);
-						var _obj = untyped json[arrName][nr];
-						// trace(_obj);
-						// trace(untyped json[arrName][nr]);
-						// trace(untyped obj[key]);
-						// trace(untyped obj.key);
-						// trace(untyped obj.title);
-						// trace(untyped json.chapter[1].title);
-
-						var __arr = untyped json[arrName][nr];
-						// trace(untyped __arr[key]);
-
-						el.innerHTML = untyped __arr[key];
-					case 'code':
+					// case 'code', 'pre':
+					default:
+						// trace("case '" + tag + "': trace ('" + tag + "');");
 						// trace('code');
 						var el = cast obj.names[i];
-						var result = json; // cloning the existing obj
 						var attr:String = el.getAttribute('data-name');
-						// var give = 'i.want.it';
-						var give = attr;
-						// now split the give and iterate through keys
-						give.split(".").foreach(function(key) {
-							result = untyped result[key];
-							return true;
-						});
-						console.log(result);
-						el.innerHTML = result;
-					default:
-						trace("case '" + tag + "': trace ('" + tag + "');");
+						var data = JsonPath.search(Json.stringify(json), attr);
+						el.innerHTML = data;
 				}
 			}
 		} else {

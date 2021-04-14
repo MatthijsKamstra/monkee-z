@@ -83,6 +83,12 @@ class ResearchTest extends buddy.SingleSuite {
 				data.length.should.be(3);
 				data.should.be("yoo");
 			});
+
+			it('Search json with path: "i.want.watch.films[2].year"', {
+				var data:String = JsonPath.search(content, 'i.want.watch.films[2].year');
+				// trace(data);
+				data.should.be(null);
+			});
 		});
 	}
 }

@@ -130,36 +130,14 @@ class MonkeeJson {
 			while(_g < _g1) {
 				let i = _g++;
 				let tag = obj.names[i].tagName.toLowerCase();
-				switch(tag) {
-				case "code":
-					let el = obj.names[i];
-					let result = json;
-					let attr = el.getAttribute("data-name");
-					let give = attr;
-					Lambda.foreach(give.split("."),function(key) {
-						result = result[key];
-						return true;
-					});
-					$global.console.log(result);
-					el.innerHTML = result;
-					break;
-				case "input":
+				if(tag == "input") {
 					let input = obj.names[i];
 					input.value = json[input.getAttribute("data-name")];
-					break;
-				case "pre":
-					let el1 = obj.names[i];
-					let attr1 = el1.getAttribute("data-name");
-					let nrString = StringTools.replace(attr1.split("[")[1],"]","");
-					let arrName = attr1.split("[")[0];
-					let key = attr1.split("].")[1];
-					let nr = Std.parseInt(nrString);
-					let _obj = json[arrName][nr];
-					let __arr = json[arrName][nr];
-					el1.innerHTML = __arr[key];
-					break;
-				default:
-					console.log("src/MonkeeJson.hx:165:","case '" + tag + "': trace ('" + tag + "');");
+				} else {
+					let el = obj.names[i];
+					let attr = el.getAttribute("data-name");
+					let data = utils_JsonPath.search(JSON.stringify(json),attr);
+					el.innerHTML = data;
 				}
 			}
 		} else {
@@ -168,6 +146,15 @@ class MonkeeJson {
 	}
 	static main() {
 		let app = new MonkeeJson();
+	}
+}
+class Reflect {
+	static field(o,field) {
+		try {
+			return o[field];
+		} catch( _g ) {
+			return null;
+		}
 	}
 }
 class Std {
@@ -207,6 +194,23 @@ class haxe_iterators_ArrayIterator {
 	}
 	next() {
 		return this.array[this.current++];
+	}
+}
+class utils_JsonPath {
+	static search(jsonStr,path) {
+		let result = JSON.parse(jsonStr);
+		Lambda.foreach(path.split("."),function(key) {
+			if(key.indexOf("[") != -1) {
+				let index = Std.parseInt(StringTools.replace(key.split("[")[1],"]",""));
+				key = key.split("[")[0];
+				let arr = Reflect.field(result,key);
+				result = arr[index];
+			} else {
+				result = Reflect.field(result,key);
+			}
+			return true;
+		});
+		return result;
 	}
 }
 class utils_Throbber {
