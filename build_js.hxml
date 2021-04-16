@@ -1,3 +1,4 @@
+-lib uglifyjs
 -lib buddy
 
 -cp src
@@ -9,19 +10,24 @@
 --each
 
 -main MonkeeLoad
--js docs/monkee_load.js
+-js docs/js/monkee_load.js
 
 --next
 
 -main MonkeeLoadInner
--js docs/monkee_load_inner.js
+-js docs/js/monkee_load_inner.js
 
 --next
 
 -main MonkeeReact
--js docs/monkee_react.js
+-js docs/js/monkee_react.js
 
 --next
 
 -main MonkeeJson
--js docs/monkee_json.js
+-js docs/js/monkee_json.js
+
+--next
+
+-main MonkeeRoute
+-js docs/js/monkee_route.js

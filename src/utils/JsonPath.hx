@@ -26,9 +26,12 @@ class JsonPath {
 	/**
 	 * search in json for the correct value, return null if not
 	 *
-	 * @example
+	 * convert a string value to path used in json.
+	 * can be an array as well
 	 *
+	 * @example
 	 * 			var data = JsonPath.search(str, 'i.want.data');
+	 * 			var arr:Array<Dynamic> = cast JsonPath.search(str, 'i.want.data[0]');
 	 *
 	 * @param jsonStr
 	 * @param path

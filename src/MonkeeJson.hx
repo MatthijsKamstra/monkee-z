@@ -1,5 +1,6 @@
 package;
 
+import utils.Html;
 import utils.JsonPath;
 import haxe.Json;
 import js.html.InputElement;

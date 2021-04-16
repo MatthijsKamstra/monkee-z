@@ -18,7 +18,7 @@ class Research {
 		trace(JsonPath.search(content, 'i.watch.films[1].year')); // 2002
 		trace(JsonPath.search(content, 'i.watch.films[1000].year')); // null
 
-		var arr = JsonPath.search(content, 'i.watch.films');
+		var arr:Array<Dynamic> = cast JsonPath.search(content, 'i.watch.films');
 		trace(arr[2].title); // yoo
 	}
 

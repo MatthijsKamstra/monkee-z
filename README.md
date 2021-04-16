@@ -156,3 +156,9 @@ And it has a version 2... so BETTER then mine.
 So just a POC that is totally unrelavant at this moment
 
 **stimulus** https://stimulus.hotwire.dev/
+
+## source
+
+https://github.com/ciscoheat/buddy
+
+https://reefjs.com/routing/snorkel/

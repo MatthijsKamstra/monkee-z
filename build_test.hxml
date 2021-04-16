@@ -1,4 +1,4 @@
-
+-lib uglifyjs
 -lib buddy
 -cp src
 -D analyzer-optimize
