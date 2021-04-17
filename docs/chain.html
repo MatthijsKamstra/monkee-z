@@ -31,13 +31,19 @@
         <h2 class="badge badge-dark">#bar</h2>
         <div id="bar">bar</div>
 
-        <h2 class="badge badge-dark">monk</h2>
-        <div id="monk">monk</div>
+        <h2 class="badge badge-dark">#monk</h2>
+        <div id="monk">#monk</div>
 
-        <h2 class="badge badge-dark">.monkee</h2>
+        <h2 class="badge badge-dark">.monkee (not advised)</h2>
         <div class="monkee">.monkee</div>
         <div class="monkee">.monkee</div>
         <div class="monkee">.monkee</div>
+
+        <h2 class="badge badge-dark">#app</h2>
+        <div id="app">#app</div>
+
+        <h2 class="badge badge-dark">x</h2>
+        <div id="x">#x</div>
 
     </div>
 
@@ -61,7 +67,6 @@
         var app1 = new MonkeeChain(foo, {
             template: '<h1>Hello, foo!</h1>'
         });
-        app1.render();
 
         var app2 = new MonkeeChain('#bar', {
             data: {},
@@ -69,7 +74,6 @@
                 return '<h1>Hello, bar!</h1>';
             }
         });
-        app2.render();
 
         var app3 = new MonkeeChain('#monk', {
             data: {
@@ -80,12 +84,11 @@
                 return `<h1>${props.greeting}, ${props.name}!</h1>`;
             }
         });
-        app3.render();
 
-        var app4 = new MonkeeChain('.monkee');
-        var app6 = new MonkeeChain('doesnotexist');
-        var app6 = new MonkeeChain('#doesnotexist');
-        var app5 = new MonkeeChain('.doesnotexist');
+        var app4 = new MonkeeChain('.monkee', { data: {}, template: '<p>👋</p>' });
+        // var app6 = new MonkeeChain('doesnotexist');
+        // var app6 = new MonkeeChain('#doesnotexist');
+        // var app5 = new MonkeeChain('.doesnotexist');
 
         // Setup the component
         var app = new MonkeeChain('#app', {
@@ -97,15 +100,25 @@
             }
         });
 
-        // Render the component
-        app.render();
 
         // Update the clock once a second
         window.setInterval(function () {
             app.data.time = new Date().toLocaleTimeString();
+            // re-render app
             app.render();
         }, 1000);
 
+        // some default values
+        let firstName = 'Matthijs';
+        let lastName = 'Kamstra';
+        new MonkeeChain('#x', {
+            data: {
+                message: "🐵"
+            },
+            template: function (props) {
+                return `<p>${firstName} ${lastName}: ${props.message}</p>`;
+            }
+        });
 
     </script>
 
