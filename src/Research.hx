@@ -1,25 +1,64 @@
 package;
 
-import utils.JsonPath;
+import js.lib.Object;
 import haxe.Json;
-
-using StringTools;
-using Lambda;
+import js.Browser.*;
+import js.lib.Proxy;
 
 class Research {
+	var targetObj = {};
+
 	public function new() {
-		var content:String = sys.io.File.getContent('docs/data/i.want.it.json');
+		trace('Research');
 
-		trace(JsonPath.search(content, 'i.want.it')); // Oh I know you do...
-		trace(JsonPath.search(content, 'i.want.to.believe')); // You should watch X-files
-		trace(JsonPath.search(content, 'i.want.to.fail')); // null
-		trace(JsonPath.search(content, 'i.watch.films')); // [{year: 2001, title: foo}, {year: 2002, title: bar}, {year: 2003, title: yoo}]));
-		trace(JsonPath.search(content, 'i.watch.films[1]')); // {year: 2002, title: bar}
-		trace(JsonPath.search(content, 'i.watch.films[1].year')); // 2002
-		trace(JsonPath.search(content, 'i.watch.films[1000].year')); // null
+		testOne();
+		// testTwo();
+		// testThree();
+	}
 
-		var arr:Array<Dynamic> = cast JsonPath.search(content, 'i.watch.films');
-		trace(arr[2].title); // yoo
+	// Demo
+	var myVar = 123;
+	var varWatch = 0;
+
+	function testThree() {
+		Object.defineProperty(this, 'varWatch', {
+			get: function() {
+				return myVar;
+			},
+			set: function(v) {
+				myVar = v;
+				console.log('Value changed! New value: ' + v);
+			}
+		});
+
+		console.log(varWatch);
+		varWatch = 456;
+		console.log(varWatch);
+	}
+
+	function testTwo() {
+		var validator = {
+			set: function(target:{}, property:String, value:Any, receiver:Null<{}>) {
+				console.log('The property ${property} has been updated with ${Json.stringify(value)}');
+				return true;
+			}
+		};
+		var store = new Proxy({}, validator);
+		Reflect.setField(store, 'a', 'hello');
+
+		// store.a = 'hello';
+		// console => The property a has been updated with hello
+	}
+
+	function testOne() {
+		var targetProxy:{} = new js.lib.Proxy(targetObj, {
+			set: function(target:{}, key:String, value:Any, receiver:Null<{}>) {
+				console.log('${key} set to ${Json.stringify(value)}');
+				untyped target[key] = value;
+				return true;
+			}
+		});
+		untyped targetProxy.hello_world = "test"; // console: 'hello_world set to test'
 	}
 
 	static public function main() {
