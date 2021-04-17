@@ -48,6 +48,11 @@
         <h2 class="badge badge-dark">json</h2>
         <div id="json">#json</div>
 
+        <h2 class="badge badge-dark">array</h2>
+        <div id="array">#array</div>
+
+
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -140,11 +145,12 @@
             },
             template: function (props) {
                 return `
-                <strong>File ${props.json.name}</strong>
-                <p>Original file size ${props.json.size.original}</p>
-                <p>UglifyJs file size ${props.json.size.uglifyjs}</p>
-                <p>Extra minified file size ${props.json.size.minified}</p>
-
+                <strong>File ${props.json.name}:</strong>
+                <ul>
+                    <li>Original file size: ${props.json.size.original}</li>
+                    <li>UglifyJs file size: ${props.json.size.uglifyjs}</li>
+                    <li>Extra minified file size: ${props.json.size.minified}</li>
+                </ul>
                 `;
             }
         });
@@ -157,6 +163,24 @@
             appJson.data.json = data;
             appJson.render();
         });
+
+        new MonkeeChain('#array', {
+            data: {
+                heading: 'My Todos',
+                todos: ['Swim', 'Climb', 'Jump', 'Play']
+            },
+            template: function (props) {
+                return `
+                <h1>${props.heading}</h1>
+                <ul>
+                    ${props.todos.map(function (todo) {
+                    return `<li>${todo}</li>`;
+                }).join('')}
+                </ul>
+                `;
+            }
+        });
+
 
 
     </script>
