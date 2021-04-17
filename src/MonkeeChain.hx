@@ -1,5 +1,6 @@
 package;
 
+import haxe.Json;
 import js.lib.Function;
 import js.html.SupportedType;
 import js.html.DOMParser;
@@ -41,17 +42,17 @@ class MonkeeChain {
 		if (this.target == null) {
 			console.error('Target "${this.targetName}" possibly not correct target/no element');
 			return;
-		} else {
-			// visual check
-			this.target.dataset.monkee = 'set';
-			this.target.innerText = 'x ${this.targetName} set';
+			// } else {
+			// 	// visual check
+			// 	this.target.dataset.monkee = 'set';
+			// 	this.target.innerText = 'x ${this.targetName} set';
 		}
 
 		if (obj.data != null && obj.data != {}) {
 			// trace(obj.data);
 			this.data = obj.data;
 		} else {
-			console.error('Element "${this.targetName}" has no data: ${obj.data}');
+			console.error('Element "${this.targetName}" has no data: ${Json.stringify(obj.data)}');
 			this.data = {};
 		}
 
@@ -59,7 +60,7 @@ class MonkeeChain {
 			// trace(obj.template);
 			this.template = obj.template;
 		} else {
-			console.error('Element "${this.targetName}" has template: ${obj.template}');
+			console.error('Element "${this.targetName}" has template: ${Json.stringify(obj.template)}');
 		}
 
 		render();
@@ -76,21 +77,20 @@ class MonkeeChain {
 			this.target.innerHTML = untyped (this.template).call(this, this.data);
 		}
 	}
-
 	/**
 	 * Convert a template string into HTML DOM nodes
 	 * @param  {String} str The template string
 	 * @return {Node}       The template HTML
 	 */
-	public function stringToHTML(str:String):Element {
-		var parser = new DOMParser();
-		var doc = parser.parseFromString(str, SupportedType.TEXT_HTML);
-		return doc.body;
-	};
+	// public function stringToHTML(str:String):Element {
+	// 	var parser = new DOMParser();
+	// 	var doc = parser.parseFromString(str, SupportedType.TEXT_HTML);
+	// 	return doc.body;
+	// };
 }
 
 typedef MonkeeChainObj = {
 	@:optional var _id:String;
 	var data:Dynamic;
-	var template:Dynamic;
+	var template:EitherType<String, Function>;
 }
