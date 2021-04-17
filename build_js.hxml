@@ -31,3 +31,8 @@
 
 -main MonkeeRoute
 -js docs/js/monkee_route.js
+
+--next
+
+MonkeeChain
+-js docs/js/monkee_chain.js

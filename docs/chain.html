@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🙈</text></svg>">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- footer related styling -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>Monkee - Z 🐵 CHAIN</title>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+
+    <div class="container">
+
+        <h2 class="badge badge-dark">#foo</h2>
+        <div id="foo">foo</div>
+
+        <h2 class="badge badge-dark">#bar</h2>
+        <div id="bar">bar</div>
+
+        <h2 class="badge badge-dark">monk</h2>
+        <div id="monk">monk</div>
+
+        <h2 class="badge badge-dark">.monkee</h2>
+        <div class="monkee">.monkee</div>
+        <div class="monkee">.monkee</div>
+        <div class="monkee">.monkee</div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+    <!-- Monkee code -->
+    <script src="./js/monkee_chain.js"></script>
+    <!-- <script src="./js/monkee_chain.min.js"></script> -->
+
+    <!-- embed monkee bugger and you are good to go -->
+    <!-- <script src="https://matthijskamstra.github.io/monkee-bugger/monkee_bugger.min.js"></script> -->
+
+
+    <script>
+        var foo = document.getElementById('foo');
+        var app1 = new MonkeeChain(foo, {
+            template: '<h1>Hello, foo!</h1>'
+        });
+        app1.render();
+
+        var app2 = new MonkeeChain('#bar', {
+            data: {},
+            template: function () {
+                return '<h1>Hello, bar!</h1>';
+            }
+        });
+        app2.render();
+
+        var app3 = new MonkeeChain('#monk', {
+            data: {
+                greeting: 'Hello',
+                name: 'monk'
+            },
+            template: function (props) {
+                return `<h1>${props.greeting}, ${props.name}!</h1>`;
+            }
+        });
+        app3.render();
+
+        var app4 = new MonkeeChain('.monkee');
+        var app6 = new MonkeeChain('doesnotexist');
+        var app6 = new MonkeeChain('#doesnotexist');
+        var app5 = new MonkeeChain('.doesnotexist');
+
+        // Setup the component
+        var app = new MonkeeChain('#app', {
+            data: {
+                time: new Date().toLocaleTimeString()
+            },
+            template: function (props) {
+                return '<strong>The time is:</strong> ' + props.time;
+            }
+        });
+
+        // Render the component
+        app.render();
+
+        // Update the clock once a second
+        window.setInterval(function () {
+            app.data.time = new Date().toLocaleTimeString();
+            app.render();
+        }, 1000);
+
+
+    </script>
+
+</body>
+
+</html>
