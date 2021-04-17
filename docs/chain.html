@@ -45,6 +45,9 @@
         <h2 class="badge badge-dark">x</h2>
         <div id="x">#x</div>
 
+        <h2 class="badge badge-dark">json</h2>
+        <div id="json">#json</div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -119,6 +122,41 @@
                 return `<p>${firstName} ${lastName}: ${props.message}</p>`;
             }
         });
+
+
+
+        // Setup the component
+        var appJson = new MonkeeChain('#json', {
+            data: {
+                json: {
+                    name: '',
+                    size: {
+                        minified: "",
+                        original: "",
+                        uglifyjs: "",
+                    }
+                }
+            },
+            template: function (props) {
+                return `
+                <strong>File ${props.json.name}</strong>
+                <p>Original file size ${props.json.size.original}</p>
+                <p>UglifyJs file size ${props.json.size.uglifyjs}</p>
+                <p>Extra minified file size ${props.json.size.minified}</p>
+
+                `;
+            }
+        });
+
+        // Fetch API data
+        fetch('json/monkee_chain.json').then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            //console.log(data);
+            appJson.data.json = data;
+            appJson.render();
+        });
+
 
     </script>
 
