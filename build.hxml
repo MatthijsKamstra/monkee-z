@@ -1,8 +1,8 @@
--lib uglifyjs
+# -lib uglifyjs
 -lib buddy
 -cp src
 -D analyzer-optimize
--main Research
+-main ResearchJsonPath
 --interp
 
 
