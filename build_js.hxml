@@ -36,3 +36,6 @@
 
 MonkeeChain
 -js docs/js/monkee_chain.js
+
+# Use custom build tool
+--macro BuildToolSimple.run()

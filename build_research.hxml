@@ -1,0 +1,24 @@
+-lib buddy
+-lib uglifyjs
+
+-main Research
+-cp src/
+-js bin/_.js
+
+-dce full
+-D analyzer-optimize
+-D js-es=6
+
+
+# -D source-map-content
+# -debug
+
+# Use custom build tool
+--macro BuildToolSimple.run()
+
+--next
+
+--cmd node bin/_.js
+
+
+
