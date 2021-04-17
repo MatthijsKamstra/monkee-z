@@ -10,7 +10,7 @@ class MonkeeReact {
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
 			if (DEBUG)
-				trace('MonkeeReact');
+				console.info(App.callIn('MonkeeReact'));
 		});
 
 		var arr = document.querySelectorAll('[data-wrapper]');

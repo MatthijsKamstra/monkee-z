@@ -24,7 +24,7 @@ class MonkeeLoadInner {
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
 			if (DEBUG)
-				console.log('[MonkeeLoadInner] template loading');
+				console.info(App.callIn('MonkeeLoadInner'));
 			init();
 		});
 	}

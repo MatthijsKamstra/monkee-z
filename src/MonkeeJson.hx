@@ -24,7 +24,7 @@ class MonkeeJson {
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
 			if (DEBUG)
-				console.log('[MonkeeJson]');
+				console.info(App.callIn('MonkeeJson'));
 			init();
 		});
 	}
