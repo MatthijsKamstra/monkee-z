@@ -12,8 +12,6 @@ class Lambda {
 		return true;
 	}
 }
-Lambda.__name__ = true;
-Math.__name__ = true;
 class MonkeeJson {
 	constructor() {
 		this.loadingId = 0;
@@ -24,7 +22,7 @@ class MonkeeJson {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[monkee]" + " - " + "MonkeeJson" + " - build: " + "2021-04-17 15:03:50");
+				$global.console.info("[monkee]" + " - " + "MonkeeJson" + " - build: " + "2021-04-17 21:47:32");
 			}
 			_gthis.init();
 		});
@@ -119,7 +117,6 @@ class MonkeeJson {
 		let app = new MonkeeJson();
 	}
 }
-MonkeeJson.__name__ = true;
 class Reflect {
 	static field(o,field) {
 		try {
@@ -129,7 +126,6 @@ class Reflect {
 		}
 	}
 }
-Reflect.__name__ = true;
 class Std {
 	static parseInt(x) {
 		if(x != null) {
@@ -152,13 +148,11 @@ class Std {
 		return null;
 	}
 }
-Std.__name__ = true;
 class StringTools {
 	static replace(s,sub,by) {
 		return s.split(sub).join(by);
 	}
 }
-StringTools.__name__ = true;
 class haxe_iterators_ArrayIterator {
 	constructor(array) {
 		this.current = 0;
@@ -171,7 +165,6 @@ class haxe_iterators_ArrayIterator {
 		return this.array[this.current++];
 	}
 }
-haxe_iterators_ArrayIterator.__name__ = true;
 class utils_Html {
 	static getBody(html) {
 		let test = html.toLowerCase();
@@ -203,7 +196,6 @@ class utils_Html {
 		}
 	}
 }
-utils_Html.__name__ = true;
 class utils_JsonPath {
 	static search(jsonStr,path) {
 		let result = JSON.parse(jsonStr);
@@ -227,7 +219,6 @@ class utils_JsonPath {
 		return result;
 	}
 }
-utils_JsonPath.__name__ = true;
 class utils_Throbber {
 	static set(el) {
 		let _div = window.document.createElement("div");
@@ -236,10 +227,6 @@ class utils_Throbber {
 		return _div;
 	}
 }
-utils_Throbber.__name__ = true;
 function $getIterator(o) { if( o instanceof Array ) return new haxe_iterators_ArrayIterator(o); else return o.iterator(); }
-String.__name__ = true;
-Array.__name__ = true;
-Date.__name__ = "Date";
 MonkeeJson.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
