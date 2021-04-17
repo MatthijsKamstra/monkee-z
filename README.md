@@ -162,3 +162,11 @@ So just a POC that is totally unrelavant at this moment
 https://github.com/ciscoheat/buddy
 
 https://reefjs.com/routing/snorkel/
+
+## reactive
+
+- https://gist.github.com/FLamparski/1122e08edeef19ff0913
+- https://www.monterail.com/blog/2016/how-to-build-a-reactive-engine-in-javascript-part-1-observable-objects
+- https://medium.com/hackernoon/how-i-converted-my-react-app-to-vanillajs-and-whether-or-not-it-was-a-terrible-idea-4b14b1b2faff
+- https://medium.com/hackernoon/how-i-converted-my-react-app-to-vanillajs-and-whether-or-not-it-was-a-terrible-idea-4b14b1b2faff
+- https://medium.com/@varaprasadh.a/build-reactive-ui-with-plain-javascript-180085998756
