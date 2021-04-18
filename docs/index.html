@@ -21,13 +21,25 @@
 
 <body class="d-flex flex-column h-100">
 	<div data-load="components/nav.html"></div>
-	<!--
-		<div data-load="components/main.html"></div>
+	<div data-load="components/hero.html"></div>
 
-		<div class="container">
-			<div data-load="components/img.html"></div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>Monkee-Chain</h1>
+			</div>
+			<div class="col-6">
+				<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code>
+			</div>
+			<div class="col-6">
+				<div id="app"></div>
+			</div>
+			<div class="col-6">
+				<div id="code-app"></div>
+			</div>
 		</div>
-	-->
+	</div>
 
 	<div class="container mt-5">
 		<div class="row">
@@ -103,9 +115,16 @@
     -->
 
 	<!-- Monkee code -->
+	<script src="./js/monkee_chain.min.min.js"></script>
 	<script src="./js/monkee_load.min.min.js"></script>
-	<script src="./js/monkee_load_inner.min.js"></script>
+	<script src="./js/monkee_load_inner.min.min.js"></script>
 	<script src="./js/monkee_react.min.js"></script>
+
+	<!-- Monkee script -->
+	<script src="index.js"></script>
+	<script src="chain/embedcode.js"></script>
+	<!-- Show code -->
+	<script>embedcode('code-app', 'index.js');</script>
 </body>
 
 </html>
