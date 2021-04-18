@@ -163,6 +163,8 @@ So just a POC that is totally unrelavant at this moment
 - https://reefjs.com/routing/snorkel/
 - https://getbootstrap.com/docs/4.5/getting-started/introduction/
 - https://highlightjs.org/usage/
+- https://picsum.photos/
+- https://lorim
 
 ## reactive
 
