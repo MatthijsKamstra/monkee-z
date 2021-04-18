@@ -12,6 +12,9 @@
 -main MonkeeLoad
 -js docs/js/monkee_load.js
 
+# Use custom build tool
+--macro BuildToolSimple.run()
+
 --next
 
 -main MonkeeLoadInner
@@ -37,5 +40,5 @@
 MonkeeChain
 -js docs/js/monkee_chain.js
 
-# Use custom build tool
---macro BuildToolSimple.run()
+# # Use custom build tool
+# --macro BuildToolSimple.run()

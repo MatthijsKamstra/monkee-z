@@ -33,11 +33,11 @@ class Html {
 
 	/**
 	 * [Description]
-	 * @param html
 	 * @param target
-	 * @param isInner = true
+	 * @param html
+	 * @param isInner
 	 */
-	public static function processHTML(html:String, target:js.html.Element, isInner = true) {
+	public static function processHTML(target:js.html.Element, html:String, isInner:Bool) {
 		if (isInner) {
 			target.innerHTML = html;
 		} else {
@@ -53,7 +53,7 @@ class Html {
 	public static function htmlToElement(html:String, isInner = true) {
 		var template = document.createDivElement();
 		html = untyped html.trim(); // Never return a text node of whitespace as the result
-		Html.processHTML(html, template, isInner);
+		Html.processHTML(template, html, isInner);
 		// template.innerHTML = html;
 		return template.firstChild;
 	}
