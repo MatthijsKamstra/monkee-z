@@ -22,7 +22,7 @@ class MonkeeJson {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[monkee]" + " - " + "MonkeeJson" + " - build: " + "2021-04-17 21:47:32");
+				$global.console.info("[monkee]" + " - " + "MonkeeJson" + " - build: " + "2021-04-18 21:46:38");
 			}
 			_gthis.init();
 		});
@@ -227,3 +227,5 @@ class utils_Throbber {
 function $getIterator(o) { if( o instanceof Array ) return new haxe_iterators_ArrayIterator(o); else return o.iterator(); }
 MonkeeJson.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_json.js.map

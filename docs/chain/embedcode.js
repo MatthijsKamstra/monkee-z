@@ -18,6 +18,9 @@ function embedcode(id, filename) {
     var script = document.createElement('script');
     script.src = '//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js';
     document.body.appendChild(script);
+    var script = document.createElement('script');
+    script.innerHTML = 'hljs.highlightAll();';
+    document.body.appendChild(script);
 
 
 

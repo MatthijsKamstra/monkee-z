@@ -4,16 +4,16 @@
 -cp src
 -D js-es=6
 -dce full
-# -D source-map-content
-# -debug
+-D source-map-content
+-debug
+
+# Use custom build tool
+--macro BuildToolSimple.run()
 
 --each
 
 -main MonkeeLoad
 -js docs/js/monkee_load.js
-
-# Use custom build tool
---macro BuildToolSimple.run()
 
 --next
 
