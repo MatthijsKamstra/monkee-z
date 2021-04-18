@@ -72,10 +72,10 @@ class MonkeeLoadInner {
 				while(_g < _g1) {
 					let i = _g++;
 					let el = obj.names[i];
-					utils_Html.processHTML(body,el,true);
+					utils_Html.processHTML(el,body,true);
 				}
 			} else {
-				utils_Html.processHTML(body,obj.el,true);
+				utils_Html.processHTML(obj.el,body,true);
 			}
 			if(_gthis.DEBUG) {
 				$global.console.log("- end loading and parsing url: " + obj.url + " into element");
@@ -104,7 +104,7 @@ class MonkeeLoadInner {
 				input.value = json[input.getAttribute("data-name")];
 			}
 		} else {
-			utils_Html.processHTML(str,obj.el,true);
+			utils_Html.processHTML(obj.el,str,true);
 		}
 	}
 	static main() {
@@ -143,10 +143,7 @@ class utils_Html {
 		}
 		return html.slice(x + 1,y);
 	}
-	static processHTML(html,target,isInner) {
-		if(isInner == null) {
-			isInner = true;
-		}
+	static processHTML(target,html,isInner) {
 		if(isInner) {
 			target.innerHTML = html;
 		} else {

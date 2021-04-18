@@ -3,7 +3,7 @@
 class MonkeeChain {
 	constructor(target,obj) {
 		this.template = null;
-		this.data = null;
+		this.data = { };
 		this.target = null;
 		this.targetName = "";
 		this.DEBUG = true;
@@ -23,9 +23,6 @@ class MonkeeChain {
 		}
 		if(obj.data != null && obj.data != { }) {
 			this.data = obj.data;
-		} else {
-			$global.console.error("Element \"" + this.targetName + "\" has no data: " + JSON.stringify(obj.data));
-			this.data = { };
 		}
 		if(obj.template != null && obj.template != "") {
 			this.template = obj.template;

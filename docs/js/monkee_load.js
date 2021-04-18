@@ -2,103 +2,51 @@
 (function ($global) { "use strict";
 class MonkeeLoad {
 	constructor() {
-		this.timeEnd = .0;
-		this.timeStart = .0;
 		this.loadingId = 0;
 		this.loadingArr = [];
-		this.dataAtr = "data-load";
 		this.req = new XMLHttpRequest();
-		this.DEBUG = false;
-		let _gthis = this;
-		window.document.addEventListener("DOMContentLoaded",function(event) {
-			if(_gthis.DEBUG) {
-				$global.console.info("[monkee]" + " - " + "MonkeeLoad" + " - build: " + "2021-04-17 21:47:32");
-			}
-			_gthis.init();
-		});
-	}
-	init() {
-		let arr = window.document.querySelectorAll("[" + this.dataAtr + "]");
+		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		let _g = 0;
-		let _g1 = arr.length;
+		let _g1 = this.arr.length;
 		while(_g < _g1) {
 			let i = _g++;
-			let wrapper = arr[i];
-			let url = wrapper.getAttribute(this.dataAtr);
-			if(this.DEBUG) {
-				$global.console.log("templates url: " + url);
+			let _configName = this.arr[i];
+			let elements = window.document.querySelectorAll("[" + _configName + "]");
+			let _g1 = 0;
+			let _g2 = elements.length;
+			while(_g1 < _g2) {
+				let i = _g1++;
+				let wrapper = elements[i];
+				let url = wrapper.getAttribute(_configName);
+				this.loadingArr.push({ el : wrapper, url : url, loaderType : "data-load-inner" == _configName ? "inner" : "outer"});
 			}
-			this.loadingArr.push({ el : wrapper, url : url});
-			let _div = window.document.createElement("div");
-			_div.className = "loader";
-			wrapper.appendChild(_div);
 		}
-		this.timeStart = new Date().getTime();
 		this.startLoading(this.loadingId);
-	}
-	getCurrentTime() {
-		this.timeEnd = new Date().getTime();
-		if(this.DEBUG) {
-			$global.console.log(this.timeEnd - this.timeStart + "ms");
-		}
 	}
 	startLoading(nr) {
 		if(nr >= this.loadingArr.length) {
 			return;
 		}
-		let obj = this.loadingArr[nr];
-		if(this.DEBUG) {
-			$global.console.log("start loading: " + obj.url + " into element");
-		}
-		this.loadHTML(obj.url,obj.el);
+		this.loadData(this.loadingArr[nr]);
 		this.loadingId++;
 	}
-	loadHTML(url,el) {
+	loadData(obj) {
 		let _gthis = this;
-		this.req.open("GET",url);
+		this.req.open("GET",obj.url);
 		this.req.onload = function() {
-			let body = _gthis.getBody(_gthis.req.response);
-			if(body == "") {
-				body = _gthis.req.response;
-			}
-			_gthis.processHTML(body,el);
-			if(_gthis.DEBUG) {
-				$global.console.log("- end loading and parsing url: " + url + " into element");
-			}
-			_gthis.getCurrentTime();
+			let body = _gthis.req.response;
+			utils_Html.processHTML(obj.el,body,obj.loaderType == "inner");
 			_gthis.startLoading(_gthis.loadingId);
 		};
 		this.req.onerror = function(error) {
-			if(_gthis.DEBUG) {
-				$global.console.error("[JS] error: " + error);
-			}
+			$global.console.error("error: " + error);
 		};
 		this.req.send();
 	}
-	getBody(html) {
-		let test = html.toLowerCase();
-		let x = test.indexOf("<body");
-		if(x == -1) {
-			return "";
-		}
-		x = test.indexOf(">",x);
-		if(x == -1) {
-			return "";
-		}
-		let y = test.lastIndexOf("</body>");
-		if(y == -1) {
-			y = test.lastIndexOf("</html>");
-		}
-		if(y == -1) {
-			y = html.length;
-		}
-		return html.slice(x + 1,y);
-	}
-	processHTML(content,target) {
-		target.outerHTML = content;
-	}
 	static main() {
-		let app = new MonkeeLoad();
+		window.document.addEventListener("DOMContentLoaded",function(event) {
+			let app = new MonkeeLoad();
+		});
 	}
 }
 class haxe_iterators_ArrayIterator {
@@ -111,6 +59,15 @@ class haxe_iterators_ArrayIterator {
 	}
 	next() {
 		return this.array[this.current++];
+	}
+}
+class utils_Html {
+	static processHTML(target,html,isInner) {
+		if(isInner) {
+			target.innerHTML = html;
+		} else {
+			target.outerHTML = html;
+		}
 	}
 }
 MonkeeLoad.main();

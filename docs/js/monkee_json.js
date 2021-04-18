@@ -77,10 +77,10 @@ class MonkeeJson {
 				while(_g < _g1) {
 					let i = _g++;
 					let el = obj.names[i];
-					utils_Html.processHTML(body,el,obj.isInner);
+					utils_Html.processHTML(el,body,obj.isInner);
 				}
 			} else {
-				utils_Html.processHTML(body,obj.el,obj.isInner);
+				utils_Html.processHTML(obj.el,body,obj.isInner);
 			}
 			_gthis.startLoading(_gthis.loadingId);
 		};
@@ -110,7 +110,7 @@ class MonkeeJson {
 				}
 			}
 		} else {
-			utils_Html.processHTML(str,obj.el,true);
+			utils_Html.processHTML(obj.el,str,true);
 		}
 	}
 	static main() {
@@ -185,10 +185,7 @@ class utils_Html {
 		}
 		return html.slice(x + 1,y);
 	}
-	static processHTML(html,target,isInner) {
-		if(isInner == null) {
-			isInner = true;
-		}
+	static processHTML(target,html,isInner) {
 		if(isInner) {
 			target.innerHTML = html;
 		} else {
