@@ -1,0 +1,43 @@
+<pre><code>
+    // Setup the component
+    var appJson = new MonkeeChain('#app', {
+        data: {
+            json: {
+                name: '',
+                size: {
+                    minified: "",
+                    original: "",
+                    uglifyjs: "",
+                }
+            }
+        },
+        template: function (props) {
+            return `
+            <strong>File ${props.json.name}:</strong>
+            <ul>
+                <li>Original file size: ${props.json.size.original}</li>
+                <li>UglifyJs file size: ${props.json.size.uglifyjs}</li>
+                <li>Extra minified file size: ${props.json.size.minified}</li>
+            </ul>
+            `;
+        }
+    });
+
+    // Fetch API data
+    fetch('json/monkee_load.json').
+        then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            //console.log(data);
+            appJson.data.json = data;
+            appJson.render();
+        });
+</code></pre>
+
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/haxe.min.js"></script>
+<script>hljs.highlightAll();</script>

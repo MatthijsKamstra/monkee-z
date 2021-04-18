@@ -35,8 +35,10 @@
     </div>
 
     <div class="container">
-
+        <div id="app"></div>
     </div>
+
+    <div data-load="components/footer.html"></div>
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -47,9 +49,50 @@
         crossorigin="anonymous"></script>
 
     <!-- Monkee code -->
+    <script src="./js/monkee_chain.min.min.js"></script>
+
     <script src="./js/monkee_load.js"></script>
     <!-- <script src="./js/monkee_load.min.js"></script> -->
     <!-- <script src="./js/monkee_load.min.min.js"></script> -->
+
+
+
+
+    <script>
+        // Setup the component
+        var appJson = new MonkeeChain('#app', {
+            data: {
+                json: {
+                    name: '',
+                    size: {
+                        minified: "",
+                        original: "",
+                        uglifyjs: "",
+                    }
+                }
+            },
+            template: function (props) {
+                return `
+                <strong>File ${props.json.name}:</strong>
+                <ul>
+                    <li>Original file size: ${props.json.size.original}</li>
+                    <li>UglifyJs file size: ${props.json.size.uglifyjs}</li>
+                    <li>Extra minified file size: ${props.json.size.minified}</li>
+                </ul>
+                `;
+            }
+        });
+
+        // Fetch API data
+        fetch('json/monkee_load.json').
+            then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                //console.log(data);
+                appJson.data.json = data;
+                appJson.render();
+            });
+    </script>
 
 </body>
 

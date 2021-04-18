@@ -162,6 +162,7 @@ So just a POC that is totally unrelavant at this moment
 - https://github.com/ciscoheat/buddy
 - https://reefjs.com/routing/snorkel/
 - https://getbootstrap.com/docs/4.5/getting-started/introduction/
+- https://highlightjs.org/usage/
 
 ## reactive
 
