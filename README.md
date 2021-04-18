@@ -159,9 +159,9 @@ So just a POC that is totally unrelavant at this moment
 
 ## source
 
-https://github.com/ciscoheat/buddy
-
-https://reefjs.com/routing/snorkel/
+- https://github.com/ciscoheat/buddy
+- https://reefjs.com/routing/snorkel/
+- https://getbootstrap.com/docs/4.5/getting-started/introduction/
 
 ## reactive
 
