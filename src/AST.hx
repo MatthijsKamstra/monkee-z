@@ -13,4 +13,6 @@ typedef LoadObj = {
 	//
 	@:optional var type:String;
 	@:optional var isInner:Bool;
+	//
+	@:optional var loaderType:String;
 }
