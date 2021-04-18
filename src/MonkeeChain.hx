@@ -16,7 +16,7 @@ class MonkeeChain {
 	var DEBUG = true;
 	var targetName:String = '';
 	var target:Element = null;
-	var data:Dynamic = null;
+	var data:Dynamic = {};
 	var template:String = null;
 
 	/**
@@ -51,9 +51,9 @@ class MonkeeChain {
 		if (obj.data != null && obj.data != {}) {
 			// trace(obj.data);
 			this.data = obj.data;
-		} else {
-			console.error('Element "${this.targetName}" has no data: ${Json.stringify(obj.data)}');
-			this.data = {};
+			// } else {
+			// 	console.error('Element "${this.targetName}" has no data: ${Json.stringify(obj.data)}');
+			// 	this.data = {};
 		}
 
 		if (obj.template != null && obj.template != '') {
