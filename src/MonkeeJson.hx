@@ -88,10 +88,10 @@ class MonkeeJson {
 				if (obj.names.length > 0) {
 					for (i in 0...obj.names.length) {
 						var el = obj.names[i];
-						Html.processHTML(body, el, obj.isInner);
+						Html.processHTML(el, body, obj.isInner);
 					}
 				} else {
-					Html.processHTML(body, obj.el, obj.isInner);
+					Html.processHTML(obj.el, body, obj.isInner);
 				}
 			}
 
@@ -139,7 +139,7 @@ class MonkeeJson {
 				}
 			}
 		} else {
-			Html.processHTML(str, obj.el, true);
+			Html.processHTML(obj.el, str, true);
 		}
 	}
 
