@@ -22,11 +22,17 @@
 
 <body class="d-flex flex-column h-100">
 
+    <div data-load="../components/nav.html"></div>
+
     <div class="container">
+        <h2 class="badge badge-secondary">Code example</h2>
+        <div id="code"></div>
 
+        <h2 class="badge badge-secondary">In action</h2>
         <div id="app"></div>
-
     </div>
+
+    <div data-load="../components/footer.html"></div>
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -36,10 +42,17 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
 
+
     <!-- Monkee code -->
+    <script src="../js/monkee_load.min.min.js"></script>
     <script src="../js/monkee_chain.min.min.js"></script>
 
-    <script src="code.js"></script>
+    <!-- Monkee-Chain examples -->
+    <script src="embedcode.js"></script>
+    <script src="basic.js"></script>
+
+    <script>embedcode('code', 'basic.js');</script>
+
 </body>
 
 </html>
