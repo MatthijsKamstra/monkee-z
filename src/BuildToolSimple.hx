@@ -13,7 +13,7 @@ class BuildToolSimple {
 				return Std.int(after / before * 100 * precision) / precision;
 
 			var outPath = haxe.macro.Compiler.getOutput();
-			trace('Javascript file: "${outPath}');
+			trace('Javascript file: "${outPath}"'); // docs/js/monkee_load.js
 			var sizeBefore = sys.io.File.getContent(outPath).length;
 			trace("JavaScript size original: " + kilobyte(sizeBefore));
 
@@ -46,12 +46,20 @@ class BuildToolSimple {
 			// generate json, small test
 			var json = {};
 			Reflect.setField(json, 'name', outPath.split('js/')[1]);
+			Reflect.setField(json, 'updated', Date.now());
 			Reflect.setField(json, 'size', {});
+			Reflect.setField(json, 'url', {});
 			Reflect.setField(Reflect.field(json, 'size'), 'original', '${kilobyte(sizeBefore)}');
 			Reflect.setField(Reflect.field(json, 'size'), 'uglifyjs', '${kilobyte(sizeAfter2)}');
 			Reflect.setField(Reflect.field(json, 'size'), 'minified', '${kilobyte(sizeAfter3)}');
+			// https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.min.js
+			// {outPath}"'); // docs/js/monkee_load.js
+			var path = outPath.replace('docs/', 'https://matthijskamstra.github.io/monkee-z/').replace('.js', '');
+			Reflect.setField(Reflect.field(json, 'url'), 'original', '${path}.js');
+			Reflect.setField(Reflect.field(json, 'url'), 'uglifyjs', '${path}.min.js');
+			Reflect.setField(Reflect.field(json, 'url'), 'minified', '${path}.min.min.js');
 
-			var outPath5 = outPath.replace('.js', '.json').replace('/js/', '/json/');
+			var outPath5 = outPath.replace('.js', '.json').replace('/js/', '/data/json/');
 			sys.io.File.saveContent(outPath5, haxe.Json.stringify(json));
 			#end
 		});
