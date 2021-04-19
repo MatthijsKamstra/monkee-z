@@ -6,7 +6,7 @@ class MonkeeReact {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[monkee]" + " - " + "MonkeeReact" + " - build: " + "2021-04-19 20:53:10");
+				$global.console.info("[monkee]" + " - " + "MonkeeReact" + " - build: " + "2021-04-19 20:38:35");
 			}
 		});
 		let arr = window.document.querySelectorAll("[data-wrapper]");
@@ -56,3 +56,5 @@ class haxe_iterators_ArrayIterator {
 }
 MonkeeReact.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_react.js.map

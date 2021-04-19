@@ -5,7 +5,7 @@
 -D js-es=6
 -dce full
 -D source-map-content
-# -debug
+-debug
 
 # # Use custom build tool
 --macro BuildToolSimple.run()
@@ -14,8 +14,6 @@
 
 -main MonkeeLoad
 -js docs/js/monkee_load.js
-
-
 
 --next
 

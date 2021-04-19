@@ -6,7 +6,7 @@ class BuildToolSimple {
 	public static function run() {
 		// when Haxe is done with compiling
 		haxe.macro.Context.onAfterGenerate(() -> {
-			#if !debug
+			// #if !debug
 			inline function kilobyte(size:Float, precision:Int = 1000)
 				return Std.int(size / 1024 * precision) / precision + "Kb";
 			inline function percentage(before:Float, after:Float, precision:Int = 1)
@@ -61,7 +61,7 @@ class BuildToolSimple {
 
 			var outPath5 = outPath.replace('.js', '.json').replace('/js/', '/data/json/');
 			sys.io.File.saveContent(outPath5, haxe.Json.stringify(json));
-			#end
+			// #end
 		});
 	}
 }
