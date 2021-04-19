@@ -7,13 +7,15 @@
 -D source-map-content
 -debug
 
-# Use custom build tool
+# # Use custom build tool
 --macro BuildToolSimple.run()
 
 --each
 
 -main MonkeeLoad
 -js docs/js/monkee_load.js
+
+
 
 --next
 
