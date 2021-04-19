@@ -72,5 +72,3 @@ class utils_Html {
 }
 MonkeeLoad.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_load.js.map

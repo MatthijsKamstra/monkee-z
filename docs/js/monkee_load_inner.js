@@ -10,7 +10,7 @@ class MonkeeLoadInner {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[monkee]" + " - " + "MonkeeLoadInner" + " - build: " + "2021-04-19 20:38:35");
+				$global.console.info("[monkee]" + " - " + "MonkeeLoadInner" + " - build: " + "2021-04-19 20:53:10");
 			}
 			_gthis.init();
 		});
@@ -170,5 +170,3 @@ class utils_Time {
 }
 MonkeeLoadInner.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_load_inner.js.map
