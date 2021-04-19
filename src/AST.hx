@@ -15,4 +15,5 @@ typedef LoadObj = {
 	@:optional var isInner:Bool;
 	//
 	@:optional var loaderType:String;
+	@:optional var isJson:Bool;
 }

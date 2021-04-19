@@ -24,15 +24,19 @@
 
 
     <div data-load="components/nav.html"></div>
+    <div data-load="components/hero.html"></div>
+
+
+    <div class="container" data-load-inner="components/img.html">
+        <p>photo</p>
+    </div>
+
     <div data-load="components/main.html"></div>
 
     <div class="container">
         <div data-load="components/img.html"></div>
     </div>
 
-    <div class="container" data-load-inner="components/img.html">
-        <p>photo</p>
-    </div>
 
     <div class="container">
         <div id="app"></div>
@@ -50,13 +54,9 @@
 
     <!-- Monkee code -->
     <script src="./js/monkee_chain.min.min.js"></script>
-
-    <script src="./js/monkee_load.js"></script>
-    <!-- <script src="./js/monkee_load.min.js"></script> -->
-    <!-- <script src="./js/monkee_load.min.min.js"></script> -->
-
-
-
+    <script src="./js/monkee_load_lite.js"></script>
+    <!-- <script src="./js/monkee_load_lite.min.js"></script> -->
+    <!-- <script src="./js/monkee_load_lite.min.min.js"></script> -->
 
     <script>
         // Setup the component
@@ -84,7 +84,7 @@
         });
 
         // Fetch API data
-        fetch('data/json/monkee_load.json').
+        fetch('data/json/monkee_load_lite.json').
             then(function (response) {
                 return response.json();
             }).then(function (data) {

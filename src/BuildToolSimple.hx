@@ -59,7 +59,7 @@ class BuildToolSimple {
 			Reflect.setField(Reflect.field(json, 'url'), 'uglifyjs', '${path}.min.js');
 			Reflect.setField(Reflect.field(json, 'url'), 'minified', '${path}.min.min.js');
 
-			var outPath5 = outPath.replace('.js', '.json').replace('/js/', '/data/json/');
+			var outPath5 = outPath.replace('.js', '.json').replace('/js/', '/assets/json/');
 			sys.io.File.saveContent(outPath5, haxe.Json.stringify(json));
 			// #end
 		});

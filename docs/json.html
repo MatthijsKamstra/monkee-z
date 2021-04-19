@@ -23,6 +23,7 @@
 <body class="d-flex flex-column h-100">
 
 	<div data-load="components/nav.html"></div>
+	<div data-load="components/hero.html"></div>
 
 
 	<div class="container mt-5">
@@ -74,6 +75,12 @@
 	</div>
 
 	<div class="container mt-5">
+
+		<div class="container">
+			<div id="app"></div>
+		</div>
+
+
 	</div>
 
 
@@ -97,8 +104,47 @@
     -->
 
 	<!-- Monkee code -->
-	<script src="./js/monkee_json.min.js"></script>
+	<script src="./js/monkee_chain.min.min.js"></script>
+	<!-- <script src="./js/monkee_load.js"></script> -->
+	<script src="./js/monkee_load.min.js"></script>
+	<!-- <script src="./js/monkee_load.min.min.js"></script> -->
 
+
+	<script>
+		// Setup the component
+		var appJson = new MonkeeChain('#app', {
+			data: {
+				json: {
+					name: '',
+					size: {
+						minified: "",
+						original: "",
+						uglifyjs: "",
+					}
+				}
+			},
+			template: function (props) {
+				return `
+                <strong>File ${props.json.name}:</strong>
+                <ul>
+                    <li>Original file size: ${props.json.size.original}</li>
+                    <li>UglifyJs file size: ${props.json.size.uglifyjs}</li>
+                    <li>Extra minified file size: ${props.json.size.minified}</li>
+                </ul>
+                `;
+			}
+		});
+
+		// Fetch API data
+		fetch('data/json/monkee_load.json').
+			then(function (response) {
+				return response.json();
+			}).then(function (data) {
+				//console.log(data);
+				appJson.data.json = data;
+				appJson.render();
+			});
+	</script>
 </body>
 
 </html>

@@ -57,14 +57,19 @@ function embedcode(id, filename) {
     function setButton() {
         var btn = document.getElementById('copy-code-btn');
         btn.classList.add('btn-light');
-        console.log(btn);
+        // console.log(btn);
 
         var input = document.getElementById('input');
+
+        // console.log(input);
+        // console.log(input.value);
         btn.onclick = function (e) {
             e.preventDefault();
             console.log('click');
             input.select()
             document.execCommand('copy');
+
+            // window.alert('code is copied');
 
             // var code = document.getElementById(`${id}`).querySelector('.hljs');
             // console.log(code);

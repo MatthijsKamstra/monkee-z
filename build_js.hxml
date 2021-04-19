@@ -15,39 +15,39 @@
 -main MonkeeLoad
 -js docs/js/monkee_load.js
 
---next
+# --next
 
--main MonkeeLoadLite
--js docs/js/monkee_load_lite.js
+# -main MonkeeLoadLite
+# -js docs/js/monkee_load_lite.js
 
---next
+# --next
 
--main MonkeeLoadInner
--js docs/js/monkee_load_inner.js
+# -main MonkeeLoadInner
+# -js docs/js/monkee_load_inner.js
 
---next
+# --next
 
--main MonkeeReact
--js docs/js/monkee_react.js
+# -main MonkeeReact
+# -js docs/js/monkee_react.js
 
---next
+# --next
 
--main MonkeeJson
--js docs/js/monkee_json.js
+# -main MonkeeJson
+# -js docs/js/monkee_json.js
 
---next
+# --next
 
--main MonkeeRoute
--js docs/js/monkee_route.js
+# -main MonkeeRoute
+# -js docs/js/monkee_route.js
 
---next
+# --next
 
-MonkeeChain
--js docs/js/monkee_chain.js
+# MonkeeChain
+# -js docs/js/monkee_chain.js
 
---next
+# --next
 
-MonkeeChainLite
--js docs/js/monkee_chain_lite.js
+# MonkeeChainLite
+# -js docs/js/monkee_chain_lite.js
 
 
