@@ -22,7 +22,11 @@ class MonkeeJson {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
+<<<<<<< HEAD
 				$global.console.info("[monkee]" + " - " + "MonkeeJson" + " - build: " + "2021-04-19 20:38:35");
+=======
+				$global.console.info("[monkee]" + " - " + "MonkeeJson" + " - build: " + "2021-04-19 10:30:42");
+>>>>>>> d10d715e6b76800742a664bbcfa2bc6baec41a18
 			}
 			_gthis.init();
 		});
