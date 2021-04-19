@@ -17,6 +17,11 @@
 
 --next
 
+-main MonkeeLoadLite
+-js docs/js/monkee_load_lite.js
+
+--next
+
 -main MonkeeLoadInner
 -js docs/js/monkee_load_inner.js
 
@@ -40,5 +45,9 @@
 MonkeeChain
 -js docs/js/monkee_chain.js
 
-# # Use custom build tool
-# --macro BuildToolSimple.run()
+--next
+
+MonkeeChainLite
+-js docs/js/monkee_chain_lite.js
+
+
