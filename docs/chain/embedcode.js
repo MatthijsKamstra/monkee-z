@@ -56,7 +56,7 @@ function embedcode(id, filename) {
 
     function setButton() {
         var btn = document.getElementById('copy-code-btn');
-        btn.classList.add('btn-dark');
+        btn.classList.add('btn-light');
         console.log(btn);
 
         var input = document.getElementById('input');
@@ -65,6 +65,10 @@ function embedcode(id, filename) {
             console.log('click');
             input.select()
             document.execCommand('copy');
+
+            // var code = document.getElementById(`${id}`).querySelector('.hljs');
+            // console.log(code);
+            // code.classList.add('flash');
         };
     };
 
