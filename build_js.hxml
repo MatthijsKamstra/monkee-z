@@ -20,6 +20,11 @@
 # -main MonkeeLoadLite
 # -js docs/js/monkee_load_lite.js
 
+--next
+
+-main MonkeeUtil
+-js docs/js/monkee_util.js
+
 # --next
 
 # -main MonkeeLoadInner

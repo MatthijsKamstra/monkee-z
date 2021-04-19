@@ -33,6 +33,9 @@
 				<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code>
 			</div>
 			<div class="col-6">
+				<code data-escape='<div id="app2"></div>'></code>
+			</div>
+			<div class="col-6">
 				<div id="app"></div>
 			</div>
 			<div class="col-6">
@@ -117,11 +120,13 @@
 	<!-- Monkee code -->
 	<script src="./js/monkee_chain.min.min.js"></script>
 	<script src="./js/monkee_load.min.min.js"></script>
-	<script src="./js/monkee_react.min.js"></script>
+	<script src="./js/monkee_react.min.min.js"></script>
+	<script src="./js/monkee_util.min.min.js"></script>
 
 	<!-- Monkee script -->
 	<script src="index.js"></script>
 	<script src="utils/embedcode.js"></script>
+
 	<!-- Show code -->
 	<script>embedcode('code-app', 'index.js');</script>
 </body>

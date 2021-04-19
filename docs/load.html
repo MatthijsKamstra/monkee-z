@@ -16,16 +16,36 @@
     <!-- footer related styling -->
     <link rel="stylesheet" href="style.css">
 
-    <title>Monkee - Z 🐵 Load</title>
+    <title>Monkee - Z 🐵 Load Lite</title>
 
 </head>
 
 <body class="d-flex flex-column h-100">
 
-
     <div data-load="components/nav.html"></div>
     <div data-load="components/hero.html"></div>
 
+    <div class="container">
+        <h2>Monkee Loader Lite</h2>
+        <p>
+        <ul>
+            <li>No loading animation</li>
+            <li>whole html will be parsed (use templates without body tag)</li>
+            <li>light</li>
+            <li>usefull for loading files into the page</li>
+            <li>
+                <code data-escape='<div id="app"></div>'></code>
+            </li>
+            <li>
+                <pre>
+                    <code data-escape='<div id="app"></div>'></code>
+                </pre>
+            </li>
+
+        </ul>
+        </p>
+        <div id="app"></div>
+    </div>
 
     <div class="container" data-load-inner="components/img.html">
         <p>photo</p>
@@ -35,11 +55,6 @@
 
     <div class="container">
         <div data-load="components/img.html"></div>
-    </div>
-
-
-    <div class="container">
-        <div id="app"></div>
     </div>
 
     <div data-load="components/footer.html"></div>
@@ -57,6 +72,9 @@
     <script src="./js/monkee_load_lite.js"></script>
     <!-- <script src="./js/monkee_load_lite.min.js"></script> -->
     <!-- <script src="./js/monkee_load_lite.min.min.js"></script> -->
+
+    <!-- <script src="./utils/escape_pre.js"></script> -->
+    <script src="./js/monkee_util.js"></script>
 
     <script>
         // Setup the component
@@ -84,7 +102,7 @@
         });
 
         // Fetch API data
-        fetch('data/json/monkee_load_lite.json').
+        fetch('assets/json/monkee_load_lite.json').
             then(function (response) {
                 return response.json();
             }).then(function (data) {

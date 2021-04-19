@@ -28,7 +28,7 @@
 
 	<div class="container mt-5">
 		<h1>Inner data json</h1>
-		<form data-load-inner="data/data.json">
+		<form data-load-inner="assets/data/data.json">
 			<input data-name="firstname" type="text" class="form-control" placeholder="test">
 			<input data-name="lastname" type="text" class="form-control" placeholder="test">
 			<input data-name="email" type="email" class="form-control" placeholder="name@example.com">
@@ -37,14 +37,14 @@
 
 	<div class="container mt-5">
 		<h1>Inner data json</h1>
-		<pre data-load-inner="data/content.json" class="text-secondary"></pre>
+		<pre data-load-inner="assets/data/content.json" class="text-secondary"></pre>
 	</div>
 
 	<div class="container mt-5">
-		<h1>data/content.json</h1>
-		<textarea data-load-inner="data/content.json" class="form-control" id="exampleFormControlTextarea1"
+		<h1>assets/data/content.json</h1>
+		<textarea data-load-inner="assets/data/content.json" class="form-control" id="exampleFormControlTextarea1"
 			rows="3"></textarea>
-		<div data-load-inner="data/content.json" class="">
+		<div data-load-inner="assets/data/content.json" class="">
 
 			<pre data-name="chapter[1].title"></pre>
 			<pre data-name="chapter[1].body"></pre>
@@ -58,12 +58,12 @@
 	</div>
 
 	<div class="container mt-5">
-		<h1>data/i.want.it.json</h1>
+		<h1>assets/data/i.want.it.json</h1>
 
-		<textarea data-load-inner="data/i.want.it.json" class="form-control" id="exampleFormControlTextarea1"
+		<textarea data-load-inner="assets/data/i.want.it.json" class="form-control" id="exampleFormControlTextarea1"
 			rows="3"></textarea>
 
-		<div data-load-inner="data/i.want.it.json" class="">
+		<div data-load-inner="assets/data/i.want.it.json" class="">
 			<ul>
 				<li>i.want.it: <code data-name="i.want.it"></code></li>
 				<li>i.want.to.believe: <code data-name="i.want.to.believe"></code></li>
@@ -136,7 +136,7 @@
 		});
 
 		// Fetch API data
-		fetch('data/json/monkee_load.json').
+		fetch('assets/json/monkee_load.json').
 			then(function (response) {
 				return response.json();
 			}).then(function (data) {

@@ -18,6 +18,7 @@ fetch('fetch.js')
             .replaceAll('"', '&quot;')
             .replaceAll('<', '&lt;')
             .replaceAll('>', '&gt;')
+            .replaceAll('&', '&amp;')
             ;
         app.render();
         hljs.highlightAll();

@@ -1,14 +1,1 @@
-{
-  "name": "monkee_load.js",
-  "url": {
-    "original": "https://matthijskamstra.github.io/monkee-z/js/monkee_load.js",
-    "minified": "https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.min.js",
-    "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.js"
-  },
-  "size": {
-    "original": "5.461Kb",
-    "minified": "3.137Kb",
-    "uglifyjs": "3.231Kb"
-  },
-  "updated": "2021-04-19 23:11:11"
-}
+{"name":"monkee_load.js","url":{"original":"https://matthijskamstra.github.io/monkee-z/js/monkee_load.js","minified":"https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.min.js","uglifyjs":"https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.js"},"size":{"original":"5.461Kb","minified":"3.137Kb","uglifyjs":"3.231Kb"},"updated":"2021-04-19 23:49:11"}
