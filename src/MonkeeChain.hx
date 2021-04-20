@@ -91,6 +91,6 @@ class MonkeeChain {
 
 typedef MonkeeChainObj = {
 	@:optional var _id:String;
-	var data:Dynamic;
+	var data:{};
 	var template:EitherType<String, Function>;
 }

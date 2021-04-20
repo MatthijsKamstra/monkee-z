@@ -7,52 +7,64 @@
 -D source-map-content
 -debug
 
-# # Use custom build tool
+# Use custom build tool
 --macro BuildToolSimple.run()
 
 --each
 
 -main MonkeeLoad
 -js docs/js/monkee_load.js
-
-# --next
-
-# -main MonkeeLoadLite
-# -js docs/js/monkee_load_lite.js
+--cmd echo MonkeeLoad
 
 --next
 
--main MonkeeUtil
--js docs/js/monkee_util.js
+-main MonkeeLoadLite
+-js docs/js/monkee_load_lite.js
+--cmd echo MonkeeLoadLite
 
-# --next
+--next
 
-# -main MonkeeLoadInner
-# -js docs/js/monkee_load_inner.js
+-main MonkeeLoadInner
+-js docs/js/monkee_load_inner.js
+--cmd echo MonkeeLoadInner
 
-# --next
+--next
 
-# -main MonkeeReact
-# -js docs/js/monkee_react.js
+-main MonkeeReact
+-js docs/js/monkee_react.js
+--cmd echo MonkeeReact
 
-# --next
+--next
 
-# -main MonkeeJson
-# -js docs/js/monkee_json.js
+-main MonkeeJson
+-js docs/js/monkee_json.js
+--cmd echo MonkeeJson
 
-# --next
+--next
 
-# -main MonkeeRoute
-# -js docs/js/monkee_route.js
+-main MonkeeRoute
+-js docs/js/monkee_route.js
+--cmd echo MonkeeRoute
 
-# --next
+--next
 
-# MonkeeChain
-# -js docs/js/monkee_chain.js
+MonkeeChain
+-js docs/js/monkee_chain.js
+--cmd echo MonkeeChain
 
-# --next
+--next
 
-# MonkeeChainLite
-# -js docs/js/monkee_chain_lite.js
+MonkeeChainLite
+-js docs/js/monkee_chain_lite.js
+--cmd echo MonkeeChainLite
+
+--next
+
+# test extern
+-main MonkeeChainJs
+-js docs/js/monkee_chain_js.js
+--cmd echo MonkeeChainLiteJS
+--cmd node docs/js/monkee_chain_js.js
+
 
 
