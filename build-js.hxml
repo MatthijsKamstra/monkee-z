@@ -4,11 +4,11 @@
 -cp src
 -D js-es=6
 -dce full
-# -D source-map-content
-# -debug
+-D source-map-content
+-debug
 
 # Use custom build tool
---macro BuildToolSimple.run()
+# --macro BuildToolSimple.run()
 
 --each
 
@@ -28,33 +28,34 @@
 -js docs/js/monkee_util.js
 --cmd echo MonkeeUtil
 
---next
-
--main MonkeeReact
--js docs/js/monkee_react.js
---cmd echo MonkeeReact
-
---next
-
--main MonkeeRoute
--js docs/js/monkee_route.js
---cmd echo MonkeeRoute
-
---next
-
-MonkeeChain
--js docs/js/monkee_chain.js
---cmd echo MonkeeChain
-
---next
-
-MonkeeChainLite
--js docs/js/monkee_chain_lite.js
---cmd echo MonkeeChainLite
 
 # --next
 
-# test extern
+# -main MonkeeReact
+# -js docs/js/monkee_react.js
+# --cmd echo MonkeeReact
+
+# --next
+
+# -main MonkeeRoute
+# -js docs/js/monkee_route.js
+# --cmd echo MonkeeRoute
+
+# --next
+
+# MonkeeChain
+# -js docs/js/monkee_chain.js
+# --cmd echo MonkeeChain
+
+# --next
+
+# MonkeeChainLite
+# -js docs/js/monkee_chain_lite.js
+# --cmd echo MonkeeChainLite
+
+# --next
+
+# # test extern
 # -main MonkeeChainJs
 # -js docs/js/monkee_chain_js.js
 # --cmd echo MonkeeChainLiteJS
