@@ -14,9 +14,14 @@ using StringTools;
 @:expose
 class MonkeeUtil {
 	public function new() {
-		trace('MonkeeUtil');
+		// if (DEBUG)
+		console.info(App.callIn('MonkeeUtil'));
+		init();
+	}
 
+	function init() {
 		var all = document.querySelectorAll('[data-escape]');
+
 		for (i in 0...all.length) {
 			var el:Element = cast all[i];
 			var html = el.getAttribute('data-escape');
@@ -36,6 +41,8 @@ class MonkeeUtil {
 	}
 
 	static public function main() {
-		var app = new MonkeeUtil();
+		document.addEventListener('DOMContentLoaded', (event) -> {
+			var app = new MonkeeUtil();
+		});
 	}
 }
