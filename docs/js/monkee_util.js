@@ -40,5 +40,3 @@ class haxe_iterators_ArrayIterator {
 }
 MonkeeUtil.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, {});
-
-//# sourceMappingURL=monkee_util.js.map

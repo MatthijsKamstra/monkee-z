@@ -20,7 +20,7 @@ class MonkeeLoad {
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.info("[monkee]" + " - " + "MonkeeLoad" + " - build: " + "2021-04-19 20:38:35");
+			$global.console.info("[monkee]" + " - " + "MonkeeLoad" + " - build: " + "2021-04-20 10:23:38");
 		}
 		let _g = 0;
 		let _g1 = this.arr.length;
@@ -223,5 +223,3 @@ class utils_Throbber {
 function $getIterator(o) { if( o instanceof Array ) return new haxe_iterators_ArrayIterator(o); else return o.iterator(); }
 MonkeeLoad.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_load.js.map
