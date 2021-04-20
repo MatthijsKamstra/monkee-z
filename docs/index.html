@@ -28,18 +28,57 @@
 		<div class="row">
 			<div class="col-12">
 				<h2>Monkee-Chain</h2>
+				<a class="float-right btn btn-outline-dark btn-sm" href="chain.html">read more</a>
+				<p>A lightweight library for creating reactive UI.</p>
 			</div>
 			<div class="col-6">
-				<code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code>
+				<b>html:</b><br>
+				<code data-escape='<div id="app"></div>'></code>
 			</div>
 			<div class="col-6">
-				<code data-escape='<div id="app2"></div>'></code>
-			</div>
-			<div class="col-6">
+				<b>working example:</b><br>
 				<div id="app"></div>
 			</div>
-			<div class="col-6">
+			<div class="col-12">
+				<b>code:</b><br>
 				<div id="code-app"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-12">
+				<h2>Monkee-Load</h2>
+				<a class="float-right btn btn-outline-dark btn-sm" href="load.html">read more</a>
+				<p>A lightweight library for loading temlates.</p>
+			</div>
+			<div class="col-6">
+				<b>html:</b><br>
+				<code data-escape='<div data-load="components/nav2.html"></div>'></code>
+			</div>
+			<div class="col-6">
+				<b>working example:</b><br>
+				<div data-load="components/nav2.html"></div>
+			</div>
+			<div class="col-6">
+				<b>html:</b><br>
+				<code
+					data-escape='<div class="container" data-load-inner="components/img.html"><p>photo</p></div>'></code>
+			</div>
+			<div class="col-6">
+				<b>working example:</b><br>
+				<div data-load-inner="components/img.html">
+					<p>photo</p>
+				</div>
+			</div>
+			<div class="col-6">
+				<b>html:</b><br>
+				<code data-escape='<p data-load-inner="assets/data/data.txt" class="text-secondary"></p>'></code>
+			</div>
+			<div class="col-6">
+				<b>working example:</b><br>
+				<p data-load-inner="assets/data/data.txt" class="text-secondary"></p>
 			</div>
 		</div>
 	</div>

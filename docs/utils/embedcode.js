@@ -5,13 +5,16 @@ function embedcode(id, filename) {
     link.rel = 'stylesheet';
     link.href = '//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css';
     document.body.appendChild(link);
+
     var link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css';
     document.body.appendChild(link);
+
     var script = document.createElement('script');
     script.src = '//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js';
     document.body.appendChild(script);
+
     // var script = document.createElement('script');
     // script.innerHTML = 'hljs.highlightAll();';
     // document.body.appendChild(script);
@@ -24,9 +27,11 @@ function embedcode(id, filename) {
         },
         template: function (data) {
             return `
-            <textarea id="input" hidden>${data.code}</textarea>
+            <div class="code-wrapper">
+            <textarea id="input" style="position:fixed;top:-100px;">${data.code}</textarea>
             <pre style="border-radius:4px;"><code class="js">${data.js}</code></pre>
             <button class="btn" id="copy-code-btn">📋</button>
+            </div>
             `;
         }
     });
@@ -41,10 +46,10 @@ function embedcode(id, filename) {
             // console.log(data);
             app.data.code = data;
             app.data.js = data
+                .replaceAll('&', '&amp;')
                 .replaceAll('"', '&quot;')
                 .replaceAll('<', '&lt;')
                 .replaceAll('>', '&gt;')
-                .replaceAll('&', '&amp;')
                 ;
             app.render();
             setTimeout(function () {
@@ -60,16 +65,19 @@ function embedcode(id, filename) {
         // console.log(btn);
 
         var input = document.getElementById('input');
+        input.setAttribute('style', 'position:fixed;top:-100px;')
 
         // console.log(input);
         // console.log(input.value);
+
+
         btn.onclick = function (e) {
             e.preventDefault();
-            console.log('click');
             input.select()
             document.execCommand('copy');
 
-            // window.alert('code is copied');
+            // console.log('click');
+            window.alert('code is copied');
 
             // var code = document.getElementById(`${id}`).querySelector('.hljs');
             // console.log(code);
