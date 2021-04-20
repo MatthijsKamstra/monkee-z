@@ -21,10 +21,27 @@
 </head>
 
 <body class="d-flex flex-column h-100">
+    <div data-load="components/nav.html"></div>
+    <div data-load="components/hero.html"></div>
 
     <div class="container">
-
+        <div id="app"></div>
     </div>
+
+    <div class="container">
+        <div id="test-string"></div>
+    </div>
+
+    <div class="container">
+        <div id="test-obj"></div>
+    </div>
+
+    <div class="container">
+        <div id="test-change"></div>
+    </div>
+
+    <div data-load="components/footer.html"></div>
+
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -36,9 +53,9 @@
 
     <!-- Monkee code -->
     <script src="./js/monkee_load.min.min.js"></script>
-    <script src="./js/monkee_load_inner.min.min.js"></script>
+    <script src="./js/monkee_chain.min.min.js"></script>
     <script src="./js/monkee_react.min.min.js"></script>
-    <script src="./js/monkee_test.js"></script>
+    <script src="./js/monkee_chain_js.js"></script>
 
 </body>
 

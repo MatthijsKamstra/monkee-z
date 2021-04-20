@@ -28,7 +28,7 @@
 		<div class="row">
 			<div class="col-12">
 				<h2>Monkee-Chain</h2>
-				<a class="float-right btn btn-outline-dark btn-sm" href="chain.html">read more</a>
+				<a class="float-right btn btn-outline-dark btn-sm" href="chain/">read more monkee-chain</a>
 				<p>A lightweight library for creating reactive UI.</p>
 			</div>
 			<div class="col-6">
@@ -50,8 +50,8 @@
 		<div class="row">
 			<div class="col-12">
 				<h2>Monkee-Load</h2>
-				<a class="float-right btn btn-outline-dark btn-sm" href="load.html">read more</a>
-				<p>A lightweight library for loading temlates.</p>
+				<a class="float-right btn btn-outline-dark btn-sm" href="load.html">read more monkee-load</a>
+				<p>A lightweight library for loading templates.</p>
 			</div>
 			<div class="col-6">
 				<b>html:</b><br>
@@ -137,6 +137,13 @@
 		</div>
 	</div>
 
+	<div class="container">
+
+		<b>code:</b><br>
+		<div id="foobar"></div>
+	</div>
+
+
 	<div data-load="components/footer.html"></div>
 
 	<!-- Optional JavaScript; choose one of the two! -->
@@ -160,7 +167,8 @@
 	<script src="./js/monkee_chain.min.min.js"></script>
 	<script src="./js/monkee_load.min.min.js"></script>
 	<script src="./js/monkee_react.min.min.js"></script>
-	<script src="./js/monkee_util.min.min.js"></script>
+	<!-- <script src="./js/monkee_util.min.min.js"></script> -->
+	<script src="./js/monkee_util.js"></script>
 
 	<!-- Monkee script -->
 	<script src="index.js"></script>
@@ -168,6 +176,7 @@
 
 	<!-- Show code -->
 	<script>embedcode('code-app', 'index.js');</script>
+	<script>MonkeeUtil.embedCode('foobar', 'example/chain/basic.js');</script>
 </body>
 
 </html>
