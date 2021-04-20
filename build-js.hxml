@@ -10,23 +10,23 @@
 # Use custom build tool
 # --macro BuildToolSimple.run()
 
---each
+# --each
 
--main MonkeeLoad
--js docs/js/monkee_load.js
---cmd echo MonkeeLoad
+# -main MonkeeLoad
+# -js docs/js/monkee_load.js
+# --cmd echo MonkeeLoad
 
---next
+# --next
 
--main MonkeeLoadLite
--js docs/js/monkee_load_lite.js
---cmd echo MonkeeLoadLite
+# -main MonkeeLoadLite
+# -js docs/js/monkee_load_lite.js
+# --cmd echo MonkeeLoadLite
 
---next
+# --next
 
--main MonkeeUtil
--js docs/js/monkee_util.js
---cmd echo MonkeeUtil
+# -main MonkeeUtil
+# -js docs/js/monkee_util.js
+# --cmd echo MonkeeUtil
 
 
 # --next
@@ -55,10 +55,10 @@
 
 # --next
 
-# # test extern
-# -main MonkeeChainJs
-# -js docs/js/monkee_chain_js.js
-# --cmd echo MonkeeChainLiteJS
+# test extern
+-main MonkeeChainJs
+-js docs/js/monkee_chain_js.js
+--cmd echo MonkeeChainLiteJS
 # --cmd node docs/js/monkee_chain_js.js
 
 

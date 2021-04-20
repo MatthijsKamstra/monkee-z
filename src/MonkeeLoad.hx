@@ -53,7 +53,7 @@ class MonkeeLoad {
 				}
 				// if (_isJson) {}
 				loadingArr.push(_loadObj);
-				trace(loadingArr);
+				// trace(loadingArr);
 			}
 		}
 		startLoading(loadingId);

@@ -8,14 +8,15 @@ import haxe.extern.EitherType;
 
 @:native('MonkeeChain')
 extern class MonkeeChainExterns {
+	public var data:Dynamic;
+
 	function new(target:EitherType<String, Element>, obj:MonkeeChainObjz):Void;
 	public function render():Void;
 }
 
 typedef MonkeeChainObjz = {
 	@:optional var _id:String;
-	var data:{};
-	var template:CommandHandler;
+	var data:Dynamic;
+	var template:EitherType<(props:Dynamic) -> String, String>;
+	// var template:(props:Dynamic) -> String;
 }
-
-typedef CommandHandler = String->(Bool->Void)->Void;
