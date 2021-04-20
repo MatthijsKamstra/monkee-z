@@ -20,9 +20,20 @@ class MonkeeChain {
 	var template:String = null;
 
 	/**
-	 * [Description]
-	 * @param target
-	 * @param obj
+	 * Simple and lightweight reactivity
+	 *
+	 * @example
+	 * 		var app = new MonkeeChainLite('#app',{
+	 * 			data:{
+	 * 				test:'foo'
+	 * 			},
+	 * 			template: function (props){
+	 * 				return `<p>${props.test}</p>`
+	 * 			}
+	 * 		});
+	 *
+	 * @param target		element (document.getElementById('app')) or string ('#app')
+	 * @param obj			see typedef
 	 */
 	public function new(target:EitherType<String, Element>, obj:MonkeeChainObj) {
 		if (DEBUG)
