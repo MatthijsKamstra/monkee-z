@@ -2,10 +2,7 @@
 (function ($hx_exports, $global) { "use strict";
 class MonkeeUtil {
 	constructor() {
-		$global.console.info("[monkee]" + " - " + "MonkeeUtil" + " - build: " + "2021-04-19 20:38:35");
-		this.init();
-	}
-	init() {
+		console.log("src/MonkeeUtil.hx:17:","MonkeeUtil");
 		let all = window.document.querySelectorAll("[data-escape]");
 		let _g = 0;
 		let _g1 = all.length;
@@ -20,9 +17,7 @@ class MonkeeUtil {
 		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(html,"&","&amp;"),"\"","&quot;"),"<","&lt;"),">","&gt;");
 	}
 	static main() {
-		window.document.addEventListener("DOMContentLoaded",function(event) {
-			let app = new MonkeeUtil();
-		});
+		let app = new MonkeeUtil();
 	}
 }
 $hx_exports["MonkeeUtil"] = MonkeeUtil;
@@ -44,6 +39,4 @@ class haxe_iterators_ArrayIterator {
 	}
 }
 MonkeeUtil.main();
-})(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_util.js.map
+})(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, {});

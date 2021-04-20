@@ -7,7 +7,7 @@ class MonkeeRoute {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[monkee]" + " - " + "MonkeeRoute" + " - build: " + "2021-04-19 20:38:35");
+				$global.console.info("[monkee]" + " - " + "MonkeeRoute" + " - build: " + "2021-04-20 10:23:42");
 			}
 			_gthis.init();
 		});
@@ -68,5 +68,3 @@ class haxe_iterators_ArrayIterator {
 }
 MonkeeRoute.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_route.js.map
