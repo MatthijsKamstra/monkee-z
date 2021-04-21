@@ -14,7 +14,7 @@
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <!-- Monkee Style custom styling -->
-    <link rel="stylesheet" href="..assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
 
     <title>Monkee - Z 🐵 CHAIN</title>
 
@@ -67,9 +67,9 @@
 
     <!-- Monkee code -->
     <script src="../js/monkee_load.min.min.js"></script>
-    <script src="../js/monkee_chain.js"></script>
-    <!-- <script src="./js/monkee_chain.min.js"></script> -->
-    <!-- <script src="./js/monkee_chain.min.min.js"></script> -->
+    <!-- <script src="../js/monkee_chain.js"></script>-->
+    <!-- <script src="../js/monkee_chain.min.js"></script> -->
+    <script src="../js/monkee_chain.min.min.js"></script>
 
     <!-- embed monkee bugger and you are good to go -->
     <!-- <script src="https://matthijskamstra.github.io/monkee-bugger/monkee_bugger.min.js"></script> -->
@@ -160,7 +160,7 @@
         });
 
         // Fetch API data
-        fetch('data/json/monkee_chain.json').then(function (response) {
+        fetch('../assets/json/monkee_chain.json').then(function (response) {
             return response.json();
         }).then(function (data) {
             //console.log(data);

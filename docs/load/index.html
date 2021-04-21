@@ -57,6 +57,41 @@
         <div data-load="../components/img.html"></div>
     </div>
 
+    <div class="container mt-5">
+        <h1>Inner data json</h1>
+        <pre data-load-inner="assets/data/data.json" class="text-secondary"></pre>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Inner data json</h1>
+        <form data-load-inner="assets/data/data.json">
+            <input data-name="firstname" type="text" class="form-control" placeholder="test" />
+            <input data-name="lastname" type="text" class="form-control" placeholder="test" />
+            <input data-name="email" type="email" class="form-control" placeholder="name@example.com" />
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Inner data</h1>
+        <p data-load-inner="assets/data/data.txt" class="text-secondary"></p>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Inner data</h1>
+        <div data-load-inner="assets/data/data.txt" data-target="out" class="text-secondary">
+            <p data-name="out" class="text-primary">.text-primary</p>
+            <p data-name="out" class="text-secondary">.text-secondary</p>
+            <p data-name="out" class="text-success">.text-success</p>
+            <p data-name="out" class="text-danger">.text-danger</p>
+            <p data-name="out" class="text-warning">.text-warning</p>
+            <p data-name="out" class="text-info">.text-info</p>
+            <p data-name="out" class="text-light bg-dark">.text-light</p>
+            <p data-name="out" class="text-dark">.text-dark</p>
+            <p data-name="out" class="text-muted">.text-muted</p>
+            <p data-name="out" class="text-white bg-dark">.text-white</p>
+        </div>
+    </div>
+
     <div data-load="../components/footer.html"></div>
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
