@@ -1,6 +1,6 @@
 package;
 
-import MonkeeChainExterns;
+import externs.MonkeeChain;
 
 class MonkeeChainJs {
 	public function new() {
@@ -12,81 +12,64 @@ class MonkeeChainJs {
 		test0();
 		test1();
 		test2();
-		// test3();
-		// test4();
+		test3();
+		test4();
 	}
 
 	function test0() {
-		var app = new MonkeeChainExterns('#app', {
+		var app = new MonkeeChain('#app', {
 			data: {
-				hello: 'matthijs'
+				name: 'matthijs'
 			},
 			template: function(props:Dynamic) {
-				return '<p>${props.hello}</p>';
+				return '<p>hello ${props.name}</p>';
 			},
 		});
 	}
 
 	function test1() {
-		var temp = 'foo';
-		var app = new MonkeeChainExterns('#test-string', {
-			data: {
-				hello: 'matthijs'
-			},
-			template: '<p>${temp}</p>'
+		var title = 'MonkeChain';
+		var app = new MonkeeChain('#test-string', {
+			data: {},
+			template: '<p>${title}</p>'
 		});
 	}
 
 	function test2() {
-		var temp = 'foo';
 		var obj:DataObj = {
 			label: 'label it',
 			say: {
 				hello: 'matthijs'
 			}
 		};
-		var app = new MonkeeChainExterns('#test-obj', {
+		var app = new MonkeeChain('#test-obj', {
 			data: obj,
 			template: function(props:DataObj):String {
-				return '<p>${props.label}</p>';
+				return '<p>${props.label}, ${props.say.hello}</p>';
 			}
 		});
 	}
 
-	function test3() {
-		var temp = 'foo';
-		var obj:DataObj = {
-			label: 'label it',
-			say: {
-				hello: 'matthijs'
-			}
-		};
-		var app = new MonkeeChainExterns('#test-obj', {
-			data: obj,
-			template: function(props:DataObj):String {
-				return '<p>${props.label}</p>';
-			}
-		});
-	}
+	function test3() {}
 
 	function test4() {
 		// some default values
 		var firstName = 'Matthijs';
 		var lastName = 'Kamstra';
 		var obj2:DataObj2 = {
-			message: '🐵'
+			message: 'startvalue'
 		};
 
 		// Setup the component
-		var app = new MonkeeChainExterns('#test-change', {
+		var app = new MonkeeChain('#test-change', {
 			data: obj2,
 			template: function(props:DataObj2):String {
-				return '<p>${firstName} ${lastName}: ${props.message}</p>';
+				return '<p>${firstName} ${lastName} : ${props.message}</p>';
 			}
 		});
 
 		// update data
-		app.data.message = '🙈';
+		app.data.message = 'endvalue';
 		// re-render app
 		app.render();
 	}

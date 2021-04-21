@@ -91,11 +91,11 @@ code {
   position: relative;
   margin-bottom: 1rem;
 }
-#copy-code-btn {
+/* .copy-code-btn {
   position: absolute;
   top: 35px;
   right: 25px;
-}
+} */
 .flash {
   animation: pulse 1s 1;
 }

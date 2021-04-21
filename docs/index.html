@@ -142,6 +142,11 @@
 		<b>code:</b><br>
 		<div id="foobar"></div>
 	</div>
+	<div class="container">
+
+		<b>code:</b><br>
+		<div id="foobar2"></div>
+	</div>
 
 
 	<div data-load="components/footer.html"></div>
@@ -172,11 +177,11 @@
 
 	<!-- Monkee script -->
 	<script src="index.js"></script>
-	<script src="utils/embedcode.js"></script>
 
 	<!-- Show code -->
-	<script>embedcode('code-app', 'index.js');</script>
-	<script>MonkeeUtil.embedCode('foobar', 'example/chain/basic.js');</script>
+	<script>MonkeeUtil.embedCode('#code-app', 'index.js');</script>
+	<script>MonkeeUtil.embedCode('#foobar', 'example/chain/basic.js');</script>
+	<script>MonkeeUtil.embedCode('#foobar2', 'example/chain/click.js');</script>
 </body>
 
 </html>

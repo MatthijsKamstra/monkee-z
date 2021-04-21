@@ -10,22 +10,35 @@ class MonkeeChainJs {
 		this.test0();
 		this.test1();
 		this.test2();
+		this.test3();
+		this.test4();
 	}
 	test0() {
-		let app = new MonkeeChain("#app",{ data : { hello : "matthijs"}, template : function(props) {
-			return "<p>" + Std.string(props.hello) + "</p>";
+		let app = new MonkeeChain("#app",{ data : { name : "matthijs"}, template : function(props) {
+			return "<p>hello " + Std.string(props.name) + "</p>";
 		}});
 	}
 	test1() {
-		let temp = "foo";
-		let app = new MonkeeChain("#test-string",{ data : { hello : "matthijs"}, template : "<p>" + temp + "</p>"});
+		let title = "MonkeChain";
+		let app = new MonkeeChain("#test-string",{ data : { }, template : "<p>" + title + "</p>"});
 	}
 	test2() {
-		let temp = "foo";
 		let obj = { label : "label it", say : { hello : "matthijs"}};
 		let app = new MonkeeChain("#test-obj",{ data : obj, template : function(props) {
-			return "<p>" + props.label + "</p>";
+			return "<p>" + props.label + ", " + props.say.hello + "</p>";
 		}});
+	}
+	test3() {
+	}
+	test4() {
+		let firstName = "Matthijs";
+		let lastName = "Kamstra";
+		let obj2 = { message : "startvalue"};
+		let app = new MonkeeChain("#test-change",{ data : obj2, template : function(props) {
+			return "<p>" + firstName + " " + lastName + " : " + props.message + "</p>";
+		}});
+		app.data.message = "endvalue";
+		app.render();
 	}
 	static main() {
 		let app = new MonkeeChainJs();

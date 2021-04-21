@@ -30,7 +30,7 @@ function embedcode(id, filename) {
             <div class="code-wrapper">
             <textarea id="input" style="position:fixed;top:-100px;">${data.code}</textarea>
             <pre style="border-radius:4px;"><code class="js">${data.js}</code></pre>
-            <button class="btn" id="copy-code-btn">📋</button>
+            <button class="btn copy-code-btn" id="copy-code-btn">📋</button>
             </div>
             `;
         }

@@ -7,10 +7,13 @@ import js.html.SupportedType;
 import js.html.DOMParser;
 import js.lib.Error;
 import js.html.Element;
+import js.html.InputElement;
 import haxe.extern.EitherType;
 import js.Browser.*;
 
 using StringTools;
+
+import externs.MonkeeChain;
 
 @:expose
 @:keep
@@ -40,7 +43,8 @@ class MonkeeUtil {
 	 */
 	public static function embedCode(id:String, filename:String) {
 		console.info(App.callIn('MonkeeUtil :: embedCode'));
-		trace(id, filename);
+		// trace(id, filename);
+
 		// setup up highlight.js
 		var link = document.createLinkElement();
 		link.rel = 'stylesheet';
@@ -57,69 +61,68 @@ class MonkeeUtil {
 		document.body.appendChild(script);
 
 		// Setup the component
-		// Syntax.code('
-		// var app = new MonkeeChain("#_{id}", {
-		//     data: {
-		//         js: "",
-		//         code: "test"
-		//     },
-		//     template: function (data) {
-		//         return `
-		//         <div class="code-wrapper">
-		//         <textarea id="input" style="position:fixed;top:-100px;">_{data.code}</textarea>
-		//         <pre style="border-radius:4px;"><code class="js">_{data.js}</code></pre>
-		//         <button class="btn" id="copy-code-btn">📋</button>
+		var app = new MonkeeChain('${id}', {
+			data: {
+				js: "",
+				code: "test"
+			},
+			template: function(data) {
+				return '
+		        <div class="copy-code-wrapper-${id}" style="position:relative;">
+		        <textarea id="copy-code-input-${id}" style="position:fixed;top:-100px;">${data.code}</textarea>
+		        <pre style="border-radius:4px;"><code class="js">${data.js}</code></pre>
+		        <button class="btn" id="copy-code-btn-${id}" style="position: absolute; top: 15px; right: 15px;">📋</button>
+		        </div>
+		        ';
+			}
+		});
 
-		//         </div>
+		function setButton() {
+			var wrapper:Element = document.getElementById('copy-code-wrapper-${id}');
+			var btn = document.getElementById('copy-code-btn-${id}');
+			btn.classList.add('btn-light');
+			// console.log(btn);
 
-		//         `;
-		//     }
-		// });
-		// ');
+			var input:InputElement = cast document.getElementById('copy-code-input-${id}');
+			input.setAttribute('style', 'position:fixed;top:-100px;'); // console.log(input);
 
-		// setButton(); // first try
+			// console.log(input.value);
+
+			btn.onclick = function(e) {
+				e.preventDefault();
+				untyped input.select();
+				document.execCommand('copy');
+
+				// console.log('click');
+				window.alert('code is copied');
+
+				// var code = document.getElementById(`${id}`).querySelector('.hljs');
+				// console.log(code);
+				// code.classList.add('flash');
+			};
+		};
+
+		setButton(); // first try
 
 		// Fetch API data
 		window.fetch('${filename}')
 			.then(function(response) {
 				return response.text();
-			}).then(function(data) {
-			console.log(data);
-			// app.data.code = data;
-			// app.data.js = data
-			// 	.replaceAll('&', '&amp;')
-			// 	.replaceAll('"', '&quot;')
-			// 	.replaceAll('<', '&lt;')
-			// 	.replaceAll('>', '&gt;');
-			// app.render();
-			// setTimeout(function() {
-			// 	hljs.highlightAll();
-			// 	setButton(); // second try
-			// }, 500);
+			})
+			.then(function(data) {
+				// console.log(data);
+				app.data.code = data;
+				app.data.js = data
+					.replace('&', '&amp;')
+					.replace('"', '&quot;')
+					.replace('<', '&lt;')
+					.replace('>', '&gt;');
+				app.render();
+				window.setTimeout(function() {
+					untyped hljs.highlightAll();
+					setButton(); // second try
+				}, 500);
 			});
-
-		// function setButton() {
-		// 	var btn = document.getElementById('copy-code-btn');
-		// 	btn.classList.add('btn-light');
-		// 	// console.log(btn);
-
-		// 	var input = document.getElementById('input');
-		// 	input.setAttribute('style', 'position:fixed;top:-100px;') // console.log(input);
-
-		// 		// console.log(input.value);
-
-		// 	btn.onclick = function(e) {
-		// 		e.preventDefault();
-		// 		input.select()
-		// 		document.execCommand('copy');
-
-		// 		// console.log('click');
-		// 		window.alert('code is copied');
-
-		// 		// var code = document.getElementById(`${id}`).querySelector('.hljs');
-		// 		// console.log(code);
-		// 		// code.classList.add('flash');
-		// 	};
 	};
 
 	public static function escapeHTML(html:String) {

@@ -1,4 +1,4 @@
-package;
+package externs;
 
 import js.lib.Function;
 import js.html.Element;
@@ -7,7 +7,7 @@ import haxe.extern.EitherType;
 // import MonkeeChain.MonkeeChainObj;
 
 @:native('MonkeeChain')
-extern class MonkeeChainExterns {
+extern class MonkeeChain {
 	public var data:Dynamic;
 
 	function new(target:EitherType<String, Element>, obj:MonkeeChainObjz):Void;

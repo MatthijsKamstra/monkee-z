@@ -1,0 +1,17 @@
+-lib uglifyjs
+-lib buddy
+
+-cp src
+-D js-es=6
+-dce full
+-D source-map-content
+-debug
+
+
+-main MonkeeUtil
+-js docs/js/monkee_util.js
+--cmd echo MonkeeUtil
+
+
+
+
