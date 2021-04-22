@@ -112,11 +112,11 @@ class MonkeeUtil {
 			.then(function(data) {
 				// console.log(data);
 				app.data.code = data;
-				app.data.js = data
-					.replace('&', '&amp;')
-					.replace('"', '&quot;')
-					.replace('<', '&lt;')
-					.replace('>', '&gt;');
+				app.data.js = escapeHTML(data);
+				// .replace('&', '&amp;')
+				// .replace('"', '&quot;')
+				// .replace('<', '&lt;')
+				// .replace('>', '&gt;');
 				app.render();
 				window.setTimeout(function() {
 					untyped hljs.highlightAll();

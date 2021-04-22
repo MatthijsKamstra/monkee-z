@@ -50,8 +50,7 @@ class MonkeeUtil {
 			return response.text();
 		}).then(function(data) {
 			app.data.code = data;
-			let tmp = StringTools.replace(StringTools.replace(StringTools.replace(data,"&","&amp;"),"\"","&quot;"),"<","&lt;");
-			app.data.js = StringTools.replace(tmp,">","&gt;");
+			app.data.js = MonkeeUtil.escapeHTML(data);
 			app.render();
 			window.setTimeout(function() {
 				hljs.highlightAll();
