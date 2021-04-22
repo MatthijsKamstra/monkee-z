@@ -1,5 +1,6 @@
 package;
 
+import js.Browser.*;
 import externs.MonkeeChain;
 
 class MonkeeChainJs {
@@ -50,7 +51,24 @@ class MonkeeChainJs {
 		});
 	}
 
-	function test3() {}
+	function test3() {
+		// Setup the component
+		var app = new MonkeeChain('#test-timer', {
+			data: {
+				time: Date.now()
+			},
+			template: function(props) {
+				return '<strong>The time is:</strong> ' + props.time;
+			}
+		});
+
+		// Update the clock once a second
+		window.setInterval(function() {
+			app.data.time = Date.now();
+			// re-render app
+			app.render();
+		}, 1000);
+	}
 
 	function test4() {
 		// some default values

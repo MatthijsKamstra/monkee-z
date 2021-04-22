@@ -3,7 +3,7 @@
 Math.__name__ = true;
 class MonkeeChainJs {
 	constructor() {
-		console.log("src/MonkeeChainJs.hx:7:","MonkeeChainJs");
+		console.log("src/MonkeeChainJs.hx:8:","MonkeeChainJs");
 		this.init();
 	}
 	init() {
@@ -29,6 +29,13 @@ class MonkeeChainJs {
 		}});
 	}
 	test3() {
+		let app = new MonkeeChain("#test-timer",{ data : { time : new Date()}, template : function(props) {
+			return "<strong>The time is:</strong> " + props.time;
+		}});
+		window.setInterval(function() {
+			app.data.time = new Date();
+			app.render();
+		},1000);
 	}
 	test4() {
 		let firstName = "Matthijs";
@@ -133,6 +140,7 @@ class js_Boot {
 js_Boot.__name__ = true;
 String.__name__ = true;
 Array.__name__ = true;
+Date.__name__ = "Date";
 js_Boot.__toStr = ({ }).toString;
 MonkeeChainJs.main();
 })({});

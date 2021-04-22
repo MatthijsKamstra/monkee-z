@@ -24,12 +24,12 @@
 
 
 # test extern
-# -main MonkeeChainJs
-# -js docs/js/monkee_chain_js.js
-# --cmd echo MonkeeChainLiteJS
+-main MonkeeChainJs
+-js docs/js/monkee_chain_js.js
+--cmd echo MonkeeChainJS
 # # --cmd node docs/js/monkee_chain_js.js
 
-# --next
+--next
 
 -main MonkeeUtil
 -js docs/js/monkee_util.js
