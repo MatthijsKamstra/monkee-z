@@ -36,6 +36,28 @@ class MonkeeUtil {
 		}
 	}
 
+	public static function setLink(href:String) {
+		var one = document.querySelector('[href="${href}"]');
+		// trace(one);
+		if (one == null) {
+			// trace('XXXXXXXX');
+			var link = document.createLinkElement();
+			link.rel = 'stylesheet';
+			link.href = '${href}';
+			document.body.appendChild(link);
+		}
+	}
+
+	public static function setScript(src:String) {
+		var one = document.querySelector('[src="${src}"]');
+		// trace(one);
+		if (one == null) {
+			var script = document.createScriptElement();
+			script.src = src;
+			document.body.appendChild(script);
+		}
+	}
+
 	/**
 	 * [Description]
 	 * @param id
@@ -46,19 +68,9 @@ class MonkeeUtil {
 		// trace(id, filename);
 
 		// setup up highlight.js
-		var link = document.createLinkElement();
-		link.rel = 'stylesheet';
-		link.href = '//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css';
-		document.body.appendChild(link);
-
-		var link = document.createLinkElement();
-		link.rel = 'stylesheet';
-		link.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css';
-		document.body.appendChild(link);
-
-		var script = document.createScriptElement();
-		script.src = '//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js';
-		document.body.appendChild(script);
+		setLink('//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css');
+		setLink('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css');
+		setScript('//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js');
 
 		// Setup the component
 		var app = new MonkeeChain('${id}', {

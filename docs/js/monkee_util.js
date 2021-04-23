@@ -16,19 +16,28 @@ class MonkeeUtil {
 			el.innerHTML = MonkeeUtil.escapeHTML(html);
 		}
 	}
+	static setLink(href) {
+		let one = window.document.querySelector("[href=\"" + href + "\"]");
+		if(one == null) {
+			let link = window.document.createElement("link");
+			link.rel = "stylesheet";
+			link.href = "" + href;
+			window.document.body.appendChild(link);
+		}
+	}
+	static setScript(src) {
+		let one = window.document.querySelector("[src=\"" + src + "\"]");
+		if(one == null) {
+			let script = window.document.createElement("script");
+			script.src = src;
+			window.document.body.appendChild(script);
+		}
+	}
 	static embedCode(id,filename) {
 		$global.console.info("[monkee]" + " - " + "MonkeeUtil :: embedCode" + " - build: " + "2021-04-21 20:34:02");
-		let link = window.document.createElement("link");
-		link.rel = "stylesheet";
-		link.href = "//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css";
-		window.document.body.appendChild(link);
-		let link1 = window.document.createElement("link");
-		link1.rel = "stylesheet";
-		link1.href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css";
-		window.document.body.appendChild(link1);
-		let script = window.document.createElement("script");
-		script.src = "//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js";
-		window.document.body.appendChild(script);
+		MonkeeUtil.setLink("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css");
+		MonkeeUtil.setLink("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css");
+		MonkeeUtil.setScript("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js");
 		let app = new MonkeeChain("" + id,{ data : { js : "", code : "test"}, template : function(data) {
 			return "\n\t\t        <div class=\"copy-code-wrapper-" + id + "\" style=\"position:relative;\">\n\t\t        <textarea id=\"copy-code-input-" + id + "\" style=\"position:fixed;top:-100px;\">" + data.code + "</textarea>\n\t\t        <pre style=\"border-radius:4px;\"><code class=\"js\">" + data.js + "</code></pre>\n\t\t        <button class=\"btn\" id=\"copy-code-btn-" + id + "\" style=\"position: absolute; top: 15px; right: 15px;\">📋</button>\n\t\t        </div>\n\t\t        ";
 		}});
