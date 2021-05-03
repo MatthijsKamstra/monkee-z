@@ -23,7 +23,7 @@ var app = new MonkeeChain("#app", {
 });
 
 // Fetch API data
-fetch("../data/json/monkee_load.json")
+fetch("../../data/json/monkee_load.json")
     .then(function (response) {
         return response.json();
     })
