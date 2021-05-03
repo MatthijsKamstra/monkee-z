@@ -1,6 +1,6 @@
-var app1 = new MonkeeChain('#app1', {
+var app1 = new MonkeeChain("#app1", {
     data: {
-        counter: 11
+        counter: 11,
     },
     template: function (props) {
         return `
@@ -9,16 +9,15 @@ var app1 = new MonkeeChain('#app1', {
             <button class="btn btn-primary" data-add='up'>+</button>
             <button class="btn btn-primary" data-add='down'>-</button>
         </form> `;
-    }
+    },
 });
-
 
 function clickHandler(e) {
     e.preventDefault();
     console.log(e);
     var el = e.target;
-    var dir = el.getAttribute('data-add');
-    if (dir == 'up') {
+    var dir = el.getAttribute("data-add");
+    if (dir == "up") {
         app1.data.counter++;
     } else {
         app1.data.counter--;
@@ -27,8 +26,4 @@ function clickHandler(e) {
 }
 
 // Listen for clicks
-document.getElementById('xx').addEventListener('click', clickHandler, false);
-
-
-
-
+document.getElementById("xx").addEventListener("click", clickHandler, false);

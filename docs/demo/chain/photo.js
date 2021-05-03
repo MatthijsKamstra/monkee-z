@@ -8,21 +8,24 @@ var app = new MonkeeChain("#app", {
         return `
           <h1>${props.heading}</h1>
           <ul>
-              ${props.json.map(function (todo) {
-            return `<li>${todo.author}</li>`;
-        }).join("")}
+              ${props.json
+                .map(function (todo) {
+                    return `<li>${todo.author}</li>`;
+                })
+                .join("")}
             </ul>
 
             <h1>${props.heading}</h1>
             <div class="row">
-               ${props.json.map(function (obj) {
-            return `<div class="col-4">
+               ${props.json
+                .map(function (obj) {
+                    return `<div class="col-4">
                         <a href="${obj.url}" target="_blank">
                             <img src="${obj.download_url}" alt="${obj.author}" class="img-fluid" />
                         </a>
                     </div>
                 `;
-        })
+                })
                 .join("")}
             </div>
           `;

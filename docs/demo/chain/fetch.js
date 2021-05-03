@@ -1,14 +1,14 @@
 // Setup the component
-var app = new MonkeeChain('#app', {
+var app = new MonkeeChain("#app", {
     data: {
         json: {
-            name: '',
+            name: "",
             size: {
                 minified: "",
                 original: "",
                 uglifyjs: "",
-            }
-        }
+            },
+        },
     },
     template: function (props) {
         return `
@@ -19,14 +19,15 @@ var app = new MonkeeChain('#app', {
                 <li>Extra minified file size: ${props.json.size.minified}</li>
             </ul>
             `;
-    }
+    },
 });
 
 // Fetch API data
-fetch('../data/json/monkee_load.json').
-    then(function (response) {
+fetch("../data/json/monkee_load.json")
+    .then(function (response) {
         return response.json();
-    }).then(function (data) {
+    })
+    .then(function (data) {
         // console.log(data);
         app.data.json = data;
         app.render();

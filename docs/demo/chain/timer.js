@@ -1,11 +1,11 @@
 // Setup the component
-var app = new MonkeeChain('#app', {
+var app = new MonkeeChain("#app", {
     data: {
-        time: new Date().toLocaleTimeString()
+        time: new Date().toLocaleTimeString(),
     },
     template: function (props) {
-        return '<strong>The time is:</strong> ' + props.time;
-    }
+        return "<strong>The time is:</strong> " + props.time;
+    },
 });
 
 // Update the clock once a second

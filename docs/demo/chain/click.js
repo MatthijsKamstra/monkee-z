@@ -1,6 +1,6 @@
-var app = new MonkeeChain('#app', {
+var app = new MonkeeChain("#app", {
     data: {
-        counter: 10
+        counter: 10,
     },
     template: function (props) {
         return `
@@ -9,11 +9,10 @@ var app = new MonkeeChain('#app', {
             <button onclick="add(1)">+</button>
             <button onclick="add(-1)">-</button>
         </div > `;
-    }
+    },
 });
 
 function add(dir) {
     app.data.counter += parseInt(dir);
     app.render();
 }
-

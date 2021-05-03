@@ -1,8 +1,8 @@
 // Setup the component
-var app = new MonkeeChain('#app', {
+var app = new MonkeeChain("#app", {
     data: {
         csv: "",
-        arr: []
+        arr: [],
     },
     template: function (props) {
         return `
@@ -10,15 +10,15 @@ var app = new MonkeeChain('#app', {
             <strong>${title()}:</strong>
             <div>${table(props.arr)}</div>
             `;
-    }
+    },
 });
 
 function title() {
-    return 'Title via function';
+    return "Title via function";
 }
 
 function table(arr) {
-    var html = '<table class="table">'
+    var html = '<table class="table">';
     for (let i = 0; i < arr.length; i++) {
         const row = arr[i];
         html += `<tr>`;
@@ -28,25 +28,26 @@ function table(arr) {
         }
         html += `</tr>`;
     }
-    html += '<table>'
+    html += "<table>";
     return html;
 }
 
 // Fetch API data
-fetch('../../assets/data/data.csv').
-    then(function (response) {
+fetch("../../assets/data/data.csv")
+    .then(function (response) {
         return response.text();
-    }).then(function (data) {
+    })
+    .then(function (data) {
         // console.log(data);
         var arr = [];
-        var linesArr = data.split('\n');
+        var linesArr = data.split("\n");
         for (let i = 0; i < linesArr.length; i++) {
             const line = linesArr[i];
             // console.log(line)
-            var col = line.split(',');
+            var col = line.split(",");
             var tempColArr = [];
             for (let j = 0; j < col.length; j++) {
-                const val = col[j].replaceAll('"', '');
+                const val = col[j].replaceAll('"', "");
                 // console.log(val)
                 tempColArr.push(val);
             }

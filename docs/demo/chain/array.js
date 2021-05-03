@@ -1,15 +1,17 @@
-new MonkeeChain('#app', {
+new MonkeeChain("#app", {
   data: {
-    heading: 'My Todos',
-    todos: ['Swim', 'Climb', 'Jump', 'Play']
+    heading: "My Todos",
+    todos: ["Swim", "Climb", "Jump", "Play"],
   },
   template: function (props) {
     return `
       <h1>${props.heading}</h1>
       <ul>
-        ${props.todos.map(function (todo) {
+        ${props.todos
+        .map(function (todo) {
           return `<li>${todo}</li>`;
-        }).join('')}
+        })
+        .join("")}
       </ul>`;
-  }
+  },
 });
