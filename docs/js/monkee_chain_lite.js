@@ -8,7 +8,7 @@ class MonkeeChainLite {
 		this.targetName = "";
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.info("[monkee]" + " - " + "MonkeeChainLite" + " - build: " + "2021-05-03 21:52:00");
+			$global.console.info("[monkee]" + " - " + "MonkeeChainLite" + " - build: " + "2021-05-03 23:01:47");
 		}
 		if(typeof(target) == "string") {
 			this.targetName = target;

@@ -2,7 +2,7 @@
 (function ($hx_exports, $global) { "use strict";
 class MonkeeUtil {
 	constructor() {
-		$global.console.info("[monkee]" + " - " + "MonkeeUtil" + " - build: " + "2021-05-03 21:51:56");
+		$global.console.info("[monkee]" + " - " + "MonkeeUtil" + " - build: " + "2021-05-03 23:01:43");
 		this.init();
 	}
 	init() {
@@ -34,7 +34,7 @@ class MonkeeUtil {
 		}
 	}
 	static embedCode(id,filename) {
-		$global.console.info("[monkee]" + " - " + "MonkeeUtil :: embedCode" + " - build: " + "2021-05-03 21:51:56");
+		$global.console.info("[monkee]" + " - " + "MonkeeUtil :: embedCode" + " - build: " + "2021-05-03 23:01:43");
 		MonkeeUtil.setLink("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css");
 		MonkeeUtil.setLink("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css");
 		MonkeeUtil.setScript("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js");
