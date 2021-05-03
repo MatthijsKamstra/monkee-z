@@ -26,14 +26,15 @@
 						Chain examples
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="chain/basic.html">Basic</a>
-						<a class="dropdown-item" href="chain/click.html">Click</a>
-						<a class="dropdown-item" href="chain/code.html">Code</a>
-						<a class="dropdown-item" href="chain/fetch.html">Fetch</a>
-						<a class="dropdown-item" href="chain/timer.html">Timer</a>
-						<a class="dropdown-item" href="chain/message.html">message</a>
-						<a class="dropdown-item" href="chain/array.html">array</a>
-						<a class="dropdown-item" href="chain/photo.html">photo</a>
+						<a class="dropdown-item" href="demo/chain/array.html">Array</a>
+						<a class="dropdown-item" href="demo/chain/basic.html">Basic</a>
+						<a class="dropdown-item" href="demo/chain/click.html">Click</a>
+						<a class="dropdown-item" href="demo/chain/code.html">Code</a>
+						<a class="dropdown-item" href="demo/chain/csv.html">Csv</a>
+						<a class="dropdown-item" href="demo/chain/fetch.html">Fetch</a>
+						<a class="dropdown-item" href="demo/chain/timer.html">Timer</a>
+						<a class="dropdown-item" href="demo/chain/message.html">message</a>
+						<a class="dropdown-item" href="demo/chain/photo.html">photo</a>
 					</div>
 				</li>
 
@@ -43,14 +44,7 @@
 						Load examples
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="chain/basic.html">Basic</a>
-						<a class="dropdown-item" href="chain/click.html">Click</a>
-						<a class="dropdown-item" href="chain/code.html">Code</a>
-						<a class="dropdown-item" href="chain/fetch.html">Fetch</a>
-						<a class="dropdown-item" href="chain/timer.html">Timer</a>
-						<a class="dropdown-item" href="chain/message.html">message</a>
-						<a class="dropdown-item" href="chain/array.html">array</a>
-						<a class="dropdown-item" href="chain/photo.html">photo</a>
+						<a class="dropdown-item" href="demo/load/index.html">Index</a>
 					</div>
 				</li>
 
@@ -77,11 +71,45 @@
 
 
 <script>
-	console.warn('nav');
+	console.warn('injected nav code');
 	zinit();
 	function zinit() {
-		console.log(window.location.href);
-		console.log(window.location.hostname);
-		console.log(window.location.pathname);
+		// console.log(window.location.href); // https://matthijskamstra.github.io/monkee-z/chain/
+		// console.log(window.location.hostname); // matthijskamstra.github.io
+		// console.log(window.location.pathname); // /monkee-z/chain/
+
+		var temp = window.location.pathname.split('/');
+		// console.log(temp);
+		// console.log(temp.length);
+		temp.filter(Boolean);
+		var temp = (temp.filter(Boolean));
+		// console.log(temp);
+
+		var arr = [];
+		var arr2 = [];
+		var nav = document.getElementsByTagName('nav')[0];
+		// console.log(nav);
+		// var l = document.links;
+		var l = nav.getElementsByTagName('a');
+		// // console.log('ll');
+		//// console.log(ll);
+		for (var i = 0; i < l.length; i++) {
+			arr.push(l[i].href);
+			if (l[i].getAttribute('href') != null)
+				arr2.push(l[i])
+		}
+		// console.log(arr);
+		// console.log(arr2);
+		for (var i = 0; i < arr2.length; i++) {
+			var link = arr2[i];
+			var href = link.getAttribute('href');
+			var up = '';
+			if (temp.length == 2) {
+				var up = '../';
+
+			}
+			link.setAttribute('href', up + href);
+		}
+
 	}
 </script>
