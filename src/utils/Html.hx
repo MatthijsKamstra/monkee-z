@@ -31,6 +31,22 @@ class Html {
 		return html.slice(x + 1, y);
 	}
 
+	public static function getScript(html) {
+		var htmlLowerCase:String = html.toLowerCase(); // to eliminate case sensitivity
+		var x:Int = htmlLowerCase.indexOf("<script");
+		if (x == -1)
+			return "";
+
+		x = htmlLowerCase.indexOf(">", x);
+		if (x == -1)
+			return "";
+		var y = htmlLowerCase.lastIndexOf("</script>");
+
+		// trace(x, y, html.slice(x + 1, y));
+
+		return html.slice(x + 1, y);
+	}
+
 	/**
 	 * [Description]
 	 * @param target

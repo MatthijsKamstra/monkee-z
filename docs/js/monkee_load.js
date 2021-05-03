@@ -20,7 +20,7 @@ class MonkeeLoad {
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.info("[monkee]" + " - " + "MonkeeLoad" + " - build: " + "2021-04-21 01:27:36");
+			$global.console.info("[monkee]" + " - " + "MonkeeLoad" + " - build: " + "2021-05-03 21:51:54");
 		}
 		let _g = 0;
 		let _g1 = this.arr.length;
@@ -61,6 +61,7 @@ class MonkeeLoad {
 			if(body == "") {
 				body = _gthis.req.response;
 			}
+			let script = utils_Html.getScript(_gthis.req.response);
 			if(obj.isJson) {
 				if(_gthis.DEBUG) {
 					$global.console.warn(obj.url);
@@ -76,6 +77,11 @@ class MonkeeLoad {
 				}
 			} else {
 				utils_Html.processHTML(obj.el,body,obj.isInner);
+			}
+			if(script != "") {
+				let scriptEl = window.document.createElement("script");
+				scriptEl.innerHTML = script;
+				window.document.body.appendChild(scriptEl);
 			}
 			_gthis.startLoading(_gthis.loadingId);
 		};
@@ -178,6 +184,19 @@ class utils_Html {
 		if(y == -1) {
 			y = html.length;
 		}
+		return html.slice(x + 1,y);
+	}
+	static getScript(html) {
+		let htmlLowerCase = html.toLowerCase();
+		let x = htmlLowerCase.indexOf("<script");
+		if(x == -1) {
+			return "";
+		}
+		x = htmlLowerCase.indexOf(">",x);
+		if(x == -1) {
+			return "";
+		}
+		let y = htmlLowerCase.lastIndexOf("</script>");
 		return html.slice(x + 1,y);
 	}
 	static processHTML(target,html,isInner) {

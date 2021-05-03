@@ -79,6 +79,8 @@ class MonkeeLoad {
 			if (body == "")
 				body = req.response;
 
+			var script = Html.getScript(req.response);
+
 			// Html.processHTML(obj.el, body, obj.loaderType == 'inner');
 
 			if (obj.isJson) {
@@ -96,6 +98,15 @@ class MonkeeLoad {
 				} else {
 					Html.processHTML(obj.el, body, obj.isInner);
 				}
+			}
+
+			// inject script from templates
+			if (script != "") {
+				// [mck] this is probably the worst idea I had, but lets see where this goes
+				// trace('add script element');
+				var scriptEl = document.createScriptElement();
+				scriptEl.innerHTML = script;
+				document.body.appendChild(scriptEl);
 			}
 
 			// load the next

@@ -12,11 +12,11 @@
 
 --each
 
-# -main MonkeeLoad
-# -js docs/js/monkee_load.js
-# --cmd echo MonkeeLoad
+-main MonkeeLoad
+-js docs/js/monkee_load.js
+--cmd echo MonkeeLoad
 
-# --next
+--next
 
 # -main MonkeeLoadLite
 # -js docs/js/monkee_load_lite.js
