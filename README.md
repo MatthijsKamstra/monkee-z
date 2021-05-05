@@ -30,6 +30,16 @@ it will load the file `components/nav.html` and when its done, it will replace t
 
 So `<div data-load="components/nav.html"></div>` will become `<nav>navigation</nav>`.
 
+```html
+<!-- Monkee code -->
+<!-- uncompressed -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.js"></script>
+<!-- compressed -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.js"></script>
+<!-- compressed to the max -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.min.js"></script>
+```
+
 ## 🐵 monkee-load-inner
 
 Same as monkee-load this will load a file, but use the `innerHTML` to parse the data
