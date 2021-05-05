@@ -2,17 +2,11 @@
 (function ($global) { "use strict";
 class Research {
 	constructor() {
-		this.targetObj = { };
 		console.log("src/Research.hx:12:","Research");
-		this.testOne();
+		this.proxi4();
 	}
-	testOne() {
-		let targetProxy = new Proxy(this.targetObj,{ set : function(target,key,value,receiver) {
-			$global.console.log("" + key + " set to " + JSON.stringify(value));
-			target[key] = value;
-			return true;
-		}});
-		targetProxy.hello_world = "test";
+	proxi4() {
+		console.log("src/Research.hx:32:",">> proxi 4");
 	}
 	static main() {
 		new Research();
@@ -31,4 +25,4 @@ class haxe_iterators_ArrayIterator {
 	}
 }
 Research.main();
-})(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+})({});
