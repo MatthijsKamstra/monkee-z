@@ -3,6 +3,7 @@
 stuff to watch for
 
 - [ ] xss
+- [ ] MonkeeUtil.embedCode fails with `<textarea>` tag in it
 
 ## XSS
 
