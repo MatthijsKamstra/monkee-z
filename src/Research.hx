@@ -5,6 +5,8 @@ import haxe.Json;
 import js.Browser.*;
 import js.lib.Proxy;
 
+// import js.lib.Reflect;
+
 class Research {
 	var targetObj = {};
 
@@ -31,23 +33,51 @@ class Research {
 	function proxi4() {
 		trace('>> proxi 4');
 
-		// var handler = {
-		// 	get: function(target, property, receiver) {
-		// 		try {
-		// 			return new Proxy(target[property], handler);
-		// 		} catch (err) {
-		// 			return Reflect.get(target, property, receiver);
-		// 		}
-		// 	},
-		// 	defineProperty: function(target, property, descriptor) {
-		// 		onChange();
-		// 		return Reflect.defineProperty(target, property, descriptor);
-		// 	},
-		// 	deleteProperty: function(target, property) {
-		// 		onChange();
-		// 		return Reflect.deleteProperty(target, property);
-		// 	}
-		// };
+		var target = {
+			message1: "hello",
+			message2: "everyone",
+			data: {}
+		};
+
+		var handler = {
+			get: function(target, property:String, receiver):Any {
+				try {
+					return new Proxy(untyped target[property], untyped handler);
+				} catch (err) {
+					return js.lib.Reflect.get(target, property, receiver);
+				}
+				// return Reflect.getProperty(target, property);
+			},
+			defineProperty: untyped function(target, property, descriptor) {
+				onChange();
+				return js.lib.Reflect.defineProperty(target, property, descriptor);
+			},
+			deleteProperty: untyped function(target, property) {
+				onChange();
+				return js.lib.Reflect.deleteProperty(target, property);
+			}
+		}
+
+		var proxy = new Proxy(target, untyped handler);
+
+		console.log(untyped proxy.message1); // hello
+		console.log(untyped proxy.message2); // everyone
+
+		trace(Reflect.getProperty(proxy, 'message1'));
+		trace(Reflect.getProperty(proxy, 'message2'));
+
+		// untyped proxy.message1 = 'hi';
+		// Reflect.setProperty(proxy, 'message1', 'hii');
+
+		// console.log(untyped proxy.message1); // hi
+		// trace(Reflect.getProperty(proxy, 'message1'));
+
+		// Reflect.setProperty(proxy, 'data', {'one': '1', 'two': '2'});
+		// trace(Reflect.getProperty(proxy, 'data'));
+
+		// console.log(untyped proxy.data.one); // 1
+		// untyped proxy.data.one = '2';
+		// console.log(untyped proxy.data.one); // 2
 	}
 
 	function proxi3() {
