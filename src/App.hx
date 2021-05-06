@@ -3,7 +3,7 @@ import haxe.macro.Context;
 class App {
 	public static inline var URL:String = "https://";
 
-	public static inline var NAME:String = "[monkee]";
+	public static inline var NAME:String = "[Monkee-Z]";
 
 	/**
 	 * @example
