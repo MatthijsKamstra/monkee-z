@@ -6,6 +6,31 @@ performance is weak: again don't use this
 
 ![](icon.png)
 
+```html
+<!-- Monkee code -->
+
+<!-- Monkee Load -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.min.js"></script>
+
+<!-- Monkee Chain -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_chain.min.min.js"></script>
+
+<!-- Monkee React -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_react.min.min.js"></script>
+
+<!-- Monkee Util -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_util.js"></script>
+```
+
+## util
+
+```html
+<!-- Show code -->
+<script>
+  MonkeeUtil.embedCode("#code-app", "demo/index.js");
+</script>
+```
+
 ## 🐵 monkee-load
 
 simple way to load templates with vanille js.
@@ -29,6 +54,16 @@ for example `nav.html` is: `<nav>navigation</nav>`
 it will load the file `components/nav.html` and when its done, it will replace the div with the content
 
 So `<div data-load="components/nav.html"></div>` will become `<nav>navigation</nav>`.
+
+```html
+<!-- Monkee code -->
+<!-- uncompressed -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.js"></script>
+<!-- compressed -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.js"></script>
+<!-- compressed to the max -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.min.js"></script>
+```
 
 ## 🐵 monkee-load-inner
 
