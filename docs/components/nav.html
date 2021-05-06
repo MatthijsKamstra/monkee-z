@@ -73,44 +73,36 @@
 
 
 <script>
-	console.warn('injected nav code');
+	console.warn('Nav Injected code: Here be dragons!');
+
+
+	var rootLocal = 'http://127.0.0.1:5500/docs/';
+	var rootGit = 'https://matthijskamstra.github.io/monkee-z/';
+
 	zinit();
 	function zinit() {
-		// console.log(window.location.href); // https://matthijskamstra.github.io/monkee-z/chain/
-		// console.log(window.location.hostname); // matthijskamstra.github.io
-		// console.log(window.location.pathname); // /monkee-z/chain/
+		//		console.log(window.location.href); // https://matthijskamstra.github.io/monkee-z/chain///
+		//		console.log(window.location.hostname); // matthijskamstra.github.io
+		//		console.log(window.location.pathname); // /monkee-z/chain/
 
-		var temp = window.location.pathname.split('/');
-		// console.log(temp);
-		// console.log(temp.length);
-		temp.filter(Boolean);
-		var temp = (temp.filter(Boolean));
-		// console.log(temp);
-
+		var root = rootGit;
+		if (window.location.href.indexOf('docs') != -1) {
+			root = rootLocal;
+		}
+		console.log(root);
 		var arr = [];
 		var arr2 = [];
 		var nav = document.getElementsByTagName('nav')[0];
-		// console.log(nav);
-		// var l = document.links;
 		var l = nav.getElementsByTagName('a');
-		// // console.log('ll');
-		//// console.log(ll);
 		for (var i = 0; i < l.length; i++) {
 			arr.push(l[i].href);
 			if (l[i].getAttribute('href') != null)
 				arr2.push(l[i])
 		}
-		// console.log(arr);
-		// console.log(arr2);
 		for (var i = 0; i < arr2.length; i++) {
 			var link = arr2[i];
 			var href = link.getAttribute('href');
-			var up = '';
-			if (temp.length == 2) {
-				var up = '../';
-
-			}
-			link.setAttribute('href', up + href);
+			link.setAttribute('href', root + href);
 		}
 
 	}
