@@ -1,0 +1,12 @@
+.red {
+  padding: 10px;
+  height: 200px;
+  width: 100%;
+  border: 1px solid #333;
+  overflow: scroll;
+  position: fixed;
+  bottom: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: "Courier New", Courier, monospace;
+}
