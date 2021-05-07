@@ -1,7 +1,7 @@
 {
   "name": "monkee-z",
   "version": "1.0.0",
-  "description": "It;s not alpha, not bravo, but zulu ... the last library you should use (and my personal playground)",
+  "description": "It's not alpha, not bravo, but zulu ... the last library you should use (and my personal playground)",
   "main": "index.js",
   "directories": {
     "doc": "docs"
