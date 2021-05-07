@@ -148,7 +148,7 @@
 		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
 		crossorigin="anonymous"></script>
 
-	<!-- Monkee code -->
+	<!-- Monkee-Z code -->
 	<script src="../js/monkee_chain.min.min.js"></script>
 	<!-- <script src="../js/monkee_load_lite.js"></script> -->
 	<!-- <script src="./js/monkee_load_lite.min.js"></script> -->
@@ -158,7 +158,7 @@
 
 	<script>
 		// Setup the component
-		var appJson = new MonkeeChain('#app', {
+		var app = new MonkeeChain('#app', {
 			data: {
 				json: {
 					name: "",
@@ -198,8 +198,8 @@
 				return response.json();
 			}).then(function (data) {
 				//console.log(data);
-				appJson.data.json = data;
-				appJson.render();
+				app.data.json = data;
+				app.render();
 			});
 	</script>
 
