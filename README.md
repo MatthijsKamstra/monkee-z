@@ -7,7 +7,7 @@ performance is weak: again don't use this
 ![](icon.png)
 
 ```html
-<!-- Monkee code -->
+<!-- Monkee-Z code -->
 
 <!-- Monkee Load -->
 <script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.min.js"></script>
@@ -56,7 +56,7 @@ it will load the file `components/nav.html` and when its done, it will replace t
 So `<div data-load="components/nav.html"></div>` will become `<nav>navigation</nav>`.
 
 ```html
-<!-- Monkee code -->
+<!-- Monkee-Z code -->
 <!-- uncompressed -->
 <script src="https://matthijskamstra.github.io/monkee-z/js/monkee_load.js"></script>
 <!-- compressed -->
