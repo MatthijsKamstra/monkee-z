@@ -3,9 +3,9 @@ package;
 import js.Browser.*;
 import externs.MonkeeChain;
 
-class MonkeeChainJs {
+class MonkeeChainTest {
 	public function new() {
-		trace('MonkeeChainJs');
+		trace('MonkeeChainTest');
 		init();
 	}
 
@@ -93,7 +93,7 @@ class MonkeeChainJs {
 	}
 
 	static public function main() {
-		var app = new MonkeeChainJs();
+		var app = new MonkeeChainTest();
 	}
 }
 
