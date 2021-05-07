@@ -106,7 +106,7 @@ class MonkeeUtil {
 				document.execCommand('copy');
 
 				// console.log('click');
-				window.alert('code is copied');
+				window.alert('Code is copied');
 
 				// var code = document.getElementById(`${id}`).querySelector('.hljs');
 				// console.log(code);
