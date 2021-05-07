@@ -6,6 +6,8 @@ performance is weak: again don't use this
 
 ![](icon.png)
 
+note: keeping this readme up-to-date seems impossible, so don't believe everything you read here... Check out the [Monkee-Z website](https://matthijskamstra.github.io/monkee-z/) as well.
+
 ```html
 <!-- Monkee-Z code -->
 
