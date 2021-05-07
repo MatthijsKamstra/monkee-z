@@ -17,6 +17,7 @@ class Research {
 		// proxi2();
 		// proxi3();
 		proxi4();
+		// proxi5();
 		// testOne();
 		// testTwo();
 		// testThree();
@@ -30,6 +31,22 @@ class Research {
 		trace('{{{onChange}}}');
 	}
 
+	function proxi5() {
+		trace('>> proxi 5');
+		var target = {
+			message1: "hello",
+			message2: "everyone",
+			data: {}
+		};
+		var proxi5Handler = {
+			get: function(target:Dynamic, property:String, receiver):Any {
+				return null;
+			}
+		}
+
+		var proxy = new Proxy(target, proxi5Handler);
+	}
+
 	function proxi4() {
 		trace('>> proxi 4');
 
@@ -40,19 +57,19 @@ class Research {
 		};
 
 		var handler = {
-			get: function(target, property:String, receiver):Any {
+			get: function(target:Dynamic, property:String, receiver):Any {
 				try {
-					return new Proxy(untyped target[property], untyped handler);
+					return new Proxy(untyped target[property], js.Lib.nativeThis.handler);
 				} catch (err) {
 					return js.lib.Reflect.get(target, property, receiver);
 				}
 				// return Reflect.getProperty(target, property);
 			},
-			defineProperty: untyped function(target, property, descriptor) {
+			defineProperty: function(target, property, descriptor) {
 				onChange();
 				return js.lib.Reflect.defineProperty(target, property, descriptor);
 			},
-			deleteProperty: untyped function(target, property) {
+			deleteProperty: function(target, property) {
 				onChange();
 				return js.lib.Reflect.deleteProperty(target, property);
 			}
@@ -63,21 +80,21 @@ class Research {
 		console.log(untyped proxy.message1); // hello
 		console.log(untyped proxy.message2); // everyone
 
-		trace(Reflect.getProperty(proxy, 'message1'));
-		trace(Reflect.getProperty(proxy, 'message2'));
+		// trace(Reflect.getProperty(proxy, 'message1'));
+		// trace(Reflect.getProperty(proxy, 'message2'));
 
-		// untyped proxy.message1 = 'hi';
+		untyped proxy.message1 = 'hi';
 		// Reflect.setProperty(proxy, 'message1', 'hii');
 
-		// console.log(untyped proxy.message1); // hi
+		console.log(untyped proxy.message1); // hi
 		// trace(Reflect.getProperty(proxy, 'message1'));
 
 		// Reflect.setProperty(proxy, 'data', {'one': '1', 'two': '2'});
 		// trace(Reflect.getProperty(proxy, 'data'));
 
-		// console.log(untyped proxy.data.one); // 1
-		// untyped proxy.data.one = '2';
-		// console.log(untyped proxy.data.one); // 2
+		console.log(untyped proxy.data.one); // 1
+		untyped proxy.data.one = '2';
+		console.log(untyped proxy.data.one); // 2
 	}
 
 	function proxi3() {
