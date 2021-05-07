@@ -12,58 +12,21 @@
 
 --each
 
--main MonkeeLoad
--js docs/js/monkee_load.js
---cmd echo MonkeeLoad
-
---next
-
-# -main MonkeeLoadLite
-# -js docs/js/monkee_load_lite.js
-# --cmd echo MonkeeLoadLite
-
 
 # test extern
--main MonkeeChainJs
--js docs/js/monkee_chain_js.js
---cmd echo MonkeeChainJS
-# # --cmd node docs/js/monkee_chain_js.js
+-main MonkeeChainTest
+-js docs/js/test_monkee_chain.js
+--cmd echo MonkeeChainTest
+# --cmd node docs/js/monkee_chain_js.js
 
 --next
 
--main MonkeeUtil
--js docs/js/monkee_util.js
---cmd echo MonkeeUtil
+# test extern
+-main MonkeeBuggerTest
+-js docs/js/test_monkee_bugger.js
+--cmd echo MonkeeBuggerTest
+# --cmd node docs/js/monkee_chain_js.js
 
-# --next
-
-
-
-
-
-# -main MonkeeReact
-# -js docs/js/monkee_react.js
-# --cmd echo MonkeeReact
-
-# --next
-
-# -main MonkeeRoute
-# -js docs/js/monkee_route.js
-# --cmd echo MonkeeRoute
-
-# --next
-
-# MonkeeChain
-# -js docs/js/monkee_chain.js
-# --cmd echo MonkeeChain
-
-# --next
-
-# MonkeeChainLite
-# -js docs/js/monkee_chain_lite.js
-# --cmd echo MonkeeChainLite
-
-# --next
 
 
 

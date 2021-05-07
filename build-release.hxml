@@ -30,6 +30,12 @@
 
 --next
 
+-main MonkeeBugger
+-js docs/js/monkee_bugger.js
+--cmd echo MonkeeBugger
+
+--next
+
 -main MonkeeReact
 -js docs/js/monkee_react.js
 --cmd echo MonkeeReact
@@ -51,14 +57,5 @@ MonkeeChain
 MonkeeChainLite
 -js docs/js/monkee_chain_lite.js
 --cmd echo MonkeeChainLite
-
-# --next
-
-# test extern
-# -main MonkeeChainJs
-# -js docs/js/monkee_chain_js.js
-# --cmd echo MonkeeChainLiteJS
-# --cmd node docs/js/monkee_chain_js.js
-
 
 
