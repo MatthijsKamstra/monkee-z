@@ -4,6 +4,8 @@ import js.html.Element;
 import js.Browser.*;
 import js.html.XMLHttpRequest;
 
+using StringTools;
+
 class Html {
 	public function new() {
 		// your code
@@ -16,14 +18,15 @@ class Html {
 	 */
 	public static function getBody(html) {
 		var test:String = html.toLowerCase(); // to eliminate case sensitivity
+
 		var x:Int = test.indexOf("<body");
 		if (x == -1)
 			return "";
-
 		x = test.indexOf(">", x);
 		if (x == -1)
 			return "";
 		var y = test.lastIndexOf("</body>");
+
 		if (y == -1)
 			y = test.lastIndexOf("</html>");
 		if (y == -1)
@@ -31,6 +34,10 @@ class Html {
 		return html.slice(x + 1, y);
 	}
 
+	/**
+	 * [Description]
+	 * @param html
+	 */
 	public static function getScript(html) {
 		var htmlLowerCase:String = html.toLowerCase(); // to eliminate case sensitivity
 		var x:Int = htmlLowerCase.indexOf("<script");
@@ -59,6 +66,24 @@ class Html {
 		} else {
 			target.outerHTML = html;
 		}
+	}
+
+	/**
+	 * sanitize string to prefend XSS attack
+	 *
+	 * @example
+	 * 		sanitizeHTML('<img src="x" onerror="alert(1)">');
+	 *
+	 * @param unsafe_str
+	 * @return String
+	 */
+	public static function sanitizeHTML(unsafe_str:String):String {
+		return unsafe_str
+			.replace('&', '&amp;')
+			.replace('<', '&lt;')
+			.replace('>', '&gt;')
+			.replace('"', '&quot;')
+			.replace("'", '&#39;'); // '&apos;' is not valid HTML 4
 	}
 
 	/**
