@@ -29,13 +29,13 @@
         <div class="row">
             <div class="col-6">
                 <h3>Monkee-Load-Lite</h3>
-                <a class="float-right btn btn-outline-dark btn-sm" href="load/lite.html">more</a>
+                <a class="float-right btn btn-outline-dark btn-sm" href="lite.html">more</a>
                 <p>A lightweight library for loading text-based-files / (html)templates <i>(< 1KB)</i>
                 </p>
             </div>
             <div class="col-6">
                 <h3>Monkee-Load</h3>
-                <a class="float-right btn btn-outline-dark btn-sm" href="load/load.html">more</a>
+                <a class="float-right btn btn-outline-dark btn-sm" href="load.html">more</a>
                 <p>A library for loading text-based-files / (html)templates <i>(~ 4KB)</i></p>
             </div>
         </div>
@@ -49,10 +49,10 @@
     <div class="container my-5">
         <div class="row">
             <div class="col-6">
-                <div id="app-lite"></div>
+                <div id="specs-load-lite"></div>
             </div>
             <div class="col-6">
-                <div id="app"></div>
+                <div id="specs-load"></div>
             </div>
         </div>
     </div>
@@ -79,8 +79,8 @@
 
     <script>
 
-        MonkeeUtil.embedSpecs('#app', '../assets/json/monkee_load.json');
-        MonkeeUtil.embedSpecs('#app-lite', '../assets/json/monkee_load_lite.json');
+        MonkeeUtil.embedSpecs('#specs-load', '../assets/json/monkee_load.json');
+        MonkeeUtil.embedSpecs('#specs-load-lite', '../assets/json/monkee_load_lite.json');
 
         // Setup the component
         var app_markdown = new MonkeeChain("#app_markdown", {

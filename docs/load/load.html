@@ -44,6 +44,17 @@
         </p>
         <div id="app"></div>
     </div>
+
+
+    <div class="container my-5">
+        <div class="row">
+
+            <div class="col-12">
+                <div id="specs-load"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="container my-5">
         <div id="app_markdown"></div>
     </div>
@@ -112,51 +123,7 @@
     <script src="../js/monkee_util.js"></script>
 
     <script>
-        // Setup the component
-        var app = new MonkeeChain('#app', {
-            data: {
-                json: {
-                    name: "",
-                    updated: "",
-                    size: {
-                        minified: "",
-                        original: "",
-                        uglifyjs: "",
-                    },
-                    url: {
-                        minified: "",
-                        original: "",
-                        uglifyjs: "",
-                    },
-                },
-            },
-            template: function (props) {
-                return `
-                    <div class="card">
-            			<div class="card-body">
-    						<strong>File ${props.json.name}:</strong>
-    						<p class="text-muted">Updated: ${props.json.updated}</p>
-    						<ul>
-    							<li>Download original file: <a href="${props.json.url.original}">${props.json.url.original}</a> (${props.json.size.original})</li>
-    							<li>UglifyJs file size: <a href="${props.json.url.uglifyjs}">${props.json.url.uglifyjs}</a> (${props.json.size.uglifyjs})</li>
-    							<li>Extra minified file size: <a href="${props.json.url.minified}">${props.json.url.minified}</a> (${props.json.size.minified})</li>
-    						</ul>
-    		    	    </div>
-    			    </div>
-                    `;
-            }
-        });
-
-        // Fetch API data
-        fetch('../assets/json/monkee_load.json').
-            then(function (response) {
-                return response.json();
-            }).then(function (data) {
-                //console.log(data);
-                app.data.json = data;
-                app.render();
-            });
-
+        MonkeeUtil.embedSpecs('#specs-load', '../assets/json/monkee_load.json');
 
 
         // Setup the component
