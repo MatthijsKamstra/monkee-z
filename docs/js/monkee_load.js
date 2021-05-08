@@ -20,7 +20,7 @@ class MonkeeLoad {
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " - " + "MonkeeLoad" + " - build: " + "2021-05-07 10:48:51");
+			$global.console.info("[Monkee-Z]" + " - " + "MonkeeLoad" + " - build: " + "2021-05-08 11:53:44");
 		}
 		let _g = 0;
 		let _g1 = this.arr.length;
