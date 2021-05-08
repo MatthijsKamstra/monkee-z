@@ -37,7 +37,7 @@
         <!-- <script src="https://matthijskamstra.github.io/monkee-bugger/monkee_bugger.min.js"></script> -->
 
 
-        <div id="app"></div>
+        <div id="specs-bugger" class="my-5"></div>
 
         <img src="../assets/img/bugger.png" class="img-thumbnail" />
     </div>
@@ -59,56 +59,13 @@
     <!-- <script src="../js/monkee_bugger.min.js"></script> -->
     <!-- <script src="../js/monkee_bugger.min.min.js"></script> -->
 
+    <script src="../js/monkee_util.js"></script>
+
     <!-- run Monkee-Bugger code -->
     <script src="../js/test_monkee_bugger.js"></script>
 
-
-
     <script>
-        // Setup the component
-        var app = new MonkeeChain('#app', {
-            data: {
-                json: {
-                    name: "",
-                    updated: "",
-                    size: {
-                        minified: "",
-                        original: "",
-                        uglifyjs: "",
-                    },
-                    url: {
-                        minified: "",
-                        original: "",
-                        uglifyjs: "",
-                    },
-                },
-            },
-            template: function (props) {
-                return `
-                <div class="card">
-        			<div class="card-body">
-						<strong>File ${props.json.name}:</strong>
-						<p class="text-muted">Updated: ${props.json.updated}</p>
-						<ul>
-							<li>Download original file: <a href="${props.json.url.original}">${props.json.url.original}</a> (${props.json.size.original})</li>
-							<li>UglifyJs file size: <a href="${props.json.url.uglifyjs}">${props.json.url.uglifyjs}</a> (${props.json.size.uglifyjs})</li>
-							<li>Extra minified file size: <a href="${props.json.url.minified}">${props.json.url.minified}</a> (${props.json.size.minified})</li>
-						</ul>
-		    	    </div>
-			    </div>
-                `;
-            }
-        });
-
-        // Fetch API data
-        fetch('../assets/json/monkee_bugger.json').
-            then(function (response) {
-                return response.json();
-            }).then(function (data) {
-                //console.log(data);
-                app.data.json = data;
-                app.render();
-            });
+        MonkeeUtil.embedSpecs('#specs-bugger', '../assets/json/monkee_bugger.json');
     </script>
 
 </body>
