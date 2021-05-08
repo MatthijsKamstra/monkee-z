@@ -25,73 +25,39 @@
     <div data-load="../components/nav.html"></div>
     <div data-load="../components/hero.html"></div>
 
-    <div class="container">
-        <h2>Monkee Loader</h2>
-        <p>
-        <ul>
-            <li>Loading animation</li>
-            <li>whole html will be parsed (use templates without body tag)</li>
-            <li>light</li>
-            <li>usefull for loading files into the page</li>
-            <li>
-                <code data-escape='<div id="app"></div>'></code>
-            </li>
-            <li>
-                <pre><code data-escape='<div id="app"></div>'></code></pre>
-            </li>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-6">
+                <h3>Monkee-Load-Lite</h3>
+                <a class="float-right btn btn-outline-dark btn-sm" href="load/lite.html">more</a>
+                <p>A lightweight library for loading text-based-files / (html)templates <i>(< 1KB)</i>
+                </p>
+            </div>
+            <div class="col-6">
+                <h3>Monkee-Load</h3>
+                <a class="float-right btn btn-outline-dark btn-sm" href="load/load.html">more</a>
+                <p>A library for loading text-based-files / (html)templates <i>(~ 4KB)</i></p>
+            </div>
+        </div>
 
-        </ul>
-        </p>
-        <div id="app"></div>
+
     </div>
     <div class="container my-5">
         <div id="app_markdown"></div>
     </div>
 
-    <div class="container" data-load-inner="../components/img.html">
-        <p>photo</p>
-    </div>
-
-    <div data-load="../components/main.html"></div>
-
-    <div class="container">
-        <div data-load="../components/img.html"></div>
-    </div>
-
-    <div class="container mt-5">
-        <h1>Inner data json</h1>
-        <pre data-load-inner="../assets/data/data.json" class="text-secondary"></pre>
-    </div>
-
-    <div class="container mt-5">
-        <h1>Inner data json</h1>
-        <form data-load-inner="../assets/data/data.json">
-            <input data-name="firstname" type="text" class="form-control" placeholder="test" />
-            <input data-name="lastname" type="text" class="form-control" placeholder="test" />
-            <input data-name="email" type="email" class="form-control" placeholder="name@example.com" />
-        </form>
-    </div>
-
-    <div class="container mt-5">
-        <h1>Inner data</h1>
-        <p data-load-inner="../assets/data/data.txt" class="text-secondary"></p>
-    </div>
-
-    <div class="container mt-5">
-        <h1>Inner data</h1>
-        <div data-load-inner="../assets/data/data.txt" data-target="out" class="text-secondary">
-            <p data-name="out" class="text-primary">.text-primary</p>
-            <p data-name="out" class="text-secondary">.text-secondary</p>
-            <p data-name="out" class="text-success">.text-success</p>
-            <p data-name="out" class="text-danger">.text-danger</p>
-            <p data-name="out" class="text-warning">.text-warning</p>
-            <p data-name="out" class="text-info">.text-info</p>
-            <p data-name="out" class="text-light bg-dark">.text-light</p>
-            <p data-name="out" class="text-dark">.text-dark</p>
-            <p data-name="out" class="text-muted">.text-muted</p>
-            <p data-name="out" class="text-white bg-dark">.text-white</p>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-6">
+                <div id="app-lite"></div>
+            </div>
+            <div class="col-6">
+                <div id="app"></div>
+            </div>
         </div>
     </div>
+
+
 
     <div data-load="../components/footer.html"></div>
 
@@ -112,52 +78,9 @@
     <script src="../js/monkee_util.js"></script>
 
     <script>
-        // Setup the component
-        var app = new MonkeeChain('#app', {
-            data: {
-                json: {
-                    name: "",
-                    updated: "",
-                    size: {
-                        minified: "",
-                        original: "",
-                        uglifyjs: "",
-                    },
-                    url: {
-                        minified: "",
-                        original: "",
-                        uglifyjs: "",
-                    },
-                },
-            },
-            template: function (props) {
-                return `
-                    <div class="card">
-            			<div class="card-body">
-    						<strong>File ${props.json.name}:</strong>
-    						<p class="text-muted">Updated: ${props.json.updated}</p>
-    						<ul>
-    							<li>Download original file: <a href="${props.json.url.original}">${props.json.url.original}</a> (${props.json.size.original})</li>
-    							<li>UglifyJs file size: <a href="${props.json.url.uglifyjs}">${props.json.url.uglifyjs}</a> (${props.json.size.uglifyjs})</li>
-    							<li>Extra minified file size: <a href="${props.json.url.minified}">${props.json.url.minified}</a> (${props.json.size.minified})</li>
-    						</ul>
-    		    	    </div>
-    			    </div>
-                    `;
-            }
-        });
 
-        // Fetch API data
-        fetch('../assets/json/monkee_load.json').
-            then(function (response) {
-                return response.json();
-            }).then(function (data) {
-                //console.log(data);
-                app.data.json = data;
-                app.render();
-            });
-
-
+        MonkeeUtil.embedSpecs('#app', '../assets/json/monkee_load.json');
+        MonkeeUtil.embedSpecs('#app-lite', '../assets/json/monkee_load_lite.json');
 
         // Setup the component
         var app_markdown = new MonkeeChain("#app_markdown", {
@@ -217,6 +140,8 @@
                 app_markdown.data.arr = arr;
                 app_markdown.render();
             });
+
+
 
 
 

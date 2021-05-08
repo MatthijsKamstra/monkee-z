@@ -36,32 +36,138 @@ class MonkeeUtil {
 		}
 	}
 
-	public static function setLink(href:String) {
-		var one = document.querySelector('[href="${href}"]');
-		// trace(one);
-		if (one == null) {
-			// trace('XXXXXXXX');
-			var link = document.createLinkElement();
-			link.rel = 'stylesheet';
-			link.href = '${href}';
-			document.body.appendChild(link);
-		}
-	}
+	// ____________________________________ Monkee-Z ____________________________________
+	/**
+	 * Json generated info on `build-release`
+	 *
+	 * @example
+	 * 			MonkeeUtil.mdTable2HTMLTable('#app', '../assets/json/monkee_load.json');
+	 *
+	 * @param id			element to parse Monkee-Z Chain code in
+	 * @param filename		the file we want to use
+	 */
+	// function table(arr) {
+	// 	var html = '<table class="table table-striped table-sm">';
+	// 	for (i in 0...arr.length) {
+	// 		var row = arr[i];
+	// 		html += '<tr>';
+	// 		for (j in 0...row.length) {
+	// 			var col = row[j];
+	// 			html += '<td>${col}<td>';
+	// 		}
+	// 		html += '</tr>';
+	// 	}
+	// 	html += "<table>";
+	// 	return html;
+	// }
+	// public static function mdTable2HTMLTable(id:String, filename:String) {
+	// 	console.info(App.callIn('MonkeeUtil :: embedSpecs'));
+	// 	// Setup the component
+	// 	var app_markdown = new MonkeeChain("#app_markdown", {
+	// 		data: {
+	// 			md: "",
+	// 			arr: [],
+	// 		},
+	// 		template: function(props) {
+	// 			return '
+	//         		<div>${this.table(props.arr)}</div>
+	//         	';
+	// 		},
+	// 	});
+	// 	// Fetch API data
+	// 	window.fetch("../assets/md/monkee_load.md").then(function(response) {
+	// 		return response.text();
+	// 	}).then(function(data) {
+	// 		// console.log(data);
+	// 		var arr = [];
+	// 		var linesArr = data.split("\n");
+	// 		for (i in 0...linesArr.length) {
+	// 			var _linesArr = linesArr[i];
+	// 			trace(_linesArr);
+	// 			if (i == 1)
+	// 				continue;
+	// 			var line = linesArr[i];
+	// 			// console.log(line);
+	// 			var col = line.split(" | ");
+	// 			// console.log(col.length);
+	// 			if (col.length <= 1)
+	// 				continue;
+	// 			var tempColArr = [];
+	// 			for (i in 0...col.length) {
+	// 				var val = col[j].replace("| ", "").replace(" |", "").replace('', "");
+	// 				// console.log(val);
+	// 				tempColArr.push(val);
+	// 			}
+	// 			arr.push(tempColArr);
+	// 		}
+	// 		console.log(arr);
+	// 		app_markdown.data.md = data;
+	// 		app_markdown.data.arr = arr;
+	// 		app_markdown.render();
+	// 	});
+	// }
 
-	public static function setScript(src:String) {
-		var one = document.querySelector('[src="${src}"]');
-		// trace(one);
-		if (one == null) {
-			var script = document.createScriptElement();
-			script.src = src;
-			document.body.appendChild(script);
-		}
+	/**
+	 * Json generated info on `build-release`
+	 *
+	 * @example
+	 * 			MonkeeUtil.embedSpecs('#app', '../assets/json/monkee_load.json');
+	 *
+	 * @param id			element to parse Monkee-Z Chain code in
+	 * @param filename		the file we want to use
+	 */
+	public static function embedSpecs(id:String, filename:String) {
+		console.info(App.callIn('MonkeeUtil :: embedSpecs'));
+
+		// Setup the component
+		var app = new MonkeeChain('${id}', {
+			data: {
+				json: {
+					name: "",
+					updated: "",
+					size: {
+						minified: "",
+						original: "",
+						uglifyjs: "",
+					},
+					url: {
+						minified: "",
+						original: "",
+						uglifyjs: "",
+					},
+				},
+			},
+			template: function(props) {
+				return '
+                    <div class="card">
+            			<div class="card-body">
+    						<strong>File ${props.json.name}:</strong>
+    						<p class="text-muted">Updated: ${props.json.updated}</p>
+    						<ul>
+    							<li>Download original file: <a href="${props.json.url.original}">${props.json.url.original}</a> (${props.json.size.original})</li>
+    							<li>UglifyJs file size: <a href="${props.json.url.uglifyjs}">${props.json.url.uglifyjs}</a> (${props.json.size.uglifyjs})</li>
+    							<li>Extra minified file size: <a href="${props.json.url.minified}">${props.json.url.minified}</a> (${props.json.size.minified})</li>
+    						</ul>
+    		    	    </div>
+    			    </div>
+                    ';
+			}
+		});
+
+		// Fetch API data
+		window.fetch('${filename}').then(function(response) {
+			return response.json();
+		}).then(function(data) {
+			// console.log(data);
+			app.data.json = data;
+			app.render();
+		});
 	}
 
 	/**
 	 * [Description]
-	 * @param id
-	 * @param filename
+	 * @param id			element to parse Monkee-Z Chain code in
+	 * @param filename		the file we want to use
 	 */
 	public static function embedCode(id:String, filename:String) {
 		console.info(App.callIn('MonkeeUtil :: embedCode'));
@@ -125,10 +231,6 @@ class MonkeeUtil {
 				// console.log(data);
 				app.data.code = data;
 				app.data.js = escapeHTML(data);
-				// .replace('&', '&amp;')
-				// .replace('"', '&quot;')
-				// .replace('<', '&lt;')
-				// .replace('>', '&gt;');
 				app.render();
 				window.setTimeout(function() {
 					untyped hljs.highlightAll();
@@ -137,6 +239,8 @@ class MonkeeUtil {
 			});
 	};
 
+	// ____________________________________ utils ____________________________________
+
 	public static function escapeHTML(html:String) {
 		// trace(html);
 		return html
@@ -144,6 +248,28 @@ class MonkeeUtil {
 			.replace('"', '&quot;')
 			.replace('<', '&lt;')
 			.replace('>', '&gt;');
+	}
+
+	public static function setLink(href:String) {
+		var one = document.querySelector('[href="${href}"]');
+		// trace(one);
+		if (one == null) {
+			// trace('XXXXXXXX');
+			var link = document.createLinkElement();
+			link.rel = 'stylesheet';
+			link.href = '${href}';
+			document.body.appendChild(link);
+		}
+	}
+
+	public static function setScript(src:String) {
+		var one = document.querySelector('[src="${src}"]');
+		// trace(one);
+		if (one == null) {
+			var script = document.createScriptElement();
+			script.src = src;
+			document.body.appendChild(script);
+		}
 	}
 
 	static public function main() {
