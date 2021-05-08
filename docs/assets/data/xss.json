@@ -1,0 +1,4 @@
+{
+  "title": "XSS injection",
+  "img": "<img src='x' onerror='alert(1)'>"
+}

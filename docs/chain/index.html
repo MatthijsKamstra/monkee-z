@@ -16,7 +16,7 @@
     <!-- Monkee Style custom styling -->
     <link rel="stylesheet" href="../assets/css/style.css" />
 
-    <title>Monkee - Z 🐵 CHAIN</title>
+    <title>Monkee - Z 🐵 Chain</title>
 
 </head>
 
@@ -25,39 +25,43 @@
     <div data-load="../components/nav.html"></div>
     <div data-load="../components/hero.html"></div>
 
-    <div class="container">
-
-        <h2 class="badge badge-dark">#foo</h2>
-        <div id="foo">foo</div>
-
-        <h2 class="badge badge-dark">#bar</h2>
-        <div id="bar">bar</div>
-
-        <h2 class="badge badge-dark">#monk</h2>
-        <div id="monk">#monk</div>
-
-        <h2 class="badge badge-dark">.monkee (not advised)</h2>
-        <div class="monkee">.monkee</div>
-        <div class="monkee">.monkee</div>
-        <div class="monkee">.monkee</div>
-
-        <h2 class="badge badge-dark">#app</h2>
-        <div id="app">#app</div>
-
-        <h2 class="badge badge-dark">x</h2>
-        <div id="x">#x</div>
-
-        <h2 class="badge badge-dark">json</h2>
-        <div id="json">#json</div>
-
-        <h2 class="badge badge-dark">array</h2>
-        <div id="array">#array</div>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-6">
+                <h3>Monkee-Chain-Lite</h3>
+                <a class="float-right btn btn-outline-dark btn-sm" href="lite.html">more</a>
+                <p>A library for creating reactive UI. <i>(< 1KB)</i>
+                </p>
+            </div>
+            <div class="col-6">
+                <h3>Monkee-Chain</h3>
+                <a class="float-right btn btn-outline-dark btn-sm" href="chain.html">more</a>
+                <p>AA library for creating reactive UI. <i>(~ 4KB)</i></p>
+            </div>
+        </div>
 
 
     </div>
+    <div class="container my-5">
+        <div id="app_markdown"></div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-6">
+                <div id="specs-chain-lite"></div>
+            </div>
+            <div class="col-6">
+                <div id="specs-chain"></div>
+            </div>
+        </div>
+    </div>
+
+
 
     <div data-load="../components/footer.html"></div>
 
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -66,124 +70,78 @@
         crossorigin="anonymous"></script>
 
     <!-- Monkee-Z code -->
+    <!-- <script src="../js/monkee_load_lite.js"></script> -->
+    <!-- <script src="./js/monkee_load_lite.min.js"></script> -->
     <script src="../js/monkee_load.min.min.js"></script>
-    <!-- <script src="../js/monkee_chain.js"></script>-->
-    <!-- <script src="../js/monkee_chain.min.js"></script> -->
     <script src="../js/monkee_chain.min.min.js"></script>
 
-    <!-- embed monkee bugger and you are good to go -->
-    <!-- <script src="https://matthijskamstra.github.io/monkee-bugger/monkee_bugger.min.js"></script> -->
-
+    <script src="../js/monkee_util.js"></script>
 
     <script>
-        var foo = document.getElementById('foo');
-        var app1 = new MonkeeChain(foo, {
-            template: '<h1>Hello, foo!</h1>'
-        });
 
-        var app2 = new MonkeeChain('#bar', {
-            data: {},
-            template: function () {
-                return '<h1>Hello, bar!</h1>';
-            }
-        });
-
-        var app3 = new MonkeeChain('#monk', {
-            data: {
-                greeting: 'Hello',
-                name: 'monk'
-            },
-            template: function (props) {
-                return `<h1>${props.greeting}, ${props.name}!</h1>`;
-            }
-        });
-
-        var app4 = new MonkeeChain('.monkee', { data: {}, template: '<p>👋</p>' });
-        // var app6 = new MonkeeChain('doesnotexist');
-        // var app6 = new MonkeeChain('#doesnotexist');
-        // var app5 = new MonkeeChain('.doesnotexist');
+        MonkeeUtil.embedSpecs('#specs-chain', '../assets/json/monkee_chain.json');
+        MonkeeUtil.embedSpecs('#specs-chain-lite', '../assets/json/monkee_chain_lite.json');
 
         // Setup the component
-        var app = new MonkeeChain('#app', {
+        var app_markdown = new MonkeeChain("#app_markdown", {
             data: {
-                time: new Date().toLocaleTimeString()
-            },
-            template: function (props) {
-                return '<strong>The time is:</strong> ' + props.time;
-            }
-        });
-
-
-        // Update the clock once a second
-        window.setInterval(function () {
-            app.data.time = new Date().toLocaleTimeString();
-            // re-render app
-            app.render();
-        }, 1000);
-
-        // some default values
-        let firstName = 'Matthijs';
-        let lastName = 'Kamstra';
-        new MonkeeChain('#x', {
-            data: {
-                message: "🐵"
-            },
-            template: function (props) {
-                return `<p>${firstName} ${lastName}: ${props.message}</p>`;
-            }
-        });
-
-
-
-        // Setup the component
-        var appJson = new MonkeeChain('#json', {
-            data: {
-                json: {
-                    name: '',
-                    size: {
-                        minified: "",
-                        original: "",
-                        uglifyjs: "",
-                    }
-                }
+                md: "",
+                arr: [],
             },
             template: function (props) {
                 return `
-                <strong>File ${props.json.name}:</strong>
-                <ul>
-                    <li>Original file size: ${props.json.size.original}</li>
-                    <li>UglifyJs file size: ${props.json.size.uglifyjs}</li>
-                    <li>Extra minified file size: ${props.json.size.minified}</li>
-                </ul>
-                `;
-            }
+            <div>${table(props.arr)}</div>
+            `;
+            },
         });
+
+
+        function table(arr) {
+            var html = '<table class="table table-striped table-sm">';
+            for (let i = 0; i < arr.length; i++) {
+                const row = arr[i];
+                html += `<tr>`;
+                for (let j = 0; j < row.length; j++) {
+                    const col = row[j];
+                    html += `<td>${col}<td>`;
+                }
+                html += `</tr>`;
+            }
+            html += "<table>";
+            return html;
+        }
 
         // Fetch API data
-        fetch('../assets/json/monkee_chain.json').then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            //console.log(data);
-            appJson.data.json = data;
-            appJson.render();
-        });
+        fetch("../assets/md/monkee_chain.md")
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (data) {
+                // console.log(data);
+                var arr = [];
+                var linesArr = data.split("\n");
+                for (let i = 0; i < linesArr.length; i++) {
+                    if (i == 1) continue;
+                    const line = linesArr[i];
+                    // console.log(line);
+                    var col = line.split(" | ");
+                    // console.log(col.length);
+                    if (col.length <= 1) continue;
+                    var tempColArr = [];
+                    for (let j = 0; j < col.length; j++) {
+                        const val = col[j].replaceAll("| ", "").replaceAll(" |", "").replaceAll('', "");
+                        // console.log(val);
+                        tempColArr.push(val);
+                    }
+                    arr.push(tempColArr);
+                }
+                console.log(arr);
+                app_markdown.data.md = data;
+                app_markdown.data.arr = arr;
+                app_markdown.render();
+            });
 
-        new MonkeeChain('#array', {
-            data: {
-                heading: 'My Todos',
-                todos: ['Swim', 'Climb', 'Jump', 'Play']
-            },
-            template: function (props) {
-                return `
-                <h1>${props.heading}</h1>
-                <ul>
-                    ${props.todos.map(function (todo) {
-                    return `<li>${todo}</li>`;
-                }).join('')}
-                </ul>
-                `;
-            }
-        });
+
 
 
 
