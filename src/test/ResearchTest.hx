@@ -4,12 +4,12 @@ import utils.JsonPath;
 
 using buddy.Should;
 
-class ResearchTest extends buddy.SingleSuite {
+class ResearchTest extends buddy.BuddySuite {
 	public function new() {
-		var content:String = sys.io.File.getContent('docs/data/i.want.it.json');
-		var json = haxe.Json.parse(content);
+		// var content:String = sys.io.File.getContent('docs/data/i.want.it.json');
+		// var json = haxe.Json.parse(content);
 
-		json = {
+		var json = {
 			"i": {
 				"want": {
 					"it": "Oh I know you do...",
@@ -27,6 +27,8 @@ class ResearchTest extends buddy.SingleSuite {
 			}
 		};
 		// trace(json);
+
+		var content = haxe.Json.stringify(json);
 
 		// A test suite:
 		describe("Check paths in json", {

@@ -8,9 +8,14 @@
 -debug
 
 
--main MonkeeUtil
--js docs/js/monkee_util.js
---cmd echo MonkeeUtil
+MonkeeChain
+-js docs/js/monkee_chain.js
+--cmd echo MonkeeChain
+
+
+# -main MonkeeUtil
+# -js docs/js/monkee_util.js
+# --cmd echo MonkeeUtil
 
 
 

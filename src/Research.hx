@@ -13,38 +13,100 @@ class Research {
 	public function new() {
 		trace('Research');
 
+		sanitize();
+
 		// proxi1();
 		// proxi2();
 		// proxi3();
-		proxi4();
+		// proxi4();
 		// proxi5();
 		// testOne();
 		// testTwo();
 		// testThree();
 	}
 
-	function render() {
-		trace('{{{render}}}');
+	function sanitize() {
+		var json = {
+			numberVal: 100,
+			intVal: 3,
+			floatVal: 4.4,
+			stringVal: "hello",
+			boolVal: true,
+			objVal: {},
+			arrayVal: ['one', 'two']
+		}
+		var content = Json.stringify(json);
+
+		trace(json.stringVal);
+		json.stringVal = "<image src=x onerror=alert('XSS_image')>";
+		trace(json.stringVal);
+		var sanitized = utils.Sanitize.sanitizeJson(json);
+		trace(sanitized.stringVal);
+		json = utils.Sanitize.sanitizeJson(json);
+		trace(json.stringVal);
 	}
 
-	function onChange() {
-		trace('{{{onChange}}}');
+	// ____________________________________ proxy ____________________________________
+
+	function render() {
+		trace('<< render >>');
+	}
+
+	function onChange(property) {
+		trace('<< onChange: ${property} >>');
 	}
 
 	function proxi5() {
 		trace('>> proxi 5');
 		var target = {
-			message1: "hello",
-			message2: "everyone",
-			data: {}
+			stringVal: "hello",
+			boolVal: true,
+			objVal: {},
+			arrayVal: ['one']
 		};
 		var proxi5Handler = {
 			get: function(target:Dynamic, property:String, receiver):Any {
-				return null;
-			}
+				// The get() trap is fired when a property of the target object is accessed via the proxy object.
+				trace('> GET: "${property}"');
+				var bool = js.lib.Reflect.get(target, property, receiver);
+				// render();
+				return bool;
+			},
+			set: function(target:Dynamic, property:String, val):Any {
+				// The set() trap controls behavior when a property of the target object is set.
+				trace('> SET: "${property}": ${val}');
+				var bool = js.lib.Reflect.set(target, property, val);
+				render();
+				return bool;
+			},
+			defineProperty: function(target:Dynamic, property:String, descriptor) {
+				trace('> defineProperty: "${property}": ${Json.stringify(descriptor)}');
+				render();
+				return js.lib.Reflect.defineProperty(target, property, descriptor);
+			},
 		}
 
-		var proxy = new Proxy(target, proxi5Handler);
+		var data = new Proxy(target, untyped proxi5Handler);
+
+		console.log(untyped data.stringVal);
+		console.log(untyped data.stringVal = 'hhehehe');
+		console.log(untyped data.stringVal);
+
+		console.log(untyped data.objVal);
+		console.log(untyped data.objVal.one); // 1
+		untyped data.objVal.one = '2';
+		console.log(untyped data.objVal);
+		console.log(untyped data.objVal.one);
+
+		console.log(untyped data.newObj);
+		console.log(untyped data.newObj = {});
+		console.log(untyped data.newObj);
+		console.log(untyped data.newObj = {'one': '1'});
+		console.log(untyped data.newObj);
+
+		console.log(untyped data.arrayVal);
+		console.log(untyped data.arrayVal.push('x'));
+		console.log(untyped data.arrayVal);
 	}
 
 	function proxi4() {
@@ -53,30 +115,32 @@ class Research {
 		var target = {
 			message1: "hello",
 			message2: "everyone",
-			data: {}
+			data: {},
+			array: ['one']
 		};
 
 		var handler = {
 			get: function(target:Dynamic, property:String, receiver):Any {
 				try {
-					return new Proxy(untyped target[property], js.Lib.nativeThis.handler);
+					return new Proxy(untyped target[property], untyped handler);
 				} catch (err) {
 					return js.lib.Reflect.get(target, property, receiver);
 				}
 				// return Reflect.getProperty(target, property);
 			},
-			defineProperty: function(target, property, descriptor) {
-				onChange();
+			defineProperty: function(target:Dynamic, property:String, descriptor) {
+				onChange(property);
 				return js.lib.Reflect.defineProperty(target, property, descriptor);
 			},
-			deleteProperty: function(target, property) {
-				onChange();
+			deleteProperty: function(target:Dynamic, property:String) {
+				onChange(property);
 				return js.lib.Reflect.deleteProperty(target, property);
 			}
 		}
 
 		var proxy = new Proxy(target, untyped handler);
 
+		console.log(untyped proxy.message1 = 'hhehehe'); // hello
 		console.log(untyped proxy.message1); // hello
 		console.log(untyped proxy.message2); // everyone
 
@@ -95,6 +159,9 @@ class Research {
 		console.log(untyped proxy.data.one); // 1
 		untyped proxy.data.one = '2';
 		console.log(untyped proxy.data.one); // 2
+		console.log(untyped proxy.array); // 2
+		console.log(untyped proxy.array.push('x')); // 2
+		console.log(untyped proxy.array); // 2
 	}
 
 	function proxi3() {

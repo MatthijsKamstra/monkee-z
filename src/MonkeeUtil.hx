@@ -37,75 +37,79 @@ class MonkeeUtil {
 	}
 
 	// ____________________________________ Monkee-Z ____________________________________
+
 	/**
 	 * Json generated info on `build-release`
 	 *
 	 * @example
-	 * 			MonkeeUtil.mdTable2HTMLTable('#app', '../assets/json/monkee_load.json');
+	 * 			MonkeeUtil.mdTable2HTMLTable('#app', '../assets/json/monkee_load.md');
 	 *
 	 * @param id			element to parse Monkee-Z Chain code in
 	 * @param filename		the file we want to use
 	 */
-	// function table(arr) {
-	// 	var html = '<table class="table table-striped table-sm">';
-	// 	for (i in 0...arr.length) {
-	// 		var row = arr[i];
-	// 		html += '<tr>';
-	// 		for (j in 0...row.length) {
-	// 			var col = row[j];
-	// 			html += '<td>${col}<td>';
-	// 		}
-	// 		html += '</tr>';
-	// 	}
-	// 	html += "<table>";
-	// 	return html;
-	// }
-	// public static function mdTable2HTMLTable(id:String, filename:String) {
-	// 	console.info(App.callIn('MonkeeUtil :: embedSpecs'));
-	// 	// Setup the component
-	// 	var app_markdown = new MonkeeChain("#app_markdown", {
-	// 		data: {
-	// 			md: "",
-	// 			arr: [],
-	// 		},
-	// 		template: function(props) {
-	// 			return '
-	//         		<div>${this.table(props.arr)}</div>
-	//         	';
-	// 		},
-	// 	});
-	// 	// Fetch API data
-	// 	window.fetch("../assets/md/monkee_load.md").then(function(response) {
-	// 		return response.text();
-	// 	}).then(function(data) {
-	// 		// console.log(data);
-	// 		var arr = [];
-	// 		var linesArr = data.split("\n");
-	// 		for (i in 0...linesArr.length) {
-	// 			var _linesArr = linesArr[i];
-	// 			trace(_linesArr);
-	// 			if (i == 1)
-	// 				continue;
-	// 			var line = linesArr[i];
-	// 			// console.log(line);
-	// 			var col = line.split(" | ");
-	// 			// console.log(col.length);
-	// 			if (col.length <= 1)
-	// 				continue;
-	// 			var tempColArr = [];
-	// 			for (i in 0...col.length) {
-	// 				var val = col[j].replace("| ", "").replace(" |", "").replace('', "");
-	// 				// console.log(val);
-	// 				tempColArr.push(val);
-	// 			}
-	// 			arr.push(tempColArr);
-	// 		}
-	// 		console.log(arr);
-	// 		app_markdown.data.md = data;
-	// 		app_markdown.data.arr = arr;
-	// 		app_markdown.render();
-	// 	});
-	// }
+	public static function mdTable2HTMLTable(id:String, filename:String) {
+		console.info(App.callIn('MonkeeUtil :: embedSpecs'));
+		// Setup the component
+
+		function createTable(arr:Array<Dynamic>):String {
+			var html = '<table class="table table-striped table-sm">';
+			for (i in 0...arr.length) {
+				var row:Array<Dynamic> = arr[i];
+				html += '<tr>';
+				for (j in 0...row.length) {
+					var col = row[j];
+					html += '<td>${col}<td>';
+				}
+				html += '</tr>';
+			}
+			html += "<table>";
+			return html;
+		}
+
+		var app_markdown = new MonkeeChain('${id}', {
+			data: {
+				md: "",
+				arr: [],
+			},
+			template: function(props) {
+				return '
+	        		<div>${createTable(props.arr)}</div>
+	        	';
+			},
+		});
+
+		// Fetch API data
+		window.fetch("../assets/md/monkee_load.md").then(function(response) {
+			return response.text();
+		}).then(function(data) {
+			// console.log(data);
+			var arr = [];
+			var linesArr = data.split("\n");
+			for (i in 0...linesArr.length) {
+				var _linesArr = linesArr[i];
+				trace(_linesArr);
+				if (i == 1)
+					continue;
+				var line = linesArr[i];
+				// console.log(line);
+				var col = line.split(" | ");
+				// console.log(col.length);
+				if (col.length <= 1)
+					continue;
+				var tempColArr = [];
+				for (j in 0...col.length) {
+					var val = col[j].replace("| ", "").replace(" |", "").replace('', "");
+					// console.log(val);
+					tempColArr.push(val);
+				}
+				arr.push(tempColArr);
+			}
+			console.log(arr);
+			app_markdown.data.md = data;
+			app_markdown.data.arr = arr;
+			app_markdown.render();
+		});
+	}
 
 	/**
 	 * Json generated info on `build-release`
@@ -165,7 +169,11 @@ class MonkeeUtil {
 	}
 
 	/**
-	 * [Description]
+	 * Embed js code into page, and a copy button for easy copy/paste
+	 *
+	 * @example
+	 * 			MonkeeUtil.embedCode('#app', 'test.js');
+	 *
 	 * @param id			element to parse Monkee-Z Chain code in
 	 * @param filename		the file we want to use
 	 */

@@ -43,8 +43,6 @@ class MonkeeChainLite {
 		if (Std.is(target, String)) {
 			this.targetName = target;
 			this.target = document.querySelector(target);
-
-			// trace(this.target);
 		} else {
 			this.targetName = untyped target.id;
 			this.target = target;
@@ -53,22 +51,13 @@ class MonkeeChainLite {
 		if (this.target == null) {
 			console.error('Target "${this.targetName}" possibly not correct target/no element');
 			return;
-			// } else {
-			// 	// visual check
-			// 	this.target.dataset.monkee = 'set';
-			// 	this.target.innerText = 'x ${this.targetName} set';
 		}
 
 		if (obj.data != null && obj.data != {}) {
-			// trace(obj.data);
 			this.data = obj.data;
-			// } else {
-			// 	console.error('Element "${this.targetName}" has no data: ${Json.stringify(obj.data)}');
-			// 	this.data = {};
 		}
 
 		if (obj.template != null && obj.template != '') {
-			// trace(obj.template);
 			this.template = obj.template;
 		} else {
 			console.error('Element "${this.targetName}" has template: ${Json.stringify(obj.template)}');
@@ -84,20 +73,9 @@ class MonkeeChainLite {
 		if (Std.is(this.template, String)) {
 			this.target.innerHTML = (this.template);
 		} else {
-			// this.target.innerHTML = cast(this.template, Function).call(this, this.data);
 			this.target.innerHTML = untyped (this.template).call(this, this.data);
 		}
 	}
-	/**
-	 * Convert a template string into HTML DOM nodes
-	 * @param  {String} str The template string
-	 * @return {Node}       The template HTML
-	 */
-	// public function stringToHTML(str:String):Element {
-	// 	var parser = new DOMParser();
-	// 	var doc = parser.parseFromString(str, SupportedType.TEXT_HTML);
-	// 	return doc.body;
-	// };
 }
 
 typedef MonkeeChainObj = {

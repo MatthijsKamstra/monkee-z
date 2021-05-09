@@ -13,16 +13,17 @@ class BuildToolSimple {
 				return Std.int(after / before * 100 * precision) / precision;
 
 			var outPath = haxe.macro.Compiler.getOutput();
-			trace('Javascript file: "${outPath}"'); // docs/js/monkee_load.js
+			Sys.println("----------------------");
+			Sys.println('Javascript file: "${outPath}"'); // docs/js/monkee_load.js
 			var sizeBefore = sys.io.File.getContent(outPath).length;
-			trace("JavaScript size original: " + kilobyte(sizeBefore));
+			Sys.println("JavaScript size original: " + kilobyte(sizeBefore));
 
 			var outPath2 = outPath.replace('.js', '.min.js');
 			@:privateAccess UglifyJS.compileFile(outPath, outPath2);
 
 			var outContent2 = sys.io.File.getContent(outPath2);
 			var sizeAfter2 = outContent2.length;
-			trace("JavaScript size minified (UglifyJS): "
+			Sys.println("JavaScript size minified (UglifyJS): "
 				+ kilobyte(sizeAfter2)
 				+ " ("
 				+ percentage(sizeAfter2, sizeBefore)
@@ -41,7 +42,8 @@ class BuildToolSimple {
 			// overwrite output
 			sys.io.File.saveContent(outPath3, outContent3);
 			var sizeAfter3 = outContent3.length;
-			trace("JavaScript size minified: " + kilobyte(sizeAfter3) + " (" + percentage(sizeAfter3, sizeBefore) + "% smaller)");
+			Sys.println("JavaScript size minified: " + kilobyte(sizeAfter3) + " (" + percentage(sizeAfter3, sizeBefore) + "% smaller)");
+			Sys.println("----------------------");
 
 			// generate json, small test
 			var json = {};

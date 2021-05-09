@@ -2,7 +2,7 @@ package test;
 
 using buddy.Should;
 
-class BuddyTest extends buddy.SingleSuite {
+class BuddyTest extends buddy.BuddySuite {
 	public function new() {
 		// A test suite:
 		describe("Using Buddy", {

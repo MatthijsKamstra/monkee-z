@@ -1,5 +1,6 @@
 package utils;
 
+import haxe.Json;
 import js.html.Element;
 import js.Browser.*;
 import js.html.XMLHttpRequest;
@@ -84,6 +85,10 @@ class Html {
 			.replace('>', '&gt;')
 			.replace('"', '&quot;')
 			.replace("'", '&#39;'); // '&apos;' is not valid HTML 4
+	}
+
+	public static function escapeHTML(unsafe_str:String):String {
+		return sanitizeHTML(unsafe_str);
 	}
 
 	/**

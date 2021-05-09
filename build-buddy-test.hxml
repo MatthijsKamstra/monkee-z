@@ -2,5 +2,5 @@
 -lib buddy
 -cp src
 -D analyzer-optimize
--main test.ResearchTest
+-main test.BuddyMain
 --interp
