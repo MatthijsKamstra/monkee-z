@@ -14,13 +14,14 @@
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <!-- Monkee Style custom styling -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
 
-    <title>Monkee - Z 🐵 XSS</title>
-
+    <title>Monkee - Z 🐵</title>
 </head>
 
 <body class="d-flex flex-column h-100">
+    <div data-load="components/nav.html"></div>
+    <div data-load="components/hero.html"></div>
 
 
     <div class="container">
@@ -29,6 +30,13 @@
 
         <h2 class="badge badge-dark">#app</h2>
         <div id="app">#app</div>
+
+        <h2 class="badge badge-dark">#app2</h2>
+        <div id="app2">#app2</div>
+
+
+        <h2 class="badge badge-dark">#app3</h2>
+        <div id="app3">#app3</div>
 
 
 
@@ -42,9 +50,10 @@
         crossorigin="anonymous"></script>
 
     <!-- Monkee-Z code -->
-    <!-- <script src="./js/monkee_chain.js"></script> -->
+    <script src="./js/monkee_load.min.min.js"></script>
+    <script src="./js/monkee_chain.js"></script>
     <!-- <script src="./js/monkee_chain.min.js"></script> -->
-    <script src="./js/monkee_chain.min.min.js"></script>
+    <!-- <script src="./js/monkee_chain.min.min.js"></script> -->
 
     <!-- embed monkee bugger and you are good to go -->
     <!-- <script src="https://matthijskamstra.github.io/monkee-bugger/monkee_bugger.min.js"></script> -->
@@ -56,12 +65,36 @@
         // Setup the component
         var app = new MonkeeChain('#app', {
             data: {
-                xss: '<img src="x" onerror="alert(1)">'
+                xss: '<p onmouseover=alert(\'XSS_mouseover\')>long paragraph</p>'
             },
             template: function (props) {
                 return props.xss;
             }
         });
+
+
+        // Setup the component
+        var app2 = new MonkeeChain('#app2', {
+            data: {
+                title: "First title"
+            },
+            template: function (props) {
+                return `title: ${props.title}`;
+            }
+        });
+        app2.data.title = 'Second title';
+
+        // Setup the component
+        var app3 = new MonkeeChain('#app3', {
+            data: {
+                title: "First title"
+            },
+            template: function (props) {
+                return `title: ${props.title}`;
+            }
+        });
+        app3.data.title = "<image src=x onerror=alert('XSS_image')>";
+
 
 
 
