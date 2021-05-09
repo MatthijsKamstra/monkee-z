@@ -26,24 +26,43 @@ class Research {
 	}
 
 	function sanitize() {
+		var xss = "<image src=x onerror=alert('XSS_image')>";
 		var json = {
 			numberVal: 100,
 			intVal: 3,
 			floatVal: 4.4,
 			stringVal: "hello",
 			boolVal: true,
+			arrayVal: ['one', 'two'],
 			objVal: {},
-			arrayVal: ['one', 'two']
 		}
 		var content = Json.stringify(json);
 
-		trace(json.stringVal);
-		json.stringVal = "<image src=x onerror=alert('XSS_image')>";
-		trace(json.stringVal);
+		trace('json.stringVal: ' + json.stringVal);
+		json.stringVal = xss;
+		trace('json.stringVal: ' + json.stringVal);
 		var sanitized = utils.Sanitize.sanitizeJson(json);
-		trace(sanitized.stringVal);
+		trace('sanitized.stringVal: ' + sanitized.stringVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace(json.stringVal);
+		trace('json.stringVal: ' + json.stringVal);
+
+		trace('json.boolVal: ' + json.boolVal);
+		untyped json.boolVal = xss;
+		trace('json.boolVal: ' + json.boolVal);
+		json = utils.Sanitize.sanitizeJson(json);
+		trace('json.boolVal: ' + json.boolVal);
+
+		trace('json.arrayVal: ' + json.arrayVal);
+		untyped json.arrayVal.push(xss);
+		trace('json.arrayVal: ' + json.arrayVal);
+		json = utils.Sanitize.sanitizeJson(json);
+		trace('json.arrayVal: ' + json.arrayVal);
+
+		trace('json.objVal: ' + json.objVal);
+		untyped json.objVal.title = (xss);
+		trace('json.objVal: ' + json.objVal);
+		json = utils.Sanitize.sanitizeJson(json);
+		trace('json.objVal: ' + json.objVal);
 	}
 
 	// ____________________________________ proxy ____________________________________

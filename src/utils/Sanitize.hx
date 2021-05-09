@@ -6,7 +6,7 @@ import haxe.Json;
 using StringTools;
 
 class Sanitize {
-	public static var IS_DEBUG = true;
+	public static var IS_DEBUG = false;
 
 	/**
 	 * [Description]
@@ -15,9 +15,10 @@ class Sanitize {
 	 */
 	public static function sanitizeJson(json:Dynamic):Dynamic {
 		if (IS_DEBUG)
-			trace("---> sanitizeJson");
+			trace('---> sanitizeJson ${json}');
 
-		var res = Json.parse(Json.stringify(json));
+		// var res = Json.parse(Json.stringify(json));
+		var res = json;
 		if (IS_DEBUG)
 			trace(res);
 		for (n in Reflect.fields(res)) {
@@ -37,16 +38,33 @@ class Sanitize {
 				if (IS_DEBUG)
 					trace('string, sanatize');
 
-				// trace(res);
+				if (IS_DEBUG)
+					trace(res);
 				Reflect.setProperty(res, key, sanitizeHTML(value));
-				// trace(res);
+				if (IS_DEBUG)
+					trace(res);
 			} else if (Std.isOfType(value, Array)) {
 				// Reflect.setProperty(res, key, sanitizeHTML(value));
 				if (IS_DEBUG)
 					trace('DO something clever with Array ${value}');
+
+				// Array<String> NOT Array<{}>
+				var value:Array<Dynamic> = cast value;
+
+				for (i in 0...value.length) {
+					// trace("i: " + i);
+					// trace("value[i]: " + value[i]);
+					// trace('${Type.typeof(value[i]) == TObject}');
+					if (Type.typeof(value[i]) == TObject) {
+						Sanitize.sanitizeJson(value);
+						continue;
+					};
+					value[i] = sanitizeHTML(value[i]);
+				}
 			} else {
 				if (IS_DEBUG)
 					trace('DO something clever with OBject ${value}');
+				Sanitize.sanitizeJson(value);
 			}
 			// #if js
 			// // import js.lib.Object;

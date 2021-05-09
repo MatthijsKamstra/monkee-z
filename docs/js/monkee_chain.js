@@ -8,7 +8,7 @@ class MonkeeChain {
 		this.targetName = "";
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " - " + "MonkeeChain" + " - build: " + "2021-05-09 12:11:52");
+			$global.console.info("[Monkee-Z]" + " - " + "MonkeeChain" + " - build: " + "2021-05-09 09:52:32");
 		}
 		let _gthis = this;
 		if(typeof(target) == "string") {
@@ -50,7 +50,7 @@ class MonkeeChain {
 	}
 	render() {
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " - " + "RENDER()" + " - build: " + "2021-05-09 12:11:52");
+			$global.console.info("[Monkee-Z]" + " - " + "RENDER()" + " - build: " + "2021-05-09 09:52:32");
 		}
 		if(typeof(this.template) == "string") {
 			this.target.innerHTML = this.template;
@@ -111,3 +111,5 @@ class utils_Html {
 	}
 }
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_chain.js.map

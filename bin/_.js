@@ -45,14 +45,31 @@ class Research {
 		this.sanitize();
 	}
 	sanitize() {
-		let json = { numberVal : 100, intVal : 3, floatVal : 4.4, stringVal : "hello", boolVal : true, objVal : { }, arrayVal : ["one","two"]};
-		JSON.stringify(json);
-		console.log("src/Research.hx:40:",json.stringVal);
-		json.stringVal = "<image src=x onerror=alert('XSS_image')>";
-		console.log("src/Research.hx:42:",json.stringVal);
-		console.log("src/Research.hx:44:",utils_Sanitize.sanitizeJson(json).stringVal);
+		let xss = "<image src=x onerror=alert('XSS_image')>";
+		let json = { numberVal : 100, intVal : 3, floatVal : 4.4, stringVal : "hello", boolVal : true, arrayVal : ["one","two"], objVal : { }};
+		let content = JSON.stringify(json);
+		console.log("src/Research.hx:41:","json.stringVal: " + json.stringVal);
+		json.stringVal = xss;
+		console.log("src/Research.hx:43:","json.stringVal: " + json.stringVal);
+		let sanitized = utils_Sanitize.sanitizeJson(json);
+		console.log("src/Research.hx:45:","sanitized.stringVal: " + sanitized.stringVal);
 		json = utils_Sanitize.sanitizeJson(json);
-		console.log("src/Research.hx:46:",json.stringVal);
+		console.log("src/Research.hx:47:","json.stringVal: " + json.stringVal);
+		console.log("src/Research.hx:49:","json.boolVal: " + (json.boolVal == null ? "null" : "" + json.boolVal));
+		json.boolVal = xss;
+		console.log("src/Research.hx:51:","json.boolVal: " + (json.boolVal == null ? "null" : "" + json.boolVal));
+		json = utils_Sanitize.sanitizeJson(json);
+		console.log("src/Research.hx:53:","json.boolVal: " + (json.boolVal == null ? "null" : "" + json.boolVal));
+		console.log("src/Research.hx:55:","json.arrayVal: " + Std.string(json.arrayVal));
+		json.arrayVal.push(xss);
+		console.log("src/Research.hx:57:","json.arrayVal: " + Std.string(json.arrayVal));
+		json = utils_Sanitize.sanitizeJson(json);
+		console.log("src/Research.hx:59:","json.arrayVal: " + Std.string(json.arrayVal));
+		console.log("src/Research.hx:61:","json.objVal: " + Std.string(json.objVal));
+		json.objVal.title = xss;
+		console.log("src/Research.hx:63:","json.objVal: " + Std.string(json.objVal));
+		json = utils_Sanitize.sanitizeJson(json);
+		console.log("src/Research.hx:65:","json.objVal: " + Std.string(json.objVal));
 	}
 	static main() {
 		new Research();
@@ -62,6 +79,12 @@ Research.__name__ = true;
 Object.assign(Research.prototype, {
 	__class__: Research
 });
+class Std {
+	static string(s) {
+		return js_Boot.__string_rec(s,"");
+	}
+}
+Std.__name__ = true;
 class StringTools {
 	static replace(s,sub,by) {
 		return s.split(sub).join(by);
@@ -258,41 +281,56 @@ js_Boot.__name__ = true;
 class utils_Sanitize {
 	static sanitizeJson(json) {
 		if(utils_Sanitize.IS_DEBUG) {
-			console.log("src/utils/Sanitize.hx:18:","---> sanitizeJson");
+			console.log("src/utils/Sanitize.hx:18:","---> sanitizeJson " + Std.string(json));
 		}
-		let res = JSON.parse(JSON.stringify(json));
 		if(utils_Sanitize.IS_DEBUG) {
-			console.log("src/utils/Sanitize.hx:22:",res);
+			console.log("src/utils/Sanitize.hx:23:",json);
 		}
 		let _g = 0;
-		let _g1 = Reflect.fields(res);
+		let _g1 = Reflect.fields(json);
 		while(_g < _g1.length) {
 			let n = _g1[_g];
 			++_g;
-			let value = Reflect.field(res,n);
+			let value = Reflect.field(json,n);
 			Type.typeof(value);
 			if(typeof(value) == "number" && ((value | 0) === value) || typeof(value) == "number") {
 				if(utils_Sanitize.IS_DEBUG) {
-					console.log("src/utils/Sanitize.hx:32:","numbers, don't do anything");
+					console.log("src/utils/Sanitize.hx:33:","numbers, don't do anything");
 				}
 			} else if(typeof(value) == "boolean") {
 				if(utils_Sanitize.IS_DEBUG) {
-					console.log("src/utils/Sanitize.hx:35:","bool, don't do anything");
+					console.log("src/utils/Sanitize.hx:36:","bool, don't do anything");
 				}
 			} else if(typeof(value) == "string") {
 				if(utils_Sanitize.IS_DEBUG) {
-					console.log("src/utils/Sanitize.hx:38:","string, sanatize");
+					console.log("src/utils/Sanitize.hx:39:","string, sanatize");
 				}
-				Reflect.setProperty(res,n,utils_Sanitize.sanitizeHTML(value));
+				console.log("src/utils/Sanitize.hx:41:",json);
+				Reflect.setProperty(json,n,utils_Sanitize.sanitizeHTML(value));
+				console.log("src/utils/Sanitize.hx:43:",json);
 			} else if(((value) instanceof Array)) {
 				if(utils_Sanitize.IS_DEBUG) {
-					console.log("src/utils/Sanitize.hx:46:","DO something clever with Array " + value);
+					console.log("src/utils/Sanitize.hx:47:","DO something clever with Array " + value);
 				}
-			} else if(utils_Sanitize.IS_DEBUG) {
-				console.log("src/utils/Sanitize.hx:49:","DO something clever with OBject " + value);
+				let value1 = value;
+				let _g = 0;
+				let _g1 = value1.length;
+				while(_g < _g1) {
+					let i = _g++;
+					if(Type.typeof(value1[i]) == ValueType.TObject) {
+						utils_Sanitize.sanitizeJson(value1);
+						continue;
+					}
+					value1[i] = utils_Sanitize.sanitizeHTML(value1[i]);
+				}
+			} else {
+				if(utils_Sanitize.IS_DEBUG) {
+					console.log("src/utils/Sanitize.hx:64:","DO something clever with OBject " + value);
+				}
+				utils_Sanitize.sanitizeJson(value);
 			}
 		}
-		return res;
+		return json;
 	}
 	static sanitizeHTML(unsafe_str) {
 		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(unsafe_str,"&","&amp;"),"<","&lt;"),">","&gt;"),"\"","&quot;"),"'","&#39;");

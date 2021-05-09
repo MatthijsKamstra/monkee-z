@@ -4,6 +4,7 @@ import buddy.*;
 
 using buddy.Should;
 
+@colorize
 // Implement "Buddy" and define an array of classes within the brackets:
 class BuddyMain implements Buddy<[
 	//
