@@ -63,6 +63,8 @@ class Research {
 		trace('json.objVal: ' + json.objVal);
 		json = utils.Sanitize.sanitizeJson(json);
 		trace('json.objVal: ' + json.objVal);
+
+		trace('json: ' + json);
 	}
 
 	// ____________________________________ proxy ____________________________________

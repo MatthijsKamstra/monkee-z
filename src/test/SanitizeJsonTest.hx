@@ -23,7 +23,8 @@ class SanitizeJsonTest extends buddy.BuddySuite {
 		// var sanitized = Sanitize.sanitizeJson(json);
 
 		var xss = "<image src=x onerror=alert('XSS_image')>";
-		var escapeXss = '&lt;image src=x onerror=alert(&#39;XSS_image&#39;)&gt;';
+		var escapeXss = Sanitize.escapeHTML(xss);
+		// var escapeXss = '&lt;image src=x onerror=alert(&#39;XSS_image&#39;)&gt;';
 
 		// A test suite:
 		describe("Test sanitizing dynamic json", {
@@ -65,6 +66,7 @@ class SanitizeJsonTest extends buddy.BuddySuite {
 				// json.arrayVal.should.not.be(xss);
 				// json.arrayVal.should.beType(String);
 			});
+
 			it("Object 2 String sanitize json", {
 				// json.objVal.should.be({}); // weird..
 				// trace(json.objVal);
@@ -75,6 +77,7 @@ class SanitizeJsonTest extends buddy.BuddySuite {
 				json = Sanitize.sanitizeJson(json);
 				// trace(untyped json.objVal.title);
 				Reflect.getProperty(json.objVal, "title").should.not.be(xss);
+				Reflect.getProperty(json.objVal, "title").should.be(escapeXss);
 			});
 		});
 	}

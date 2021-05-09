@@ -70,6 +70,7 @@ class Research {
 		console.log("src/Research.hx:63:","json.objVal: " + Std.string(json.objVal));
 		json = utils_Sanitize.sanitizeJson(json);
 		console.log("src/Research.hx:65:","json.objVal: " + Std.string(json.objVal));
+		console.log("src/Research.hx:67:","json: " + Std.string(json));
 	}
 	static main() {
 		new Research();
@@ -305,12 +306,16 @@ class utils_Sanitize {
 				if(utils_Sanitize.IS_DEBUG) {
 					console.log("src/utils/Sanitize.hx:39:","string, sanatize");
 				}
-				console.log("src/utils/Sanitize.hx:41:",json);
+				if(utils_Sanitize.IS_DEBUG) {
+					console.log("src/utils/Sanitize.hx:42:",json);
+				}
 				Reflect.setProperty(json,n,utils_Sanitize.sanitizeHTML(value));
-				console.log("src/utils/Sanitize.hx:43:",json);
+				if(utils_Sanitize.IS_DEBUG) {
+					console.log("src/utils/Sanitize.hx:45:",json);
+				}
 			} else if(((value) instanceof Array)) {
 				if(utils_Sanitize.IS_DEBUG) {
-					console.log("src/utils/Sanitize.hx:47:","DO something clever with Array " + value);
+					console.log("src/utils/Sanitize.hx:49:","DO something clever with Array " + value);
 				}
 				let value1 = value;
 				let _g = 0;
@@ -325,7 +330,7 @@ class utils_Sanitize {
 				}
 			} else {
 				if(utils_Sanitize.IS_DEBUG) {
-					console.log("src/utils/Sanitize.hx:64:","DO something clever with OBject " + value);
+					console.log("src/utils/Sanitize.hx:66:","DO something clever with OBject " + value);
 				}
 				utils_Sanitize.sanitizeJson(value);
 			}
@@ -341,6 +346,6 @@ String.prototype.__class__ = String;
 String.__name__ = true;
 Array.__name__ = true;
 js_Boot.__toStr = ({ }).toString;
-utils_Sanitize.IS_DEBUG = true;
+utils_Sanitize.IS_DEBUG = false;
 Research.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
