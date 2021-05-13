@@ -38,31 +38,42 @@ class Research {
 		}
 		var content = Json.stringify(json);
 
-		trace('json.stringVal: ' + json.stringVal);
+		// trace('json.stringVal: ' + json.stringVal);
 		json.stringVal = xss;
-		trace('json.stringVal: ' + json.stringVal);
+		// trace('json.stringVal: ' + json.stringVal);
 		var sanitized = utils.Sanitize.sanitizeJson(json);
-		trace('sanitized.stringVal: ' + sanitized.stringVal);
+		// trace('sanitized.stringVal: ' + sanitized.stringVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace('json.stringVal: ' + json.stringVal);
+		// trace('json.stringVal: ' + json.stringVal);
 
-		trace('json.boolVal: ' + json.boolVal);
+		// trace('json.boolVal: ' + json.boolVal);
 		untyped json.boolVal = xss;
-		trace('json.boolVal: ' + json.boolVal);
+		// trace('json.boolVal: ' + json.boolVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace('json.boolVal: ' + json.boolVal);
+		// trace('json.boolVal: ' + json.boolVal);
 
-		trace('json.arrayVal: ' + json.arrayVal);
+		// trace('json.arrayVal: ' + json.arrayVal);
 		untyped json.arrayVal.push(xss);
-		trace('json.arrayVal: ' + json.arrayVal);
+		// trace('json.arrayVal: ' + json.arrayVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace('json.arrayVal: ' + json.arrayVal);
+		// trace('json.arrayVal: ' + json.arrayVal);
 
-		trace('json.objVal: ' + json.objVal);
+		// trace('json.objVal: ' + json.objVal);
 		untyped json.objVal.title = (xss);
-		trace('json.objVal: ' + json.objVal);
+		// trace('json.objVal: ' + json.objVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace('json.objVal: ' + json.objVal);
+		// trace('json.objVal: ' + json.objVal);
+
+		Reflect.setField(json, 'newArrayVal', []);
+		trace(Reflect.getProperty(json, 'newArrayVal'));
+		untyped json.newArrayVal.push({inject: xss});
+		json = utils.Sanitize.sanitizeJson(json);
+		trace('json: ' + json);
+		untyped json.newArrayVal.push({inject: xss});
+		trace(Reflect.getProperty(json, 'newArrayVal')[0].inject);
+		trace('json: ' + json);
+		json = utils.Sanitize.sanitizeJson(json);
+		trace(Reflect.getProperty(json, 'newArrayVal')[0].inject);
 
 		trace('json: ' + json);
 	}

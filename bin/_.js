@@ -10,6 +10,25 @@ class Reflect {
 			return null;
 		}
 	}
+	static getProperty(o,field) {
+		let tmp;
+		if(o == null) {
+			return null;
+		} else {
+			let tmp1;
+			if(o.__properties__) {
+				tmp = o.__properties__["get_" + field];
+				tmp1 = tmp;
+			} else {
+				tmp1 = false;
+			}
+			if(tmp1) {
+				return o[tmp]();
+			} else {
+				return o[field];
+			}
+		}
+	}
 	static setProperty(o,field,value) {
 		let tmp;
 		let tmp1;
@@ -48,29 +67,26 @@ class Research {
 		let xss = "<image src=x onerror=alert('XSS_image')>";
 		let json = { numberVal : 100, intVal : 3, floatVal : 4.4, stringVal : "hello", boolVal : true, arrayVal : ["one","two"], objVal : { }};
 		let content = JSON.stringify(json);
-		console.log("src/Research.hx:41:","json.stringVal: " + json.stringVal);
 		json.stringVal = xss;
-		console.log("src/Research.hx:43:","json.stringVal: " + json.stringVal);
 		let sanitized = utils_Sanitize.sanitizeJson(json);
-		console.log("src/Research.hx:45:","sanitized.stringVal: " + sanitized.stringVal);
 		json = utils_Sanitize.sanitizeJson(json);
-		console.log("src/Research.hx:47:","json.stringVal: " + json.stringVal);
-		console.log("src/Research.hx:49:","json.boolVal: " + (json.boolVal == null ? "null" : "" + json.boolVal));
 		json.boolVal = xss;
-		console.log("src/Research.hx:51:","json.boolVal: " + (json.boolVal == null ? "null" : "" + json.boolVal));
 		json = utils_Sanitize.sanitizeJson(json);
-		console.log("src/Research.hx:53:","json.boolVal: " + (json.boolVal == null ? "null" : "" + json.boolVal));
-		console.log("src/Research.hx:55:","json.arrayVal: " + Std.string(json.arrayVal));
 		json.arrayVal.push(xss);
-		console.log("src/Research.hx:57:","json.arrayVal: " + Std.string(json.arrayVal));
 		json = utils_Sanitize.sanitizeJson(json);
-		console.log("src/Research.hx:59:","json.arrayVal: " + Std.string(json.arrayVal));
-		console.log("src/Research.hx:61:","json.objVal: " + Std.string(json.objVal));
 		json.objVal.title = xss;
-		console.log("src/Research.hx:63:","json.objVal: " + Std.string(json.objVal));
 		json = utils_Sanitize.sanitizeJson(json);
-		console.log("src/Research.hx:65:","json.objVal: " + Std.string(json.objVal));
-		console.log("src/Research.hx:67:","json: " + Std.string(json));
+		json["newArrayVal"] = [];
+		console.log("src/Research.hx:68:",Reflect.getProperty(json,"newArrayVal"));
+		json.newArrayVal.push({ inject : xss});
+		json = utils_Sanitize.sanitizeJson(json);
+		console.log("src/Research.hx:71:","json: " + Std.string(json));
+		json.newArrayVal.push({ inject : xss});
+		console.log("src/Research.hx:73:",Reflect.getProperty(json,"newArrayVal")[0].inject);
+		console.log("src/Research.hx:74:","json: " + Std.string(json));
+		json = utils_Sanitize.sanitizeJson(json);
+		console.log("src/Research.hx:76:",Reflect.getProperty(json,"newArrayVal")[0].inject);
+		console.log("src/Research.hx:78:","json: " + Std.string(json));
 	}
 	static main() {
 		new Research();
@@ -317,20 +333,20 @@ class utils_Sanitize {
 				if(utils_Sanitize.IS_DEBUG) {
 					console.log("src/utils/Sanitize.hx:49:","DO something clever with Array " + value);
 				}
-				let value1 = value;
+				let _value = value;
 				let _g = 0;
-				let _g1 = value1.length;
+				let _g1 = _value.length;
 				while(_g < _g1) {
 					let i = _g++;
-					if(Type.typeof(value1[i]) == ValueType.TObject) {
-						utils_Sanitize.sanitizeJson(value1);
+					if(Type.typeof(_value[i]) == ValueType.TObject) {
+						utils_Sanitize.sanitizeJson(_value[i]);
 						continue;
 					}
-					value1[i] = utils_Sanitize.sanitizeHTML(value1[i]);
+					_value[i] = utils_Sanitize.sanitizeHTML(_value[i]);
 				}
 			} else {
 				if(utils_Sanitize.IS_DEBUG) {
-					console.log("src/utils/Sanitize.hx:66:","DO something clever with OBject " + value);
+					console.log("src/utils/Sanitize.hx:73:","DO something clever with Object " + value);
 				}
 				utils_Sanitize.sanitizeJson(value);
 			}
@@ -338,7 +354,10 @@ class utils_Sanitize {
 		return json;
 	}
 	static sanitizeHTML(unsafe_str) {
-		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(unsafe_str,"&","&amp;"),"<","&lt;"),">","&gt;"),"\"","&quot;"),"'","&#39;");
+		if(unsafe_str.indexOf("&amp;") != -1) {
+			StringTools.replace(unsafe_str,"&","&amp;");
+		}
+		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(unsafe_str,"<","&lt;"),">","&gt;"),"\"","&quot;"),"'","&#39;");
 	}
 }
 utils_Sanitize.__name__ = true;
