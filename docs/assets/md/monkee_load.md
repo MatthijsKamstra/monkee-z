@@ -10,4 +10,4 @@
 | JSON parser                        | ❌             | ✅         |
 | Simple mustache template injection | ❌             | ✅         |
 | XSS                                | ❌             | ❌         |
-| KB                                 | < 1KB          | ~ 4KB      |
+| KB                                 | < 1KB          | ~ 5KB      |
