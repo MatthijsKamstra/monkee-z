@@ -1,0 +1,1 @@
+<div data-load="../../components/hero.html?test=hero"></div>
