@@ -13,13 +13,14 @@ class Research {
 	public function new() {
 		trace('Research');
 
-		sanitize();
+		// sanitize();
 
 		// proxi1();
 		// proxi2();
 		// proxi3();
 		// proxi4();
 		// proxi5();
+		proxi6();
 		// testOne();
 		// testTwo();
 		// testThree();
@@ -34,6 +35,7 @@ class Research {
 			stringVal: "hello",
 			boolVal: true,
 			arrayVal: ['one', 'two'],
+			arrayObjVal: [{description: 'one'}, {description: 'two'}],
 			objVal: {},
 		}
 		var content = Json.stringify(json);
@@ -86,6 +88,77 @@ class Research {
 
 	function onChange(property) {
 		trace('<< onChange: ${property} >>');
+	}
+
+	function proxi6() {
+		trace('>> proxi 6');
+		var target = {
+			stringVal: "hello",
+			boolVal: true,
+			objVal: {},
+			arrayVal: ['one']
+		};
+		var proxi6Handler = {
+			get: function(target:Dynamic, property:String, receiver):Any {
+				// The get() trap is fired when a property of the target object is accessed via the proxy object.
+				trace('\n\t---> GET: "${property}"');
+
+				// render();
+				return Reflect.getProperty(target, property);
+			},
+			// set: function(target:Dynamic, property:String, val):Any {
+			// 	// The set() trap controls behavior when a property of the target object is set.
+			// 	trace('\n\t---> SET: "${property}": ${val}');
+			// 	Reflect.setProperty(target, property, val);
+			// 	render();
+			// 	return Reflect.getProperty(target, property);
+			// },
+			defineProperty: function(target:Dynamic, property:String, descriptor) {
+				trace('\n\t---> defineProperty: "${property}": ${Json.stringify(descriptor)}');
+				Reflect.setField(target, property, descriptor.value);
+				render();
+				return true;
+			},
+		}
+
+		var data = new Proxy(target, untyped proxi6Handler);
+
+		console.log('-----------');
+		console.log(data);
+
+		console.log(untyped data.stringVal);
+		console.log(untyped data.stringVal = 'hi');
+		console.log(' <<--- should render');
+		console.log(untyped data.stringVal);
+
+		console.log('-----------');
+		console.log(data);
+
+		console.log(untyped data.objVal);
+		console.log(untyped data.objVal = {number: '1'}); // 1
+		console.log(' <<--- should render');
+		// untyped data.objVal.one = '2';
+		console.log(untyped data.objVal);
+		console.log(untyped data.objVal.number);
+
+		console.log('-----------');
+		console.log(data);
+
+		console.log(untyped data.newObj);
+		console.log(untyped data.newObj = {});
+		console.log(' <<--- should render');
+		console.log(untyped data.newObj);
+		console.log(untyped data.newObj = {'one': '1'});
+		console.log(' <<--- should render');
+		console.log(untyped data.newObj);
+
+		console.log(untyped data.arrayVal);
+		console.log(untyped data.arrayVal.push('x'));
+		console.log(' <<--- should render');
+		console.log(untyped data.arrayVal);
+
+		console.log('-----------');
+		console.log(data);
 	}
 
 	function proxi5() {
