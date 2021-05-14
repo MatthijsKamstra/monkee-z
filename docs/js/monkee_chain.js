@@ -8,7 +8,7 @@ class MonkeeChain {
 		this.targetName = "";
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " - " + "MonkeeChain" + " - build: " + "2021-05-10 23:48:37");
+			$global.console.info("[Monkee-Z]" + " - " + "MonkeeChain" + " - build: " + "2021-05-14 18:03:28");
 		}
 		let _gthis = this;
 		if(typeof(target) == "string") {
@@ -25,16 +25,19 @@ class MonkeeChain {
 		if(obj.template != null && obj.template != "") {
 			this.template = obj.template;
 		} else {
-			$global.console.error("Element \"" + this.targetName + "\" has template: " + JSON.stringify(obj.template));
+			$global.console.error("Element \"" + this.targetName + "\" has no template: " + JSON.stringify(obj.template));
 		}
 		if(obj.data != null && obj.data != { }) {
+			if(obj.allowHTML == true) {
+				$global.console.log("leave it like this");
+			}
 			this._data = obj.data;
 		}
 		let handler = { get : function(target,property,receiver) {
 			try {
 				return new Proxy(target[property],handler);
 			} catch( _g ) {
-				return utils_Html.escapeHTML(Reflect.get(target,property,receiver));
+				return utils_Sanitize.escapeHTML(Reflect.get(target,property,receiver));
 			}
 		}, defineProperty : function(target,property,descriptor) {
 			let bool = Reflect.defineProperty(target,property,descriptor);
@@ -50,7 +53,7 @@ class MonkeeChain {
 	}
 	render() {
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " - " + "RENDER()" + " - build: " + "2021-05-10 23:48:37");
+			$global.console.info("[Monkee-Z]" + " - " + "RENDER()" + " - build: " + "2021-05-14 18:03:28");
 		}
 		if(typeof(this.template) == "string") {
 			this.target.innerHTML = this.template;
@@ -102,14 +105,15 @@ class haxe_iterators_ArrayIterator {
 		return this.array[this.current++];
 	}
 }
-class utils_Html {
+class utils_Sanitize {
 	static sanitizeHTML(unsafe_str) {
-		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(unsafe_str,"&","&amp;"),"<","&lt;"),">","&gt;"),"\"","&quot;"),"'","&#39;");
+		if(unsafe_str.indexOf("&amp;") != -1) {
+			StringTools.replace(unsafe_str,"&","&amp;");
+		}
+		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(unsafe_str,"<","&lt;"),">","&gt;"),"\"","&quot;"),"'","&#39;");
 	}
 	static escapeHTML(unsafe_str) {
-		return utils_Html.sanitizeHTML(unsafe_str);
+		return utils_Sanitize.sanitizeHTML(unsafe_str);
 	}
 }
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_chain.js.map
