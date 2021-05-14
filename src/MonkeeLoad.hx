@@ -1,5 +1,7 @@
 package;
 
+import utils.Template;
+import utils.Query;
 import utils.Html;
 import utils.JsonPath;
 import haxe.Json;
@@ -43,8 +45,8 @@ class MonkeeLoad {
 				var _nameArr:Array<Element> = cast _el.querySelectorAll('[data-name]');
 				var _loadObj:LoadObj = {
 					el: _el,
-					url: unquery(_url),
-					query: query(_url),
+					url: (_url),
+					query: Query.convert(_url),
 					isJson: _isJson,
 					isInner: (_configName == 'data-load-inner'),
 					loaderType: ('data-load-inner' == _configName) ? 'inner' : 'outer',
@@ -61,23 +63,6 @@ class MonkeeLoad {
 			}
 		}
 		startLoading(loadingId);
-	}
-
-	/**
-	 * @example
-	 * 			"../../components/hero.html?test=hero"
-	 * @param url
-	 */
-	function query(url:String) {
-		var obj = null;
-		if (url.indexOf('?') != -1) {
-			var q = url.split('?')[1]; // test=hero
-			var _var0 = q.split('=')[0];
-			var _var1 = q.split('=')[1];
-			obj = {};
-			Reflect.setField(obj, '${_var0}', _var1);
-		}
-		return obj;
 	}
 
 	function unquery(url:String) {
@@ -112,9 +97,10 @@ class MonkeeLoad {
 
 			// Html.processHTML(obj.el, body, obj.loaderType == 'inner');
 
-			if (obj.query != null) {
-				console.warn(obj.query);
-				convertTemplate(obj, req.response);
+			if (Json.stringify(obj.query) != "{}") {
+				// console.warn(obj.query);
+				var template = Template.convert(obj.query, req.response);
+				Html.processHTML(obj.el, template, obj.isInner);
 			} else if (obj.isJson) {
 				if (DEBUG)
 					console.warn(obj.url);
@@ -150,22 +136,6 @@ class MonkeeLoad {
 			console.error('error: $error');
 		};
 		req.send();
-	}
-
-	function convertTemplate(obj:LoadObj, template:String) {
-		var startIndex = template.indexOf('{');
-		var endIndex = template.indexOf('}');
-
-		var word = template.substring(startIndex + 1, endIndex).trim();
-		var _replace = template.substring(startIndex, endIndex + 1);
-
-		trace(word);
-		trace(obj.query);
-		trace(Reflect.getProperty(obj.query, '${word}'));
-
-		template = template.replace(_replace, Reflect.getProperty(obj.query, '${word}'));
-
-		Html.processHTML(obj.el, template, obj.isInner);
 	}
 
 	function jsonConvert(obj:LoadObj, str:String) {

@@ -44,7 +44,7 @@ class MonkeeLoad {
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " - " + "MonkeeLoad" + " - build: " + "2021-05-14 18:03:21");
+			$global.console.info("[Monkee-Z]" + " - " + "MonkeeLoad" + " - build: " + "2021-05-14 21:58:18");
 		}
 		let _g = 0;
 		let _g1 = this.arr.length;
@@ -61,30 +61,12 @@ class MonkeeLoad {
 				let _isJson = _url.indexOf(".json") != -1;
 				let _target = _el.getAttribute("data-target");
 				let _nameArr = _el.querySelectorAll("[data-name]");
-				let _loadObj = { el : _el, url : this.unquery(_url), query : this.query(_url), isJson : _isJson, isInner : _configName == "data-load-inner", loaderType : "data-load-inner" == _configName ? "inner" : "outer", target : _target, names : _nameArr, throbber : utils_Throbber.set(_el)};
-				console.log("src/MonkeeLoad.hx:56:",_loadObj);
+				let _loadObj = { el : _el, url : _url, query : utils_Query.convert(_url), isJson : _isJson, isInner : _configName == "data-load-inner", loaderType : "data-load-inner" == _configName ? "inner" : "outer", target : _target, names : _nameArr, throbber : utils_Throbber.set(_el)};
+				console.log("src/MonkeeLoad.hx:58:",_loadObj);
 				this.loadingArr.push(_loadObj);
 			}
 		}
 		this.startLoading(this.loadingId);
-	}
-	query(url) {
-		let obj = null;
-		if(url.indexOf("?") != -1) {
-			let q = url.split("?")[1];
-			let _var0 = q.split("=")[0];
-			let _var1 = q.split("=")[1];
-			obj = { };
-			obj["" + _var0] = _var1;
-		}
-		return obj;
-	}
-	unquery(url) {
-		let _url = url;
-		if(url.indexOf("?") != -1) {
-			_url = url.split("?")[0];
-		}
-		return _url;
 	}
 	startLoading(nr) {
 		if(nr >= this.loadingArr.length) {
@@ -105,9 +87,9 @@ class MonkeeLoad {
 				body = _gthis.req.response;
 			}
 			let script = utils_Html.getScript(_gthis.req.response);
-			if(obj.query != null) {
-				$global.console.warn(obj.query);
-				_gthis.convertTemplate(obj,_gthis.req.response);
+			if(JSON.stringify(obj.query) != "{}") {
+				let template = utils_Template.convert(obj.query,_gthis.req.response);
+				utils_Html.processHTML(obj.el,template,obj.isInner);
 			} else if(obj.isJson) {
 				if(_gthis.DEBUG) {
 					$global.console.warn(obj.url);
@@ -135,17 +117,6 @@ class MonkeeLoad {
 			$global.console.error("error: " + error);
 		};
 		this.req.send();
-	}
-	convertTemplate(obj,template) {
-		let startIndex = template.indexOf("{");
-		let endIndex = template.indexOf("}");
-		let word = StringTools.trim(template.substring(startIndex + 1,endIndex));
-		let _replace = template.substring(startIndex,endIndex + 1);
-		console.log("src/MonkeeLoad.hx:162:",word);
-		console.log("src/MonkeeLoad.hx:163:",obj.query);
-		console.log("src/MonkeeLoad.hx:164:",Reflect.getProperty(obj.query,"" + word));
-		template = StringTools.replace(template,_replace,Reflect.getProperty(obj.query,"" + word));
-		utils_Html.processHTML(obj.el,template,obj.isInner);
 	}
 	jsonConvert(obj,str) {
 		let json = JSON.parse(str);
@@ -337,6 +308,59 @@ class utils_JsonPath {
 		return result;
 	}
 }
+class utils_Query {
+	static convert(url) {
+		let obj = { };
+		if(url.indexOf("?") != -1) {
+			let q = url.split("?")[1];
+			let arr = [];
+			if(q.indexOf("&") != -1) {
+				arr = q.split("&");
+			} else {
+				arr.push(q);
+			}
+			let _g = 0;
+			let _g1 = arr.length;
+			while(_g < _g1) {
+				let i = _g++;
+				let _arr = arr[i];
+				let key = _arr.split("=")[0];
+				let value = _arr.split("=")[1];
+				if(value == null) {
+					return obj;
+				}
+				obj["" + key] = value;
+			}
+		}
+		return obj;
+	}
+}
+class utils_Template {
+	static convert(obj,template) {
+		let arr = [];
+		let startIndexArr = template.split("{");
+		let _g = 0;
+		let _g1 = startIndexArr.length;
+		while(_g < _g1) {
+			let i = _g++;
+			let _startIndexArr = startIndexArr[i];
+			let endIndexArr = _startIndexArr.split("}");
+			arr = arr.concat(endIndexArr);
+		}
+		let _g2 = 0;
+		let _g3 = arr.length;
+		while(_g2 < _g3) {
+			let i = _g2++;
+			let wordUntrim = arr[i];
+			let word = StringTools.trim(arr[i]);
+			if(Object.prototype.hasOwnProperty.call(obj,word)) {
+				template = StringTools.replace(template,"{" + wordUntrim + "}",Reflect.getProperty(obj,word));
+				arr[i] = Reflect.getProperty(obj,word);
+			}
+		}
+		return template;
+	}
+}
 class utils_Throbber {
 	static set(el) {
 		let _div = window.document.createElement("div");
@@ -351,3 +375,5 @@ if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : 
 }
 MonkeeLoad.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_load.js.map
