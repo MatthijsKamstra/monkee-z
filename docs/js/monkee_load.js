@@ -44,7 +44,7 @@ class MonkeeLoad {
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " - " + "MonkeeLoad" + " - build: " + "2021-05-14 21:58:18");
+			$global.console.info("[Monkee-Z]" + " - " + "MonkeeLoad" + " - build: " + "2021-05-16 21:54:37");
 		}
 		let _g = 0;
 		let _g1 = this.arr.length;
@@ -375,5 +375,3 @@ if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : 
 }
 MonkeeLoad.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_load.js.map
