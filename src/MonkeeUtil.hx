@@ -148,9 +148,9 @@ class MonkeeUtil {
     						<strong>File ${props.json.name}:</strong>
     						<p class="text-muted">Updated: ${props.json.updated}</p>
     						<ul>
-    							<li>Download original file: <a href="${props.json.url.original}">${props.json.url.original}</a> (${props.json.size.original})</li>
-    							<li>UglifyJs file size: <a href="${props.json.url.uglifyjs}">${props.json.url.uglifyjs}</a> (${props.json.size.uglifyjs})</li>
-    							<li>Extra minified file size: <a href="${props.json.url.minified}">${props.json.url.minified}</a> (${props.json.size.minified})</li>
+    							<li>Download original file: <a href="${props.json.url.original}">${props.json.name.replace('.js', '.js')}</a> (${props.json.size.original})</li>
+    							<li>UglifyJs file size: <a href="${props.json.url.uglifyjs}">${props.json.name.replace('.js', '.min.js')}</a> (${props.json.size.uglifyjs})</li>
+    							<li>Extra minified file size: <a href="${props.json.url.minified}">${props.json.name.replace('.js', '.min.min.js')}</a> (${props.json.size.minified})</li>
     						</ul>
     		    	    </div>
     			    </div>
