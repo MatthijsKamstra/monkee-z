@@ -38,6 +38,9 @@
         <h2 class="badge badge-dark">#app3</h2>
         <div id="app3">#app3</div>
 
+        <h2 class="badge badge-dark">#app4</h2>
+        <div id="app4">#app4</div>
+
 
 
     </div>
@@ -76,7 +79,7 @@
         // Setup the component
         var app2 = new MonkeeChain('#app2', {
             data: {
-                title: "First title"
+                title: "First title (should say Second title)"
             },
             template: function (props) {
                 return `title: ${props.title}`;
@@ -94,6 +97,18 @@
             }
         });
         app3.data.title = "<image src=x onerror=alert('XSS_image')>";
+
+        // Setup the component
+        var app4 = new MonkeeChain('#app4', {
+            data: {
+                title: "<b>Bold</b> normal <i>italic</i>"
+            },
+            template: function (props) {
+                return `title: ${props.title}`;
+            },
+            allowHTML: true // Do NOT use with third-party/user-supplied
+        });
+        // app4.data.title = "<image src=x onerror=alert('XSS_image')>";
 
 
 

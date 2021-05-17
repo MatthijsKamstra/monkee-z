@@ -10,7 +10,9 @@ class BuddyMain implements Buddy<[
 	//
 	BuddyTest,
 	ResearchTest,
-	SanitizeJsonTest
+	SanitizeJsonTest,
+	QueryTest,
+	TemplateTest,
 ]> {}
 // // All test classes should now extend BuddySuite (not SingleSuite)
 // class Tests extends BuddySuite {

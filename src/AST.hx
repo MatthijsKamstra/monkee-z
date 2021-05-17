@@ -16,4 +16,5 @@ typedef LoadObj = {
 	//
 	@:optional var loaderType:String;
 	@:optional var isJson:Bool;
+	@:optional var query:Dynamic;
 }

@@ -48,22 +48,31 @@ class Sanitize {
 				if (IS_DEBUG)
 					trace('DO something clever with Array ${value}');
 
-				// Array<String> NOT Array<{}>
-				var value:Array<Dynamic> = cast value;
+				// trace('\n--> DO something clever with Array ${value}');
+				// trace('\n---> DO something clever with Array ${haxe.Json.parse(value)}');
 
-				for (i in 0...value.length) {
+				// Array<String> NOT Array<{}>
+				var _value:Array<Dynamic> = cast value;
+				// untyped var value = value;
+
+				for (i in 0..._value.length) {
 					// trace("i: " + i);
-					// trace("value[i]: " + value[i]);
-					// trace('${Type.typeof(value[i]) == TObject}');
-					if (Type.typeof(value[i]) == TObject) {
-						Sanitize.sanitizeJson(value);
+					// trace("_value[i]: " + _value[i]);
+					// trace("_value: " + value);
+					// trace('TObject? (${_value[i]})--> ${Type.typeof(_value[i]) == TObject}');
+					if (Type.typeof(_value[i]) == TObject) {
+						// trace('---> ${_value[i]}');
+						// trace('---> ${untyped value[i]}');
+						Sanitize.sanitizeJson(_value[i]);
 						continue;
 					};
-					value[i] = sanitizeHTML(value[i]);
+					_value[i] = sanitizeHTML(_value[i]);
 				}
 			} else {
 				if (IS_DEBUG)
-					trace('DO something clever with OBject ${value}');
+					trace('DO something clever with Object ${value}');
+
+				// trace('\n--> DO something clever with Object ${value}');
 				Sanitize.sanitizeJson(value);
 			}
 			// #if js
@@ -112,8 +121,10 @@ class Sanitize {
 	 * @return String
 	 */
 	public static function sanitizeHTML(unsafe_str:String):String {
+		// make sure we clean once, not continues.
+		if (unsafe_str.indexOf('&amp;') != -1)
+			unsafe_str.replace('&', '&amp;');
 		return unsafe_str
-			.replace('&', '&amp;')
 			.replace('<', '&lt;')
 			.replace('>', '&gt;')
 			.replace('"', '&quot;')

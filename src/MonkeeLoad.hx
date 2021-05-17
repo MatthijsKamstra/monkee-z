@@ -1,5 +1,7 @@
 package;
 
+import utils.Template;
+import utils.Query;
 import utils.Html;
 import utils.JsonPath;
 import haxe.Json;
@@ -43,7 +45,8 @@ class MonkeeLoad {
 				var _nameArr:Array<Element> = cast _el.querySelectorAll('[data-name]');
 				var _loadObj:LoadObj = {
 					el: _el,
-					url: _url,
+					url: (_url),
+					query: Query.convert(_url),
 					isJson: _isJson,
 					isInner: (_configName == 'data-load-inner'),
 					loaderType: ('data-load-inner' == _configName) ? 'inner' : 'outer',
@@ -51,12 +54,23 @@ class MonkeeLoad {
 					names: _nameArr,
 					throbber: Throbber.set(_el),
 				}
+
+				trace(_loadObj);
+
 				// if (_isJson) {}
 				loadingArr.push(_loadObj);
 				// trace(loadingArr);
 			}
 		}
 		startLoading(loadingId);
+	}
+
+	function unquery(url:String) {
+		var _url = url;
+		if (url.indexOf('?') != -1) {
+			_url = url.split('?')[0];
+		}
+		return _url;
 	}
 
 	function startLoading(nr:Int) {
@@ -83,7 +97,11 @@ class MonkeeLoad {
 
 			// Html.processHTML(obj.el, body, obj.loaderType == 'inner');
 
-			if (obj.isJson) {
+			if (Json.stringify(obj.query) != "{}") {
+				// console.warn(obj.query);
+				var template = Template.convert(obj.query, req.response);
+				Html.processHTML(obj.el, template, obj.isInner);
+			} else if (obj.isJson) {
 				if (DEBUG)
 					console.warn(obj.url);
 
@@ -117,7 +135,6 @@ class MonkeeLoad {
 			// if (DEBUG)
 			console.error('error: $error');
 		};
-
 		req.send();
 	}
 

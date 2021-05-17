@@ -4,7 +4,7 @@ class MonkeeBuggerTest {
 	constructor() {
 		this.DEBUG = true;
 		if(this.DEBUG) {
-			$global.console.log("[Monkee-Z]" + " - MonkeeBugger - " + "2021-05-08 12:19:51");
+			$global.console.log("[Monkee-Z]" + " - MonkeeBugger - " + "2021-05-14 21:16:05");
 		}
 		haxe_Timer.delay(function() {
 			$global.console.log("test " + 0 + " in " + 0 + "ms");

@@ -14,7 +14,7 @@ class SanitizeJsonTest extends buddy.BuddySuite {
 			stringVal: "hello",
 			boolVal: true,
 			arrayVal: ['one', 'two'],
-			arrayObjVal: [{}, {}],
+			arrayObjVal: [{description: 'one'}, {description: 'two'}],
 			objVal: {},
 		}
 		// var json = Json.parse(Json.stringify(original));
@@ -78,6 +78,39 @@ class SanitizeJsonTest extends buddy.BuddySuite {
 				// trace(untyped json.objVal.title);
 				Reflect.getProperty(json.objVal, "title").should.not.be(xss);
 				Reflect.getProperty(json.objVal, "title").should.be(escapeXss);
+			});
+
+			it("multiple times sanitize json", {
+				// json.objVal.should.be({}); // weird..
+				json = Sanitize.sanitizeJson(json);
+				json = Sanitize.sanitizeJson(json);
+				json = Sanitize.sanitizeJson(json);
+				json.stringVal.should.not.be(xss);
+				json.stringVal.should.be(escapeXss);
+			});
+
+			var inject = '';
+
+			it("New Array 2 Object 2 String sanitize json", {
+				Reflect.getProperty(json, 'newArrayVal').should.not.be([]);
+				Reflect.setField(json, 'newArrayVal', []);
+				Reflect.getProperty(json, 'newArrayVal').should.beType(Array);
+				Reflect.setProperty(json, 'newArrayVal', [{inject: xss}]);
+				// trace(Reflect.getProperty(json, 'newArrayVal')[0].inject);
+				inject = (Reflect.getProperty(json, 'newArrayVal')[0].inject);
+				(inject).should().be(xss);
+				json = Sanitize.sanitizeJson(json);
+				inject = (Reflect.getProperty(json, 'newArrayVal')[0].inject);
+				// trace(inject);
+				(inject).should().be(escapeXss);
+				// trace('newArrayVal push inject: ' + json);
+				untyped json.newArrayVal.push({inject: xss});
+				// trace(Reflect.getProperty(json, 'newArrayVal')[1].inject);
+				inject = (Reflect.getProperty(json, 'newArrayVal')[1].inject);
+				(inject).should().be(xss);
+				json = Sanitize.sanitizeJson(json);
+				inject = (Reflect.getProperty(json, 'newArrayVal')[1].inject);
+				(inject).should().be(escapeXss);
 			});
 		});
 	}

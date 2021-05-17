@@ -13,13 +13,14 @@ class Research {
 	public function new() {
 		trace('Research');
 
-		sanitize();
+		// sanitize();
 
 		// proxi1();
 		// proxi2();
 		// proxi3();
 		// proxi4();
 		// proxi5();
+		proxi6();
 		// testOne();
 		// testTwo();
 		// testThree();
@@ -34,35 +35,47 @@ class Research {
 			stringVal: "hello",
 			boolVal: true,
 			arrayVal: ['one', 'two'],
+			arrayObjVal: [{description: 'one'}, {description: 'two'}],
 			objVal: {},
 		}
 		var content = Json.stringify(json);
 
-		trace('json.stringVal: ' + json.stringVal);
+		// trace('json.stringVal: ' + json.stringVal);
 		json.stringVal = xss;
-		trace('json.stringVal: ' + json.stringVal);
+		// trace('json.stringVal: ' + json.stringVal);
 		var sanitized = utils.Sanitize.sanitizeJson(json);
-		trace('sanitized.stringVal: ' + sanitized.stringVal);
+		// trace('sanitized.stringVal: ' + sanitized.stringVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace('json.stringVal: ' + json.stringVal);
+		// trace('json.stringVal: ' + json.stringVal);
 
-		trace('json.boolVal: ' + json.boolVal);
+		// trace('json.boolVal: ' + json.boolVal);
 		untyped json.boolVal = xss;
-		trace('json.boolVal: ' + json.boolVal);
+		// trace('json.boolVal: ' + json.boolVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace('json.boolVal: ' + json.boolVal);
+		// trace('json.boolVal: ' + json.boolVal);
 
-		trace('json.arrayVal: ' + json.arrayVal);
+		// trace('json.arrayVal: ' + json.arrayVal);
 		untyped json.arrayVal.push(xss);
-		trace('json.arrayVal: ' + json.arrayVal);
+		// trace('json.arrayVal: ' + json.arrayVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace('json.arrayVal: ' + json.arrayVal);
+		// trace('json.arrayVal: ' + json.arrayVal);
 
-		trace('json.objVal: ' + json.objVal);
+		// trace('json.objVal: ' + json.objVal);
 		untyped json.objVal.title = (xss);
-		trace('json.objVal: ' + json.objVal);
+		// trace('json.objVal: ' + json.objVal);
 		json = utils.Sanitize.sanitizeJson(json);
-		trace('json.objVal: ' + json.objVal);
+		// trace('json.objVal: ' + json.objVal);
+
+		Reflect.setField(json, 'newArrayVal', []);
+		trace(Reflect.getProperty(json, 'newArrayVal'));
+		untyped json.newArrayVal.push({inject: xss});
+		json = utils.Sanitize.sanitizeJson(json);
+		trace('json: ' + json);
+		untyped json.newArrayVal.push({inject: xss});
+		trace(Reflect.getProperty(json, 'newArrayVal')[0].inject);
+		trace('json: ' + json);
+		json = utils.Sanitize.sanitizeJson(json);
+		trace(Reflect.getProperty(json, 'newArrayVal')[0].inject);
 
 		trace('json: ' + json);
 	}
@@ -75,6 +88,77 @@ class Research {
 
 	function onChange(property) {
 		trace('<< onChange: ${property} >>');
+	}
+
+	function proxi6() {
+		trace('>> proxi 6');
+		var target = {
+			stringVal: "hello",
+			boolVal: true,
+			objVal: {},
+			arrayVal: ['one']
+		};
+		var proxi6Handler = {
+			get: function(target:Dynamic, property:String, receiver):Any {
+				// The get() trap is fired when a property of the target object is accessed via the proxy object.
+				trace('\n\t---> GET: "${property}"');
+
+				// render();
+				return Reflect.getProperty(target, property);
+			},
+			// set: function(target:Dynamic, property:String, val):Any {
+			// 	// The set() trap controls behavior when a property of the target object is set.
+			// 	trace('\n\t---> SET: "${property}": ${val}');
+			// 	Reflect.setProperty(target, property, val);
+			// 	render();
+			// 	return Reflect.getProperty(target, property);
+			// },
+			defineProperty: function(target:Dynamic, property:String, descriptor) {
+				trace('\n\t---> defineProperty: "${property}": ${Json.stringify(descriptor)}');
+				Reflect.setField(target, property, descriptor.value);
+				render();
+				return true;
+			},
+		}
+
+		var data = new Proxy(target, untyped proxi6Handler);
+
+		console.log('-----------');
+		console.log(data);
+
+		console.log(untyped data.stringVal);
+		console.log(untyped data.stringVal = 'hi');
+		console.log(' <<--- should render');
+		console.log(untyped data.stringVal);
+
+		console.log('-----------');
+		console.log(data);
+
+		console.log(untyped data.objVal);
+		console.log(untyped data.objVal = {number: '1'}); // 1
+		console.log(' <<--- should render');
+		// untyped data.objVal.one = '2';
+		console.log(untyped data.objVal);
+		console.log(untyped data.objVal.number);
+
+		console.log('-----------');
+		console.log(data);
+
+		console.log(untyped data.newObj);
+		console.log(untyped data.newObj = {});
+		console.log(' <<--- should render');
+		console.log(untyped data.newObj);
+		console.log(untyped data.newObj = {'one': '1'});
+		console.log(' <<--- should render');
+		console.log(untyped data.newObj);
+
+		console.log(untyped data.arrayVal);
+		console.log(untyped data.arrayVal.push('x'));
+		console.log(' <<--- should render');
+		console.log(untyped data.arrayVal);
+
+		console.log('-----------');
+		console.log(data);
 	}
 
 	function proxi5() {

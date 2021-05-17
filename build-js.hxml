@@ -28,6 +28,15 @@
 # --cmd node docs/js/monkee_chain_js.js
 
 
+--next
+
+# test extern
+-main MonkeeLoadTest
+-js docs/js/test_monkee_load.js
+--cmd echo MonkeeLoadTest
+--cmd node docs/js/test_monkee_load.js
+
+
 
 
 

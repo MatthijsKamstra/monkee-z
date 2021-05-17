@@ -26,21 +26,31 @@
     <div data-load="../components/hero.html"></div>
 
     <div class="container">
-        <h2>Monkee Loader</h2>
-        <p>
+        <h2>Monkee Loader </h2>
+        <p>A library for loading templates and files.</p>
         <ul>
             <li>Loading animation</li>
-            <li>whole html will be parsed (use templates without body tag)</li>
-            <li>light</li>
-            <li>usefull for loading files into the page</li>
-            <li>
-                <code data-escape='<div id="app"></div>'></code>
+            <li>No xss protection</li>
+            <li>Only body of html will be parsed</li>
+            <li>usefull for loading files/templates into the page</li>
+            <li>Simple implementation:
+                <code data-escape='<div data-load="../components/nav_lite.html"></div>'></code>
             </li>
-            <li>
-                <pre><code data-escape='<div id="app"></div>'></code></pre>
+            <li>Use wrapper code: <code
+                    data-escape='<pre><code data-load-inner="../assets/data/data.json" ></code></pre>'></code>
             </li>
+            <li>Replace loading element with loading data: <code
+                    data-escape='<div data-load="../components/nav_lite.html"></div>'></code>
+            </li>
+            <li>Simple mustahce template: <code
+                    data-escape='<div data-load="../components/nav_lite.html?foo=bar"></div>'></code>
+            </li>
+            <!-- <li>
+    				<pre><code data-escape='<div id="app"></div>'></code></pre>
+    			</li> -->
 
         </ul>
+        <p>
         </p>
         <div id="app"></div>
     </div>
@@ -48,7 +58,6 @@
 
     <div class="container my-5">
         <div class="row">
-
             <div class="col-12">
                 <div id="specs-load"></div>
             </div>
@@ -59,15 +68,95 @@
         <div id="app_markdown"></div>
     </div>
 
-    <div class="container" data-load-inner="../components/img.html">
-        <p>photo</p>
+
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+                <h2>Examples</h2>
+            </div>
+
+            <div class="col-6">
+                <b>html:</b> (<a href="../components/nav_lite.html">nav_lite.html</a>)
+                <br>
+                <code data-escape='<div data-load="../components/nav_lite.html"></div>'></code>
+            </div>
+            <div class="col-6">
+                <b>working example:</b><br>
+                <div data-load="../components/nav_lite.html"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <b>html:</b> (<a href="../assets/data/data.txt">data.txt</a>)
+                <br>
+                <code data-escape='<p data-load-inner="../assets/data/data.txt" class="text-info"></p>'></code>
+            </div>
+            <div class="col-6">
+                <b>working example:</b><br>
+                <p data-load-inner="../assets/data/data.txt" class="text-info"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <b>html:</b> (<a href="../components/img.html">img.html</a> )
+                <br>
+                <code
+                    data-escape='<div class="container" data-load-inner="../components/img.html"><p>photo</p></div>'></code>
+            </div>
+            <div class="col-6">
+                <b>working example:</b><br>
+                <div data-load-inner="../components/img.html">
+                    <p>photo</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <b>html:</b> (<a href="../assets/data/data.json">data.json</a>)
+                <br>
+                <code data-escape='<pre><code data-load-inner="../assets/data/data.json"></code></pre>'></code>
+            </div>
+            <div class="col-6">
+                <b>working example:</b><br>
+                <pre><code data-load-inner="../assets/data/data.json" ></code></pre>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <b>html:</b> (<a href="../assets/data/data.csv">data.csv</a>)
+                <br>
+                <code
+                    data-escape='<textarea class="form-control" data-load-inner="../assets/data/data.csv"></textarea>'></code>
+            </div>
+            <div class="col-6">
+                <b>working example:</b><br>
+                <textarea class="form-control" data-load-inner="../assets/data/data.csv"></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <b>html:</b> (<a href="../components/hero2.html">hero2.html</a>)
+                <br>
+                <code data-escape='<div data-load="../components/hero2.html?name=Hello"></div>'></code>
+            </div>
+            <div class="col-6">
+                <b>working example:</b><br>
+                <div data-load="../components/hero2.html?name=Hello"></div>
+            </div>
+        </div>
+
     </div>
+
+
 
     <div data-load="../components/main.html"></div>
 
-    <div class="container">
-        <div data-load="../components/img.html"></div>
-    </div>
 
     <div class="container mt-5">
         <h1>Inner data json</h1>
@@ -83,10 +172,6 @@
         </form>
     </div>
 
-    <div class="container mt-5">
-        <h1>Inner data</h1>
-        <p data-load-inner="../assets/data/data.txt" class="text-secondary"></p>
-    </div>
 
     <div class="container mt-5">
         <h1>Inner data</h1>
