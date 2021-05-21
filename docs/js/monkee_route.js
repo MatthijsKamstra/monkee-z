@@ -7,13 +7,12 @@ class MonkeeRoute {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " - " + "MonkeeRoute" + " - build: " + "2021-05-21 18:42:11");
+				$global.console.info("[Monkee-Z]" + " - " + "MonkeeRoute" + " - build: " + "2021-05-21 18:46:04");
 			}
 			_gthis.init();
 		});
 	}
 	init() {
-		$global.console.info("------------------ init");
 		if(MonkeeRoute.defaultTitle == "") {
 			MonkeeRoute.defaultTitle = window.document.title;
 			MonkeeRoute.defaultUrl = window.location.href.split("#").join("");
@@ -50,13 +49,10 @@ class MonkeeRoute {
 		window.onhashchange = $bind(this,this.locationHashChanged);
 	}
 	locationHashChanged() {
-		$global.console.log("You're visiting : " + $global.location.hash);
 		let key = $global.location.hash.split("#").join("");
-		console.log("src/MonkeeRoute.hx:87:",key);
 		let _gthis = this;
 		if(Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,key)) {
 			let navObj = MonkeeRoute.map.h[key];
-			console.log("src/MonkeeRoute.hx:90:",navObj);
 			if(navObj.url == MonkeeRoute.defaultUrl) {
 				$global.location.reload();
 			} else {
@@ -69,6 +65,7 @@ class MonkeeRoute {
 		} else {
 			$global.console.info("unknown - " + MonkeeRoute.defaultUrl);
 			window.location.href = MonkeeRoute.defaultUrl;
+			$global.location.reload();
 		}
 	}
 	replaceBody(navObj,html) {

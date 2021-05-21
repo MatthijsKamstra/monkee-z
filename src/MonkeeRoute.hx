@@ -25,7 +25,7 @@ class MonkeeRoute {
 	}
 
 	function init() {
-		console.info('------------------ init');
+		// console.info('------------------ init');
 
 		// get one time the defaultTitle and set the hash to zero
 		if (defaultTitle == '') {
@@ -82,12 +82,12 @@ class MonkeeRoute {
 	}
 
 	function locationHashChanged() {
-		console.log("You're visiting : " + location.hash);
+		// console.log("You're visiting : " + location.hash);
 		var key = (location.hash).split('#').join('');
-		trace(key);
+		// trace(key);
 		if (map.exists(key)) {
 			var navObj = map.get(key);
-			trace(navObj);
+			// trace(navObj);
 			if (navObj.url == defaultUrl) {
 				location.reload();
 			} else {
@@ -99,6 +99,7 @@ class MonkeeRoute {
 			console.info('unknown - ${defaultUrl}');
 			// window.open('?', '_self');
 			window.location.href = defaultUrl;
+			location.reload();
 		}
 	}
 
