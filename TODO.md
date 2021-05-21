@@ -5,6 +5,9 @@ stuff to watch for
 - [ ] xss
 - [ ] implement proxy for object watch
 - [ ] MonkeeUtil.embedCode fails with `<textarea>` tag in it
+- [ ] set debug values via build `var DEBUG=true` with compile vars
+- [ ] event system between different parts of Monkee-Z
+- [ ] loading system with events
 
 ## XSS
 

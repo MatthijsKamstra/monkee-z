@@ -46,7 +46,7 @@ class MonkeeBugger {
 
 		// console.log('1', '2');
 
-		untyped console.log = function(msg:haxe.extern.Rest<Dynamic>, msg2:haxe.extern.Rest<Dynamic>) {
+		untyped console.log = function(msg:Dynamic, msg2:haxe.extern.Rest<Dynamic>) {
 			if (msg2 == null) {
 				_log(msg); // maintains existing logging via the console.
 				output('${msg}');

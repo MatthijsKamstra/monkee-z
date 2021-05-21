@@ -14,23 +14,18 @@
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <!-- Monkee Style custom styling -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../assets/css/style.css" />
 
-    <title>Monkee - Z 🐵</title>
+    <title>Monkee - Z 🐵 SPA</title>
 
 </head>
 
 <body class="d-flex flex-column h-100">
 
-    <nav>
-        <ul>
-            <li><a href="./components/home">Home</a></li>
-            <li><a href="./components/about">About</a></li>
-            <li><a href="./components/contact">Contact</a></li>
-        </ul>
-    </nav>
 
-    <div data-load="components/main.html"></div>
+    <div data-load="../components/spa/nav.html"></div>
+
+    <div data-load="../components/img.html"></div>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -41,14 +36,16 @@
         crossorigin="anonymous"></script>
 
     <!-- Monkee-Z code -->
-    <script src="./js/monkee_load.min.js"></script>
-    <!-- <script src="./js/monkee_route.min.js"></script> -->
-    <script src="./js/monkee_route.js"></script>
+    <script src="../js/monkee_route.js"></script>
+    <!-- <script src="./js/monkee_route.min.min.js"></script> -->
 
+    <!-- <script src="../js/monkee_load_lite.js"></script> -->
+    <!-- <script src="./js/monkee_load_lite.min.js"></script> -->
+    <script src="../js/monkee_load.min.min.js"></script>
+    <script src="../js/monkee_chain.min.min.js"></script>
 
+    <script src="../js/monkee_util.js"></script>
 
-    <!-- embed monkee bugger and you are good to go -->
-    <!-- <script src="https://matthijskamstra.github.io/monkee-bugger/monkee_bugger.min.js"></script> -->
 
 </body>
 
