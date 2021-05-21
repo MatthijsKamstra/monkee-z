@@ -4,7 +4,7 @@ import utils.JsonPath;
 
 using buddy.Should;
 
-class ResearchTest extends buddy.BuddySuite {
+class JsonPathTest extends buddy.BuddySuite {
 	public function new() {
 		// var content:String = sys.io.File.getContent('docs/data/i.want.it.json');
 		// var json = haxe.Json.parse(content);

@@ -9,10 +9,11 @@ using buddy.Should;
 class BuddyMain implements Buddy<[
 	//
 	BuddyTest,
-	ResearchTest,
+	JsonPathTest,
 	SanitizeJsonTest,
 	QueryTest,
 	TemplateTest,
+	// ProxiTest,
 ]> {}
 // // All test classes should now extend BuddySuite (not SingleSuite)
 // class Tests extends BuddySuite {
