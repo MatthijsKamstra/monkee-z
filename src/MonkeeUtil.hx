@@ -18,9 +18,11 @@ import externs.MonkeeChain;
 @:expose
 @:keep
 class MonkeeUtil {
+	var DEBUG = false;
+
 	public function new() {
-		// if (DEBUG)
-		console.info(App.callIn('MonkeeUtil'));
+		if (DEBUG)
+			console.info(App.callIn('MonkeeUtil'));
 		init();
 	}
 

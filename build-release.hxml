@@ -12,50 +12,50 @@
 
 --each
 
+--cmd echo MonkeeLoad
 -main MonkeeLoad
 -js docs/js/monkee_load.js
---cmd echo MonkeeLoad
 
 --next
 
+--cmd echo MonkeeLoadLite
 -main MonkeeLoadLite
 -js docs/js/monkee_load_lite.js
---cmd echo MonkeeLoadLite
 
 --next
 
+--cmd echo MonkeeUtil
 -main MonkeeUtil
 -js docs/js/monkee_util.js
---cmd echo MonkeeUtil
 
 --next
 
+--cmd echo MonkeeBugger
 -main MonkeeBugger
 -js docs/js/monkee_bugger.js
---cmd echo MonkeeBugger
 
 --next
 
+--cmd echo MonkeeReact
 -main MonkeeReact
 -js docs/js/monkee_react.js
---cmd echo MonkeeReact
 
 --next
 
+--cmd echo MonkeeRoute
 -main MonkeeRoute
 -js docs/js/monkee_route.js
---cmd echo MonkeeRoute
 
 --next
 
+--cmd echo MonkeeChain
 MonkeeChain
 -js docs/js/monkee_chain.js
---cmd echo MonkeeChain
 
 --next
 
+--cmd echo MonkeeChainLite
 MonkeeChainLite
 -js docs/js/monkee_chain_lite.js
---cmd echo MonkeeChainLite
 
 

@@ -51,8 +51,10 @@ class MonkeeLoadLite {
 	}
 
 	function loadData(obj:LoadObj) {
+		obj.el.classList.add('monkee-load-loading');
 		req.open('GET', obj.url);
 		req.onload = function() {
+			obj.el.classList.remove('monkee-load-loading');
 			// make it smaller, by assuming files are without html
 			var body = (req.response);
 			Html.processHTML(obj.el, body, obj.loaderType == 'inner');

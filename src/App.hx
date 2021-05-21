@@ -5,6 +5,10 @@ class App {
 
 	public static inline var NAME:String = "[Monkee-Z]";
 
+	// events
+	public static inline var ON_LOAD_READY:String = "onLoadReady";
+	public static inline var ON_LOAD_UPDATE:String = "onLoadUpdate";
+
 	/**
 	 * @example
 	 * 		console.log(App.callIn('MonkeeRoute'));

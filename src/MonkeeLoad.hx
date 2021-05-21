@@ -17,7 +17,7 @@ using StringTools;
 using Lambda;
 
 class MonkeeLoad {
-	var DEBUG = true;
+	var DEBUG = false;
 
 	// do we need this?
 	// var config = {
@@ -29,6 +29,9 @@ class MonkeeLoad {
 	var req = new XMLHttpRequest();
 	var loadingArr:Array<LoadObj> = [];
 	var loadingId = 0;
+	// events
+	var onLoadUpdateEvent = new js.html.Event(App.ON_LOAD_UPDATE);
+	var onLoadReadyEvent = new js.html.Event(App.ON_LOAD_READY);
 
 	public function new() {
 		if (DEBUG)
@@ -55,7 +58,8 @@ class MonkeeLoad {
 					throbber: Throbber.set(_el),
 				}
 
-				trace(_loadObj);
+				if (DEBUG)
+					trace(_loadObj);
 
 				// if (_isJson) {}
 				loadingArr.push(_loadObj);
@@ -75,18 +79,27 @@ class MonkeeLoad {
 
 	function startLoading(nr:Int) {
 		if (nr >= loadingArr.length) {
+			if (DEBUG)
+				console.log('MonkeeLoad :: loading ready');
+			window.dispatchEvent(onLoadReadyEvent);
 			return;
 		}
 		loadData(loadingArr[nr]);
 		loadingId++;
+		if (DEBUG)
+			console.log('MonkeeLoad :: loading update');
+		loadingArr[nr].el.dispatchEvent(onLoadUpdateEvent);
 	}
 
 	function loadData(obj:LoadObj) {
+		obj.el.classList.add('monkee-load-loading');
 		req.open('GET', obj.url);
 		req.onload = function() {
 			// remove throbber
 			if (obj.throbber != null)
 				obj.throbber.parentElement.removeChild(obj.throbber);
+
+			obj.el.classList.remove('monkee-load-loading');
 
 			// body
 			var body = Html.getBody(req.response);
