@@ -48,6 +48,32 @@
 
 
     <div class="container my-5">
+
+        <div id="code-nav"></div>
+
+
+
+        <pre>
+- add `monkee` to a tags to add to Monkee-SPA
+- add `monkee-hidden` to add hidden links to Monkee-SPA
+- add `monkee-404` to be the 404 page (missing #)
+- all script in start-page will be kept
+- title of start-page will be first part of title
+- hash will be removed from start-page
+- no `monkee-404` then the start-page will be used
+- `monkee-hidden` doesn't really hide the link use display:none for that
+- in fact, you can do the same with `monkee` & diplay:none :p
+- title will be filename without extension ('foobar.html' title will be 'foobar')
+- "href='/path/foo'" will load 'path/foo.html'
+- body of start-page will be replaced, scripts in original file will kept
+
+        </pre>
+
+        <a href="#bottom">down</a>
+
+    </div>
+
+    <div class="container my-5">
         <div id="app_markdown"></div>
     </div>
 
@@ -65,6 +91,9 @@
 
 
     <div data-load="../components/footer.html"></div>
+
+    <span id="bottom"></span>
+
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -85,6 +114,7 @@
 
     <script>
 
+        MonkeeUtil.embedCode('#code-nav', '../components/spa/nav.html');
         MonkeeUtil.embedSpecs('#specs-route ', '../assets/json/monkee_route.json');
         // MonkeeUtil.embedSpecs('#specs-route-lite', '../assets/json/monkee_route_lite.json');
 
