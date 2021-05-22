@@ -17,7 +17,7 @@ using StringTools;
 
 @:expose
 class MonkeeChain {
-	var DEBUG = true;
+	var DEBUG = false;
 	var targetName:String = '';
 	var target:Element = null;
 	var data:Dynamic; // original data, set in constructor
