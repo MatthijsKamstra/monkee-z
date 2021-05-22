@@ -2,12 +2,10 @@
 (function ($global) { "use strict";
 class MonkeeRoute {
 	constructor() {
-		this.DEBUG = false;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 17:14:20");
-			}
+			let _version = "0.0.1";
+			$global.console.info("[Monkee-Z]" + " " + "Route" + " - version: " + _version);
 			_gthis.setupRoute();
 		});
 	}
@@ -17,7 +15,7 @@ class MonkeeRoute {
 			MonkeeRoute.defaultUrl = window.window.location.href.split("#").join("");
 			MonkeeRoute.previousLocationHref = MonkeeRoute.defaultUrl;
 			this.removeHash();
-			MonkeeRoute.map.h[""] = { link : null, url : MonkeeRoute.defaultUrl, hash : ""};
+			MonkeeRoute.map.h[""] = { link : null, url : MonkeeRoute.defaultUrl, id : ""};
 		}
 		let arr = [];
 		let el = window.document.querySelector("[monkee-404]");
@@ -50,7 +48,7 @@ class MonkeeRoute {
 			let _link = arr[i];
 			let _url = _link.href.indexOf(".html") == -1 ? _link.href + ".html" : _link.href;
 			let _name = _url.split("/")[_url.split("/").length - 1].split(".")[0];
-			let navObj = { link : _link, url : _url, hash : _name};
+			let navObj = { link : _link, url : _url, id : _name};
 			if(!Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,_name)) {
 				MonkeeRoute.map.h[_name] = navObj;
 			}
@@ -107,9 +105,9 @@ class MonkeeRoute {
 	}
 	replaceBody(navObj,html) {
 		let tmp = MonkeeRoute.defaultTitle + " : ";
-		window.document.title = tmp + navObj.hash;
-		if(navObj.hash != "404") {
-			window.location.hash = "/" + navObj.hash;
+		window.document.title = tmp + navObj.id;
+		if(navObj.id != "404") {
+			window.location.hash = "/" + navObj.id;
 		}
 		MonkeeRoute.previousLocationHref = MonkeeRoute.defaultUrl;
 		let all = Array.prototype.slice.call(window.document.body.children);

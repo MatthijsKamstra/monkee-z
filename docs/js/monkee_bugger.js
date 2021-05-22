@@ -3,12 +3,10 @@
 Math.__name__ = true;
 class MonkeeBugger {
 	constructor() {
-		this.DEBUG = true;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - build: " + "2021-05-22 17:14:18");
-			}
+			let _version = "0.0.1";
+			$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - version: " + _version);
 			_gthis.init();
 			_gthis.highjack();
 		});

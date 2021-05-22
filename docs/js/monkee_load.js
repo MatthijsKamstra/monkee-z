@@ -45,9 +45,8 @@ class MonkeeLoad {
 		this.req = new XMLHttpRequest();
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = false;
-		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " " + "MonkeeLoad" + " - build: " + "2021-05-22 17:14:14");
-		}
+		let _version = "0.0.1";
+		$global.console.info("[Monkee-Z]" + " " + "Load" + " - version: " + _version);
 		let _g = 0;
 		let _g1 = this.arr.length;
 		while(_g < _g1) {
@@ -65,7 +64,7 @@ class MonkeeLoad {
 				let _nameArr = _el.querySelectorAll("[data-name]");
 				let _loadObj = { el : _el, url : _url, query : utils_Query.convert(_url), isJson : _isJson, isInner : _configName == "data-load-inner", loaderType : "data-load-inner" == _configName ? "inner" : "outer", target : _target, names : _nameArr, throbber : utils_Throbber.set(_el)};
 				if(this.DEBUG) {
-					console.log("src/MonkeeLoad.hx:62:",_loadObj);
+					console.log("src/MonkeeLoad.hx:66:",_loadObj);
 				}
 				this.loadingArr.push(_loadObj);
 			}

@@ -2,12 +2,9 @@
 (function ($global) { "use strict";
 class MonkeeReact {
 	constructor() {
-		this.DEBUG = false;
-		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeReact" + " - build: " + "2021-05-22 17:14:19");
-			}
+			let _version = "0.0.1";
+			$global.console.info("[Monkee-Z]" + " " + "React" + " - version: " + _version);
 		});
 		let arr = window.document.querySelectorAll("[data-wrapper]");
 		let _g = 0;

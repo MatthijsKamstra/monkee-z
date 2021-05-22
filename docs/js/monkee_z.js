@@ -41,12 +41,10 @@ Lambda.__name__ = true;
 Math.__name__ = true;
 class MonkeeBugger {
 	constructor() {
-		this.DEBUG = true;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - build: " + "2021-05-22 17:14:13");
-			}
+			let _version = "0.0.1";
+			$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - version: " + _version);
 			_gthis.init();
 			_gthis.highjack();
 		});
@@ -132,9 +130,8 @@ class MonkeeLoad {
 		this.req = new XMLHttpRequest();
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = false;
-		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " " + "MonkeeLoad" + " - build: " + "2021-05-22 17:14:13");
-		}
+		let _version = "0.0.1";
+		$global.console.info("[Monkee-Z]" + " " + "Load" + " - version: " + _version);
 		let _g = 0;
 		let _g1 = this.arr.length;
 		while(_g < _g1) {
@@ -152,7 +149,7 @@ class MonkeeLoad {
 				let _nameArr = _el.querySelectorAll("[data-name]");
 				let _loadObj = { el : _el, url : _url, query : utils_Query.convert(_url), isJson : _isJson, isInner : _configName == "data-load-inner", loaderType : "data-load-inner" == _configName ? "inner" : "outer", target : _target, names : _nameArr, throbber : utils_Throbber.set(_el)};
 				if(this.DEBUG) {
-					console.log("src/MonkeeLoad.hx:62:",_loadObj);
+					console.log("src/MonkeeLoad.hx:66:",_loadObj);
 				}
 				this.loadingArr.push(_loadObj);
 			}
@@ -245,12 +242,10 @@ class MonkeeLoad {
 MonkeeLoad.__name__ = true;
 class MonkeeRoute {
 	constructor() {
-		this.DEBUG = false;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 17:14:13");
-			}
+			let _version = "0.0.1";
+			$global.console.info("[Monkee-Z]" + " " + "Route" + " - version: " + _version);
 			_gthis.setupRoute();
 		});
 	}
@@ -260,7 +255,7 @@ class MonkeeRoute {
 			MonkeeRoute.defaultUrl = window.window.location.href.split("#").join("");
 			MonkeeRoute.previousLocationHref = MonkeeRoute.defaultUrl;
 			this.removeHash();
-			MonkeeRoute.map.h[""] = { link : null, url : MonkeeRoute.defaultUrl, hash : ""};
+			MonkeeRoute.map.h[""] = { link : null, url : MonkeeRoute.defaultUrl, id : ""};
 		}
 		let arr = [];
 		let el = window.document.querySelector("[monkee-404]");
@@ -293,7 +288,7 @@ class MonkeeRoute {
 			let _link = arr[i];
 			let _url = _link.href.indexOf(".html") == -1 ? _link.href + ".html" : _link.href;
 			let _name = _url.split("/")[_url.split("/").length - 1].split(".")[0];
-			let navObj = { link : _link, url : _url, hash : _name};
+			let navObj = { link : _link, url : _url, id : _name};
 			if(!Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,_name)) {
 				MonkeeRoute.map.h[_name] = navObj;
 			}
@@ -350,9 +345,9 @@ class MonkeeRoute {
 	}
 	replaceBody(navObj,html) {
 		let tmp = MonkeeRoute.defaultTitle + " : ";
-		window.document.title = tmp + navObj.hash;
-		if(navObj.hash != "404") {
-			window.location.hash = "/" + navObj.hash;
+		window.document.title = tmp + navObj.id;
+		if(navObj.id != "404") {
+			window.location.hash = "/" + navObj.id;
 		}
 		MonkeeRoute.previousLocationHref = MonkeeRoute.defaultUrl;
 		let all = Array.prototype.slice.call(window.document.body.children);
@@ -376,9 +371,8 @@ MonkeeRoute.__name__ = true;
 class MonkeeUtil {
 	constructor() {
 		this.DEBUG = false;
-		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil" + " - build: " + "2021-05-22 17:14:13");
-		}
+		let _version = "0.0.1";
+		$global.console.info("[Monkee-Z]" + " " + "Util" + " - version: " + _version);
 		this.init();
 	}
 	init() {
@@ -393,7 +387,8 @@ class MonkeeUtil {
 		}
 	}
 	static mdTable2HTMLTable(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 17:14:13");
+		let _version = "0.0.1";
+		$global.console.info("[Monkee-Z]" + " " + "Util :: embedSpecs" + " - version: " + _version);
 		let createTable = function(arr) {
 			let html = "<table class=\"table table-striped table-sm\">";
 			let _g = 0;
@@ -427,7 +422,7 @@ class MonkeeUtil {
 			while(_g < _g1) {
 				let i = _g++;
 				let _linesArr = linesArr[i];
-				console.log("src/MonkeeUtil.hx:93:",_linesArr);
+				console.log("src/MonkeeUtil.hx:97:",_linesArr);
 				if(i == 1) {
 					continue;
 				}
@@ -453,7 +448,8 @@ class MonkeeUtil {
 		});
 	}
 	static embedSpecs(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 17:14:13");
+		let _version = "0.0.1";
+		$global.console.info("[Monkee-Z]" + " " + "Util :: embedSpecs" + " - version: " + _version);
 		let app = new MonkeeChain("" + id,{ data : { json : { name : "", updated : "", size : { minified : "", original : "", uglifyjs : ""}, url : { minified : "", original : "", uglifyjs : ""}}}, template : function(props) {
 			return "\n                    <div class=\"card\">\n            \t\t\t<div class=\"card-body\">\n    \t\t\t\t\t\t<strong>File " + props.json.name + ":</strong>\n    \t\t\t\t\t\t<p class=\"text-muted\">Updated: " + props.json.updated + "</p>\n    \t\t\t\t\t\t<ul>\n    \t\t\t\t\t\t\t<li>Download original file: <a href=\"" + props.json.url.original + "\">" + StringTools.replace(props.json.name,".js",".js") + "</a> (" + props.json.size.original + ")</li>\n    \t\t\t\t\t\t\t<li>UglifyJs file size: <a href=\"" + props.json.url.uglifyjs + "\">" + StringTools.replace(props.json.name,".js",".min.js") + "</a> (" + props.json.size.uglifyjs + ")</li>\n    \t\t\t\t\t\t\t<li>Extra minified file size: <a href=\"" + props.json.url.minified + "\">" + StringTools.replace(props.json.name,".js",".min.min.js") + "</a> (" + props.json.size.minified + ")</li>\n    \t\t\t\t\t\t</ul>\n    \t\t    \t    </div>\n    \t\t\t    </div>\n                    ";
 		}});
@@ -465,7 +461,8 @@ class MonkeeUtil {
 		});
 	}
 	static embedCode(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedCode" + " - build: " + "2021-05-22 17:14:13");
+		let _version = "0.0.1";
+		$global.console.info("[Monkee-Z]" + " " + "Util :: embedCode" + " - version: " + _version);
 		MonkeeUtil.setLink("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css");
 		MonkeeUtil.setLink("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css");
 		MonkeeUtil.setScript("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js");
@@ -564,7 +561,8 @@ class utils_Throbber {
 utils_Throbber.__name__ = true;
 class MonkeeZ {
 	constructor() {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeZ" + " - build: " + "2021-05-22 17:14:13");
+		let _version = "0.0.1";
+		$global.console.info("[Monkee-Z]" + " " + "MonkeeZ" + " - version: " + _version);
 	}
 	static main() {
 		let app = new MonkeeZ();
@@ -882,6 +880,8 @@ MonkeeRoute.map = new haxe_ds_StringMap();
 MonkeeRoute.defaultTitle = "";
 MonkeeRoute.defaultUrl = "";
 MonkeeRoute.previousLocationHref = "";
+MonkeeUtil.VERSION = "0.0.1";
+MonkeeZ.VERSION = "0.0.1";
 MonkeeZ.load = new MonkeeLoad();
 MonkeeZ.route = new MonkeeRoute();
 MonkeeZ.bugger = new MonkeeBugger();
