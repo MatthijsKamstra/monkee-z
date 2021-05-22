@@ -33,6 +33,12 @@ class BuildToolSimple {
 
 			// manually minify output even more
 			outContent3 = outContent3
+				.replace("_hx_skip_constructor", "$$3")
+				.replace("_hx_constructor", "$$4")
+				.replace("_hx_index", "$$5")
+				.replace("__enum__", "$$6")
+				.replace("hx__closures__", "$$7")
+				.replace("__class__", "$$8")
 				.replace('e=function(){return js_Boot.__string_rec(this,"")},', "e=_=>{},")
 				.replace('"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this', "window");
 

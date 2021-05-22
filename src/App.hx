@@ -1,7 +1,7 @@
 import haxe.macro.Context;
 
 class App {
-	public static inline var URL:String = "https://";
+	public static inline var URL:String = "https://matthijskamstra.github.io/monkee-z/";
 
 	public static inline var NAME:String = "[Monkee-Z]";
 
