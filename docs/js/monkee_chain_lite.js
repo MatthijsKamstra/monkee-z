@@ -6,7 +6,7 @@ class MonkeeChainLite {
 		this.data = { };
 		this.target = null;
 		this.targetName = "";
-		this.DEBUG = true;
+		this.DEBUG = false;
 		if(typeof(target) == "string") {
 			this.targetName = target;
 			this.target = window.document.querySelector(target);

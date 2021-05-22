@@ -3,7 +3,7 @@
 class MonkeeUtil {
 	constructor() {
 		this.DEBUG = false;
-		let _version = "0.0.1";
+		let _version = "0.0.6";
 		$global.console.info("[Monkee-Z]" + " " + "Util" + " - version: " + _version);
 		this.init();
 	}
@@ -19,7 +19,7 @@ class MonkeeUtil {
 		}
 	}
 	static mdTable2HTMLTable(id,filename) {
-		let _version = "0.0.1";
+		let _version = "0.0.6";
 		$global.console.info("[Monkee-Z]" + " " + "Util :: embedSpecs" + " - version: " + _version);
 		let createTable = function(arr) {
 			let html = "<table class=\"table table-striped table-sm\">";
@@ -54,7 +54,7 @@ class MonkeeUtil {
 			while(_g < _g1) {
 				let i = _g++;
 				let _linesArr = linesArr[i];
-				console.log("src/MonkeeUtil.hx:97:",_linesArr);
+				console.log("src/MonkeeUtil.hx:102:",_linesArr);
 				if(i == 1) {
 					continue;
 				}
@@ -80,7 +80,7 @@ class MonkeeUtil {
 		});
 	}
 	static embedSpecs(id,filename) {
-		let _version = "0.0.1";
+		let _version = "0.0.6";
 		$global.console.info("[Monkee-Z]" + " " + "Util :: embedSpecs" + " - version: " + _version);
 		let app = new MonkeeChain("" + id,{ data : { json : { name : "", updated : "", size : { minified : "", original : "", uglifyjs : ""}, url : { minified : "", original : "", uglifyjs : ""}}}, template : function(props) {
 			return "\n                    <div class=\"card\">\n            \t\t\t<div class=\"card-body\">\n    \t\t\t\t\t\t<strong>File " + props.json.name + ":</strong>\n    \t\t\t\t\t\t<p class=\"text-muted\">Updated: " + props.json.updated + "</p>\n    \t\t\t\t\t\t<ul>\n    \t\t\t\t\t\t\t<li>Download original file: <a href=\"" + props.json.url.original + "\">" + StringTools.replace(props.json.name,".js",".js") + "</a> (" + props.json.size.original + ")</li>\n    \t\t\t\t\t\t\t<li>UglifyJs file size: <a href=\"" + props.json.url.uglifyjs + "\">" + StringTools.replace(props.json.name,".js",".min.js") + "</a> (" + props.json.size.uglifyjs + ")</li>\n    \t\t\t\t\t\t\t<li>Extra minified file size: <a href=\"" + props.json.url.minified + "\">" + StringTools.replace(props.json.name,".js",".min.min.js") + "</a> (" + props.json.size.minified + ")</li>\n    \t\t\t\t\t\t</ul>\n    \t\t    \t    </div>\n    \t\t\t    </div>\n                    ";
@@ -93,7 +93,7 @@ class MonkeeUtil {
 		});
 	}
 	static embedCode(id,filename) {
-		let _version = "0.0.1";
+		let _version = "0.0.6";
 		$global.console.info("[Monkee-Z]" + " " + "Util :: embedCode" + " - version: " + _version);
 		MonkeeUtil.setLink("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css");
 		MonkeeUtil.setLink("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css");
@@ -183,6 +183,6 @@ class utils_Sanitize {
 }
 {
 }
-MonkeeUtil.VERSION = "0.0.1";
+MonkeeUtil.VERSION = "0.0.6";
 MonkeeUtil.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
