@@ -69,6 +69,16 @@ class BuildToolSimple {
 
 			var outPath5 = outPath.replace('.js', '.json').replace('/js/', '/assets/json/');
 			sys.io.File.saveContent(outPath5, haxe.Json.stringify(json));
+
+			var outTotal = 'docs/assets/json/monkee_total.json';
+			if (!sys.FileSystem.exists(outTotal)) {
+				sys.io.File.saveContent(outTotal, haxe.Json.stringify({}));
+			}
+
+			var jsonTotal = haxe.Json.parse(sys.io.File.getContent(outTotal));
+			Reflect.setField(jsonTotal, '${outPath.split('js/')[1]}', json);
+			sys.io.File.saveContent(outTotal, haxe.Json.stringify(jsonTotal));
+
 			// #end
 		});
 	}
