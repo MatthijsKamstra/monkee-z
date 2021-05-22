@@ -4,7 +4,7 @@ class MonkeeUtil {
 	constructor() {
 		this.DEBUG = false;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil" + " - build: " + "2021-05-22 12:11:03");
+			$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil" + " - build: " + "2021-05-22 17:14:17");
 		}
 		this.init();
 	}
@@ -16,11 +16,11 @@ class MonkeeUtil {
 			let i = _g++;
 			let el = all[i];
 			let html = el.getAttribute("data-escape");
-			el.innerHTML = MonkeeUtil.escapeHTML(html);
+			el.innerHTML = utils_Sanitize.escapeHTML(html);
 		}
 	}
 	static mdTable2HTMLTable(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 12:11:03");
+		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 17:14:17");
 		let createTable = function(arr) {
 			let html = "<table class=\"table table-striped table-sm\">";
 			let _g = 0;
@@ -54,7 +54,7 @@ class MonkeeUtil {
 			while(_g < _g1) {
 				let i = _g++;
 				let _linesArr = linesArr[i];
-				console.log("src/MonkeeUtil.hx:92:",_linesArr);
+				console.log("src/MonkeeUtil.hx:93:",_linesArr);
 				if(i == 1) {
 					continue;
 				}
@@ -80,7 +80,7 @@ class MonkeeUtil {
 		});
 	}
 	static embedSpecs(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 12:11:03");
+		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 17:14:17");
 		let app = new MonkeeChain("" + id,{ data : { json : { name : "", updated : "", size : { minified : "", original : "", uglifyjs : ""}, url : { minified : "", original : "", uglifyjs : ""}}}, template : function(props) {
 			return "\n                    <div class=\"card\">\n            \t\t\t<div class=\"card-body\">\n    \t\t\t\t\t\t<strong>File " + props.json.name + ":</strong>\n    \t\t\t\t\t\t<p class=\"text-muted\">Updated: " + props.json.updated + "</p>\n    \t\t\t\t\t\t<ul>\n    \t\t\t\t\t\t\t<li>Download original file: <a href=\"" + props.json.url.original + "\">" + StringTools.replace(props.json.name,".js",".js") + "</a> (" + props.json.size.original + ")</li>\n    \t\t\t\t\t\t\t<li>UglifyJs file size: <a href=\"" + props.json.url.uglifyjs + "\">" + StringTools.replace(props.json.name,".js",".min.js") + "</a> (" + props.json.size.uglifyjs + ")</li>\n    \t\t\t\t\t\t\t<li>Extra minified file size: <a href=\"" + props.json.url.minified + "\">" + StringTools.replace(props.json.name,".js",".min.min.js") + "</a> (" + props.json.size.minified + ")</li>\n    \t\t\t\t\t\t</ul>\n    \t\t    \t    </div>\n    \t\t\t    </div>\n                    ";
 		}});
@@ -92,12 +92,12 @@ class MonkeeUtil {
 		});
 	}
 	static embedCode(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedCode" + " - build: " + "2021-05-22 12:11:03");
+		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedCode" + " - build: " + "2021-05-22 17:14:17");
 		MonkeeUtil.setLink("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css");
 		MonkeeUtil.setLink("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css");
 		MonkeeUtil.setScript("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js");
-		let app = new MonkeeChain("" + id,{ data : { js : "", code : "test"}, template : function(data) {
-			return "\n\t\t        <div class=\"copy-code-wrapper-" + id + "\" style=\"position:relative;\">\n\t\t        <textarea id=\"copy-code-input-" + id + "\" style=\"position:fixed;top:-100px;\">" + data.code + "</textarea>\n\t\t        <pre style=\"border-radius:4px;\"><code class=\"js\">" + data.js + "</code></pre>\n\t\t        <button class=\"btn\" id=\"copy-code-btn-" + id + "\" style=\"position: absolute; top: 15px; right: 15px;\">📋</button>\n\t\t        </div>\n\t\t        ";
+		let app = new MonkeeChain("" + id,{ data : { code : "test", codeEscaped : "", codeType : "js"}, template : function(data) {
+			return "\n\t\t        <div class=\"copy-code-wrapper-" + id + "\" style=\"position:relative;\" data-type=\"" + data.codeType + "\">\n\t\t        <textarea id=\"copy-code-input-" + id + "\" style=\"position:fixed;top:-100px;\">" + data.code + "</textarea>\n\t\t        <pre style=\"border-radius:4px;\"><code class=\"" + data.codeType + "\">" + data.codeEscaped + "</code></pre>\n\t\t        <button class=\"btn\" id=\"copy-code-btn-" + id + "\" style=\"position: absolute; top: 15px; right: 15px;\">📋</button>\n\t\t        </div>\n\t\t        ";
 		}});
 		let setButton = function() {
 			let wrapper = window.document.getElementById("copy-code-wrapper-" + id);
@@ -116,17 +116,16 @@ class MonkeeUtil {
 		window.fetch("" + filename).then(function(response) {
 			return response.text();
 		}).then(function(data) {
-			app.data.code = data;
-			app.data.js = MonkeeUtil.escapeHTML(data);
+			let spaced = data.split("\t").join("  ");
+			app.data.code = spaced;
+			app.data.codeEscaped = utils_Sanitize.escapeHTML(spaced);
+			app.data.codeType = filename.split(".")[filename.split(".").length - 1];
 			app.render();
 			window.setTimeout(function() {
 				hljs.highlightAll();
 				setButton();
 			},500);
 		});
-	}
-	static escapeHTML(html) {
-		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(html,"&","&amp;"),"\"","&quot;"),"<","&lt;"),">","&gt;");
 	}
 	static setLink(href) {
 		let one = window.document.querySelector("[href=\"" + href + "\"]");
@@ -167,6 +166,17 @@ class haxe_iterators_ArrayIterator {
 	}
 	next() {
 		return this.array[this.current++];
+	}
+}
+class utils_Sanitize {
+	static sanitizeHTML(unsafe_str) {
+		if(unsafe_str.indexOf("&amp;") != -1) {
+			StringTools.replace(unsafe_str,"&","&amp;");
+		}
+		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(unsafe_str,"<","&lt;"),">","&gt;"),"\"","&quot;"),"'","&#39;");
+	}
+	static escapeHTML(unsafe_str) {
+		return utils_Sanitize.sanitizeHTML(unsafe_str);
 	}
 }
 {

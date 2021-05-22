@@ -45,7 +45,7 @@ class MonkeeBugger {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - build: " + "2021-05-22 12:10:59");
+				$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - build: " + "2021-05-22 17:14:13");
 			}
 			_gthis.init();
 			_gthis.highjack();
@@ -133,7 +133,7 @@ class MonkeeLoad {
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = false;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " " + "MonkeeLoad" + " - build: " + "2021-05-22 12:10:59");
+			$global.console.info("[Monkee-Z]" + " " + "MonkeeLoad" + " - build: " + "2021-05-22 17:14:13");
 		}
 		let _g = 0;
 		let _g1 = this.arr.length;
@@ -245,11 +245,11 @@ class MonkeeLoad {
 MonkeeLoad.__name__ = true;
 class MonkeeRoute {
 	constructor() {
-		this.DEBUG = true;
+		this.DEBUG = false;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 12:10:59");
+				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 17:14:13");
 			}
 			_gthis.setupRoute();
 		});
@@ -257,10 +257,34 @@ class MonkeeRoute {
 	setupRoute() {
 		if(MonkeeRoute.defaultTitle == "") {
 			MonkeeRoute.defaultTitle = window.document.title;
-			MonkeeRoute.defaultUrl = window.location.href.split("#").join("");
+			MonkeeRoute.defaultUrl = window.window.location.href.split("#").join("");
+			MonkeeRoute.previousLocationHref = MonkeeRoute.defaultUrl;
+			this.removeHash();
 			MonkeeRoute.map.h[""] = { link : null, url : MonkeeRoute.defaultUrl, hash : ""};
 		}
-		let arr = window.document.querySelectorAll("[monkee]");
+		let arr = [];
+		let el = window.document.querySelector("[monkee-404]");
+		if(el != null) {
+			arr.push(el);
+		}
+		let _hidden = window.document.querySelectorAll("[monkee-hidden]");
+		if(_hidden.length > 0) {
+			let _g = 0;
+			let _g1 = _hidden.length;
+			while(_g < _g1) {
+				let i = _g++;
+				arr.push(_hidden[i]);
+			}
+		}
+		let _monkee = window.document.querySelectorAll("[monkee]");
+		if(_monkee.length > 0) {
+			let _g = 0;
+			let _g1 = _monkee.length;
+			while(_g < _g1) {
+				let i = _g++;
+				arr.push(_monkee[i]);
+			}
+		}
 		let _gthis = this;
 		let _g = 0;
 		let _g1 = arr.length;
@@ -288,13 +312,17 @@ class MonkeeRoute {
 		},true);
 		window.onhashchange = $bind(this,this.locationHashChanged);
 	}
+	removeHash() {
+		window.history.pushState("",window.document.title,window.window.location.pathname + window.window.location.search);
+	}
 	locationHashChanged() {
-		let key = $global.location.hash.split("#").join("");
+		let key = window.location.hash.split("#/").join("");
+		console.log("src/MonkeeRoute.hx:120:",key);
 		let _gthis = this;
 		if(Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,key)) {
 			let navObj = MonkeeRoute.map.h[key];
 			if(navObj.url == MonkeeRoute.defaultUrl) {
-				$global.location.reload();
+				window.location.reload();
 			} else {
 				window.fetch(navObj.url).then(function(response) {
 					return response.text();
@@ -302,16 +330,31 @@ class MonkeeRoute {
 					_gthis.replaceBody(navObj,data);
 				});
 			}
+		} else if(window.location.hash.indexOf("#/") == -1) {
+			if(MonkeeRoute.previousLocationHref == window.window.location.href) {
+				window.location.reload();
+			}
+		} else if(Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,"404")) {
+			let navObj = MonkeeRoute.map.h["404"];
+			window.fetch(navObj.url).then(function(response) {
+				return response.text();
+			}).then(function(data) {
+				_gthis.replaceBody(navObj,data);
+			});
 		} else {
 			$global.console.info("unknown - " + MonkeeRoute.defaultUrl);
-			window.location.href = MonkeeRoute.defaultUrl;
-			$global.location.reload();
+			window.window.location.href = MonkeeRoute.defaultUrl;
+			window.location.reload();
+			MonkeeRoute.previousLocationHref = window.window.location.href;
 		}
 	}
 	replaceBody(navObj,html) {
 		let tmp = MonkeeRoute.defaultTitle + " : ";
 		window.document.title = tmp + navObj.hash;
-		$global.location.hash = navObj.hash;
+		if(navObj.hash != "404") {
+			window.location.hash = "/" + navObj.hash;
+		}
+		MonkeeRoute.previousLocationHref = MonkeeRoute.defaultUrl;
 		let all = Array.prototype.slice.call(window.document.body.children);
 		window.document.body.innerHTML = html;
 		let _g = 0;
@@ -334,7 +377,7 @@ class MonkeeUtil {
 	constructor() {
 		this.DEBUG = false;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil" + " - build: " + "2021-05-22 12:10:59");
+			$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil" + " - build: " + "2021-05-22 17:14:13");
 		}
 		this.init();
 	}
@@ -346,11 +389,11 @@ class MonkeeUtil {
 			let i = _g++;
 			let el = all[i];
 			let html = el.getAttribute("data-escape");
-			el.innerHTML = MonkeeUtil.escapeHTML(html);
+			el.innerHTML = utils_Sanitize.escapeHTML(html);
 		}
 	}
 	static mdTable2HTMLTable(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 12:10:59");
+		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 17:14:13");
 		let createTable = function(arr) {
 			let html = "<table class=\"table table-striped table-sm\">";
 			let _g = 0;
@@ -384,7 +427,7 @@ class MonkeeUtil {
 			while(_g < _g1) {
 				let i = _g++;
 				let _linesArr = linesArr[i];
-				console.log("src/MonkeeUtil.hx:92:",_linesArr);
+				console.log("src/MonkeeUtil.hx:93:",_linesArr);
 				if(i == 1) {
 					continue;
 				}
@@ -410,7 +453,7 @@ class MonkeeUtil {
 		});
 	}
 	static embedSpecs(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 12:10:59");
+		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedSpecs" + " - build: " + "2021-05-22 17:14:13");
 		let app = new MonkeeChain("" + id,{ data : { json : { name : "", updated : "", size : { minified : "", original : "", uglifyjs : ""}, url : { minified : "", original : "", uglifyjs : ""}}}, template : function(props) {
 			return "\n                    <div class=\"card\">\n            \t\t\t<div class=\"card-body\">\n    \t\t\t\t\t\t<strong>File " + props.json.name + ":</strong>\n    \t\t\t\t\t\t<p class=\"text-muted\">Updated: " + props.json.updated + "</p>\n    \t\t\t\t\t\t<ul>\n    \t\t\t\t\t\t\t<li>Download original file: <a href=\"" + props.json.url.original + "\">" + StringTools.replace(props.json.name,".js",".js") + "</a> (" + props.json.size.original + ")</li>\n    \t\t\t\t\t\t\t<li>UglifyJs file size: <a href=\"" + props.json.url.uglifyjs + "\">" + StringTools.replace(props.json.name,".js",".min.js") + "</a> (" + props.json.size.uglifyjs + ")</li>\n    \t\t\t\t\t\t\t<li>Extra minified file size: <a href=\"" + props.json.url.minified + "\">" + StringTools.replace(props.json.name,".js",".min.min.js") + "</a> (" + props.json.size.minified + ")</li>\n    \t\t\t\t\t\t</ul>\n    \t\t    \t    </div>\n    \t\t\t    </div>\n                    ";
 		}});
@@ -422,12 +465,12 @@ class MonkeeUtil {
 		});
 	}
 	static embedCode(id,filename) {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedCode" + " - build: " + "2021-05-22 12:10:59");
+		$global.console.info("[Monkee-Z]" + " " + "MonkeeUtil :: embedCode" + " - build: " + "2021-05-22 17:14:13");
 		MonkeeUtil.setLink("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css");
 		MonkeeUtil.setLink("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css");
 		MonkeeUtil.setScript("//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js");
-		let app = new MonkeeChain("" + id,{ data : { js : "", code : "test"}, template : function(data) {
-			return "\n\t\t        <div class=\"copy-code-wrapper-" + id + "\" style=\"position:relative;\">\n\t\t        <textarea id=\"copy-code-input-" + id + "\" style=\"position:fixed;top:-100px;\">" + data.code + "</textarea>\n\t\t        <pre style=\"border-radius:4px;\"><code class=\"js\">" + data.js + "</code></pre>\n\t\t        <button class=\"btn\" id=\"copy-code-btn-" + id + "\" style=\"position: absolute; top: 15px; right: 15px;\">📋</button>\n\t\t        </div>\n\t\t        ";
+		let app = new MonkeeChain("" + id,{ data : { code : "test", codeEscaped : "", codeType : "js"}, template : function(data) {
+			return "\n\t\t        <div class=\"copy-code-wrapper-" + id + "\" style=\"position:relative;\" data-type=\"" + data.codeType + "\">\n\t\t        <textarea id=\"copy-code-input-" + id + "\" style=\"position:fixed;top:-100px;\">" + data.code + "</textarea>\n\t\t        <pre style=\"border-radius:4px;\"><code class=\"" + data.codeType + "\">" + data.codeEscaped + "</code></pre>\n\t\t        <button class=\"btn\" id=\"copy-code-btn-" + id + "\" style=\"position: absolute; top: 15px; right: 15px;\">📋</button>\n\t\t        </div>\n\t\t        ";
 		}});
 		let setButton = function() {
 			let wrapper = window.document.getElementById("copy-code-wrapper-" + id);
@@ -446,17 +489,16 @@ class MonkeeUtil {
 		window.fetch("" + filename).then(function(response) {
 			return response.text();
 		}).then(function(data) {
-			app.data.code = data;
-			app.data.js = MonkeeUtil.escapeHTML(data);
+			let spaced = data.split("\t").join("  ");
+			app.data.code = spaced;
+			app.data.codeEscaped = utils_Sanitize.escapeHTML(spaced);
+			app.data.codeType = filename.split(".")[filename.split(".").length - 1];
 			app.render();
 			window.setTimeout(function() {
 				hljs.highlightAll();
 				setButton();
 			},500);
 		});
-	}
-	static escapeHTML(html) {
-		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(html,"&","&amp;"),"\"","&quot;"),"<","&lt;"),">","&gt;");
 	}
 	static setLink(href) {
 		let one = window.document.querySelector("[href=\"" + href + "\"]");
@@ -522,7 +564,7 @@ class utils_Throbber {
 utils_Throbber.__name__ = true;
 class MonkeeZ {
 	constructor() {
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeZ" + " - build: " + "2021-05-22 12:10:59");
+		$global.console.info("[Monkee-Z]" + " " + "MonkeeZ" + " - build: " + "2021-05-22 17:14:13");
 	}
 	static main() {
 		let app = new MonkeeZ();
@@ -784,6 +826,18 @@ class utils_JsonPath {
 	}
 }
 utils_JsonPath.__name__ = true;
+class utils_Sanitize {
+	static sanitizeHTML(unsafe_str) {
+		if(unsafe_str.indexOf("&amp;") != -1) {
+			StringTools.replace(unsafe_str,"&","&amp;");
+		}
+		return StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(unsafe_str,"<","&lt;"),">","&gt;"),"\"","&quot;"),"'","&#39;");
+	}
+	static escapeHTML(unsafe_str) {
+		return utils_Sanitize.sanitizeHTML(unsafe_str);
+	}
+}
+utils_Sanitize.__name__ = true;
 class utils_Template {
 	static convert(obj,template) {
 		let arr = [];
@@ -827,6 +881,7 @@ js_Boot.__toStr = ({ }).toString;
 MonkeeRoute.map = new haxe_ds_StringMap();
 MonkeeRoute.defaultTitle = "";
 MonkeeRoute.defaultUrl = "";
+MonkeeRoute.previousLocationHref = "";
 MonkeeZ.load = new MonkeeLoad();
 MonkeeZ.route = new MonkeeRoute();
 MonkeeZ.bugger = new MonkeeBugger();

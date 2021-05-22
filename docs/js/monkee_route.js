@@ -2,11 +2,11 @@
 (function ($global) { "use strict";
 class MonkeeRoute {
 	constructor() {
-		this.DEBUG = true;
+		this.DEBUG = false;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 12:11:07");
+				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 17:14:20");
 			}
 			_gthis.setupRoute();
 		});
@@ -14,10 +14,34 @@ class MonkeeRoute {
 	setupRoute() {
 		if(MonkeeRoute.defaultTitle == "") {
 			MonkeeRoute.defaultTitle = window.document.title;
-			MonkeeRoute.defaultUrl = window.location.href.split("#").join("");
+			MonkeeRoute.defaultUrl = window.window.location.href.split("#").join("");
+			MonkeeRoute.previousLocationHref = MonkeeRoute.defaultUrl;
+			this.removeHash();
 			MonkeeRoute.map.h[""] = { link : null, url : MonkeeRoute.defaultUrl, hash : ""};
 		}
-		let arr = window.document.querySelectorAll("[monkee]");
+		let arr = [];
+		let el = window.document.querySelector("[monkee-404]");
+		if(el != null) {
+			arr.push(el);
+		}
+		let _hidden = window.document.querySelectorAll("[monkee-hidden]");
+		if(_hidden.length > 0) {
+			let _g = 0;
+			let _g1 = _hidden.length;
+			while(_g < _g1) {
+				let i = _g++;
+				arr.push(_hidden[i]);
+			}
+		}
+		let _monkee = window.document.querySelectorAll("[monkee]");
+		if(_monkee.length > 0) {
+			let _g = 0;
+			let _g1 = _monkee.length;
+			while(_g < _g1) {
+				let i = _g++;
+				arr.push(_monkee[i]);
+			}
+		}
 		let _gthis = this;
 		let _g = 0;
 		let _g1 = arr.length;
@@ -45,13 +69,17 @@ class MonkeeRoute {
 		},true);
 		window.onhashchange = $bind(this,this.locationHashChanged);
 	}
+	removeHash() {
+		window.history.pushState("",window.document.title,window.window.location.pathname + window.window.location.search);
+	}
 	locationHashChanged() {
-		let key = $global.location.hash.split("#").join("");
+		let key = window.location.hash.split("#/").join("");
+		console.log("src/MonkeeRoute.hx:120:",key);
 		let _gthis = this;
 		if(Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,key)) {
 			let navObj = MonkeeRoute.map.h[key];
 			if(navObj.url == MonkeeRoute.defaultUrl) {
-				$global.location.reload();
+				window.location.reload();
 			} else {
 				window.fetch(navObj.url).then(function(response) {
 					return response.text();
@@ -59,16 +87,31 @@ class MonkeeRoute {
 					_gthis.replaceBody(navObj,data);
 				});
 			}
+		} else if(window.location.hash.indexOf("#/") == -1) {
+			if(MonkeeRoute.previousLocationHref == window.window.location.href) {
+				window.location.reload();
+			}
+		} else if(Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,"404")) {
+			let navObj = MonkeeRoute.map.h["404"];
+			window.fetch(navObj.url).then(function(response) {
+				return response.text();
+			}).then(function(data) {
+				_gthis.replaceBody(navObj,data);
+			});
 		} else {
 			$global.console.info("unknown - " + MonkeeRoute.defaultUrl);
-			window.location.href = MonkeeRoute.defaultUrl;
-			$global.location.reload();
+			window.window.location.href = MonkeeRoute.defaultUrl;
+			window.location.reload();
+			MonkeeRoute.previousLocationHref = window.window.location.href;
 		}
 	}
 	replaceBody(navObj,html) {
 		let tmp = MonkeeRoute.defaultTitle + " : ";
 		window.document.title = tmp + navObj.hash;
-		$global.location.hash = navObj.hash;
+		if(navObj.hash != "404") {
+			window.location.hash = "/" + navObj.hash;
+		}
+		MonkeeRoute.previousLocationHref = MonkeeRoute.defaultUrl;
 		let all = Array.prototype.slice.call(window.document.body.children);
 		window.document.body.innerHTML = html;
 		let _g = 0;
@@ -114,5 +157,6 @@ $global.$haxeUID |= 0;
 MonkeeRoute.map = new haxe_ds_StringMap();
 MonkeeRoute.defaultTitle = "";
 MonkeeRoute.defaultUrl = "";
+MonkeeRoute.previousLocationHref = "";
 MonkeeRoute.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
