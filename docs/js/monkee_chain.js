@@ -8,7 +8,7 @@ class MonkeeChain {
 		this.targetName = "";
 		this.DEBUG = false;
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " " + "MonkeeChain" + " - build: " + "2021-05-22 10:22:38");
+			$global.console.info("[Monkee-Z]" + " " + "MonkeeChain" + " - build: " + "2021-05-22 12:11:08");
 		}
 		if(typeof(target) == "string") {
 			this.targetName = target;
@@ -53,7 +53,7 @@ class MonkeeChain {
 	}
 	render() {
 		if(this.DEBUG) {
-			$global.console.info("[Monkee-Z]" + " " + "RENDER()" + " - build: " + "2021-05-22 10:22:38");
+			$global.console.info("[Monkee-Z]" + " " + "RENDER()" + " - build: " + "2021-05-22 12:11:08");
 		}
 		if(typeof(this.template) == "string") {
 			this.target.innerHTML = this.template;

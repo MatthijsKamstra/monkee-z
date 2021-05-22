@@ -6,7 +6,7 @@ class MonkeeRoute {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 10:22:37");
+				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 12:11:07");
 			}
 			_gthis.setupRoute();
 		});
