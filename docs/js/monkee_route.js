@@ -2,12 +2,11 @@
 (function ($global) { "use strict";
 class MonkeeRoute {
 	constructor() {
-		this.title = "";
 		this.DEBUG = true;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " - " + "MonkeeRoute" + " - build: " + "2021-05-21 18:46:04");
+				$global.console.info("[Monkee-Z]" + " - " + "MonkeeRoute" + " - build: " + "2021-05-22 09:32:50");
 			}
 			_gthis.init();
 		});
@@ -19,7 +18,6 @@ class MonkeeRoute {
 			$global.location.hash = "";
 			MonkeeRoute.map.h[""] = { link : null, url : MonkeeRoute.defaultUrl, hash : ""};
 		}
-		this.title = MonkeeRoute.defaultTitle;
 		let arr = window.document.querySelectorAll("[monkee]");
 		let _gthis = this;
 		let _g = 0;
@@ -69,7 +67,7 @@ class MonkeeRoute {
 		}
 	}
 	replaceBody(navObj,html) {
-		let tmp = this.title + " : ";
+		let tmp = MonkeeRoute.defaultTitle + " : ";
 		window.document.title = tmp + navObj.hash;
 		$global.location.hash = navObj.hash;
 		let all = Array.prototype.slice.call(window.document.body.children);
