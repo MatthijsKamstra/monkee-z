@@ -16,6 +16,7 @@ class MonkeeRoute {
 	public static var map:Map<String, NavObj> = [];
 	public static var defaultTitle = '';
 	public static var defaultUrl = '';
+	public static var previousLocationHref = '';
 
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
@@ -31,11 +32,13 @@ class MonkeeRoute {
 		// get one time the defaultTitle and set the hash to zero
 		if (defaultTitle == '') {
 			defaultTitle = document.title;
-			defaultUrl = window.location.href.split('#').join(''); // foo/#
-			// location.hash = ''; // might not be so good idea
+			defaultUrl = window.window.location.href.split('#').join(''); // foo/#
+			// window.location.hash = ''; // might not be so good idea
+
+			previousLocationHref = defaultUrl;
 
 			// [mck] strip the first page from hash...
-			// window.location.href = window.location.href.split('#')[0];
+			// window.window.location.href = window.window.location.href.split('#')[0];
 			removeHash();
 
 			map.set('', {
@@ -108,34 +111,40 @@ class MonkeeRoute {
 	}
 
 	function removeHash() {
-		window.history.pushState("", document.title, window.location.pathname + window.location.search);
+		window.history.pushState("", document.title, window.window.location.pathname + window.window.location.search);
 	}
 
 	function locationHashChanged() {
-		// console.log("You're visiting : " + location.hash);
-		var key = (location.hash).split('#').join('');
-		// trace(key);
+		// console.log("You're visiting : " + window.location.hash);
+		var key = (window.location.hash).split('#/').join('');
+		trace(key);
 		if (map.exists(key)) {
 			var navObj = map.get(key);
 			// trace(navObj);
 			if (navObj.url == defaultUrl) {
-				location.reload();
+				window.location.reload();
 			} else {
 				window.fetch(navObj.url)
 					.then(response -> response.text())
 					.then(data -> replaceBody(navObj, data));
 			}
 		} else {
-			if (map.exists('404')) {
+			if (window.location.hash.indexOf('#/') == -1) {
+				// console.log('use default action');
+
+				if (previousLocationHref == window.window.location.href) {
+					window.location.reload();
+				}
+			} else if (map.exists('404')) {
 				var navObj = map.get('404');
 				window.fetch(navObj.url)
 					.then(response -> response.text())
 					.then(data -> replaceBody(navObj, data));
 			} else {
 				console.info('unknown - ${defaultUrl}');
-				// window.open('?', '_self');
-				window.location.href = defaultUrl;
-				location.reload();
+				window.window.location.href = defaultUrl;
+				window.location.reload();
+				previousLocationHref = window.window.location.href;
 			}
 		}
 	}
@@ -143,7 +152,9 @@ class MonkeeRoute {
 	function replaceBody(navObj:NavObj, html:String) {
 		document.title = defaultTitle + ' : ' + navObj.hash;
 		if (navObj.hash != '404')
-			location.hash = navObj.hash;
+			window.location.hash = '/' + navObj.hash;
+
+		previousLocationHref = defaultUrl;
 
 		// before deleting all elements from body, store it
 		var all = untyped Array.prototype.slice.call(document.body.children);
