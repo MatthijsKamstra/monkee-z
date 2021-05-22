@@ -115,7 +115,7 @@ class Sanitize {
 	 * sanitize string to prefend XSS attack
 	 *
 	 * @example
-	 * 		sanitizeHTML('<img src="x" onerror="alert(1)">');
+	 * 		utils.Sanitize.sanitizeHTML('<img src="x" onerror="alert(1)">');
 	 *
 	 * @param unsafe_str
 	 * @return String
@@ -131,6 +131,12 @@ class Sanitize {
 			.replace("'", '&#39;'); // '&apos;' is not valid HTML 4
 	}
 
+	/**
+	 * 	@example
+	 * 		utils.Sanitize.escapeHTML('<img src="x" onerror="alert(1)">');
+	 * @param unsafe_str
+	 * @return String
+	 */
 	public static function escapeHTML(unsafe_str:String):String {
 		return sanitizeHTML(unsafe_str);
 	}
