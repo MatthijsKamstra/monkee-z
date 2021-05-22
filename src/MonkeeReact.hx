@@ -5,12 +5,16 @@ import js.Browser;
 import js.html.*;
 
 class MonkeeReact {
+	/**
+	 * 0.0.1 	initial
+	 */
+	static inline var VERSION = '0.0.1';
+
 	var DEBUG = false;
 
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
-			if (DEBUG)
-				console.info(App.callIn('MonkeeReact'));
+			console.info(App.callIn('React', VERSION));
 		});
 
 		var arr = document.querySelectorAll('[data-wrapper]');

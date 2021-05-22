@@ -6,11 +6,12 @@ import js.Browser.*;
 import js.html.*;
 
 class MonkeeRoute {
-	#if debug
-	var DEBUG = true;
-	#else
-	var DEBUG = false;
-	#end
+	/**
+	 * 0.0.1 	initial
+	 */
+	static inline var VERSION = '0.0.1';
+
+	var DEBUG = #if debug true #else false #end;
 
 	// get all possible pages to go to, only works when you start at the first page.
 	public static var map:Map<String, NavObj> = [];
@@ -20,8 +21,7 @@ class MonkeeRoute {
 
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
-			if (DEBUG)
-				console.info(App.callIn('MonkeeRoute'));
+			console.info(App.callIn('Route', VERSION));
 			setupRoute();
 		});
 	}
@@ -44,7 +44,7 @@ class MonkeeRoute {
 			map.set('', {
 				link: null,
 				url: defaultUrl,
-				hash: '',
+				id: '',
 			});
 		}
 
@@ -82,7 +82,7 @@ class MonkeeRoute {
 			var navObj:NavObj = {
 				link: _link,
 				url: _url,
-				hash: _name,
+				id: _name,
 			};
 
 			if (!map.exists(_name))
@@ -150,9 +150,9 @@ class MonkeeRoute {
 	}
 
 	function replaceBody(navObj:NavObj, html:String) {
-		document.title = defaultTitle + ' : ' + navObj.hash;
-		if (navObj.hash != '404')
-			window.location.hash = '/' + navObj.hash;
+		document.title = defaultTitle + ' : ' + navObj.id;
+		if (navObj.id != '404')
+			window.location.hash = '/' + navObj.id;
 
 		previousLocationHref = defaultUrl;
 
@@ -187,8 +187,8 @@ class MonkeeRoute {
 }
 
 typedef NavObj = {
-	@:optional var _id:String;
-	var link:LinkElement;
-	var url:String;
-	var hash:String;
+	var link:LinkElement; // <a href="">link</a>
+	var url:String; // url/path to file
+	var id:String; // hash
+	@:optional var title:String;
 }

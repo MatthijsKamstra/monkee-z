@@ -8,6 +8,11 @@ using StringTools;
 @:expose
 @:keep
 class MonkeeZ {
+	/**
+	 * 0.0.1 	initial
+	 */
+	static inline var VERSION = '0.0.1';
+
 	public static var load:MonkeeLoad = new MonkeeLoad();
 
 	// public static var chain:MonkeeChain = new MonkeeChain();
@@ -16,7 +21,7 @@ class MonkeeZ {
 	public static var util:MonkeeUtil = new MonkeeUtil();
 
 	public function new() {
-		console.info(App.callIn('MonkeeZ'));
+		console.info(App.callIn('MonkeeZ', VERSION));
 	}
 
 	static public function main() {

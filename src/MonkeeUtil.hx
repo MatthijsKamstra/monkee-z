@@ -19,11 +19,15 @@ import externs.MonkeeChain;
 @:expose
 @:keep
 class MonkeeUtil {
+	/**
+	 * 0.0.1 	initial
+	 */
+	static inline var VERSION = '0.0.1';
+
 	var DEBUG = false;
 
 	public function new() {
-		if (DEBUG)
-			console.info(App.callIn('MonkeeUtil'));
+		console.info(App.callIn('Util', VERSION));
 		init();
 	}
 
@@ -51,7 +55,7 @@ class MonkeeUtil {
 	 * @param filename		the file we want to use
 	 */
 	public static function mdTable2HTMLTable(id:String, filename:String) {
-		console.info(App.callIn('MonkeeUtil :: embedSpecs'));
+		console.info(App.callIn('Util :: embedSpecs', MonkeeUtil.VERSION));
 		// Setup the component
 
 		function createTable(arr:Array<Dynamic>):String {
@@ -124,7 +128,7 @@ class MonkeeUtil {
 	 * @param filename		the file we want to use
 	 */
 	public static function embedSpecs(id:String, filename:String) {
-		console.info(App.callIn('MonkeeUtil :: embedSpecs'));
+		console.info(App.callIn('Util :: embedSpecs', MonkeeUtil.VERSION));
 
 		// Setup the component
 		var app = new MonkeeChain('${id}', {
@@ -181,7 +185,7 @@ class MonkeeUtil {
 	 * @param filename		the file we want to use
 	 */
 	public static function embedCode(id:String, filename:String) {
-		console.info(App.callIn('MonkeeUtil :: embedCode'));
+		console.info(App.callIn('Util :: embedCode', MonkeeUtil.VERSION));
 		// trace(id, filename);
 
 		// setup up highlight.js

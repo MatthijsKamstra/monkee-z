@@ -17,6 +17,11 @@ using StringTools;
 
 @:expose
 class MonkeeChain {
+	/**
+	 * 0.0.1 	initial
+	 */
+	static inline var VERSION = '0.0.1';
+
 	var DEBUG = false;
 	var targetName:String = '';
 	var target:Element = null;
@@ -42,8 +47,7 @@ class MonkeeChain {
 	 * @param obj			see typedef
 	 */
 	public function new(target:EitherType<String, Element>, obj:MonkeeChainObj) {
-		if (DEBUG)
-			console.info(App.callIn('MonkeeChain'));
+		console.info(App.callIn('Chain', VERSION));
 
 		// convert data to an element if needed
 		if (Std.is(target, String)) {
@@ -106,7 +110,7 @@ class MonkeeChain {
 
 	public function render() {
 		if (DEBUG)
-			console.info(App.callIn('RENDER()'));
+			console.info(App.callIn('RENDER()', ''));
 
 		if (Std.is(this.template, String)) {
 			this.target.innerHTML = (this.template);

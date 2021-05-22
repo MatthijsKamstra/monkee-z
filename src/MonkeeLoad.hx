@@ -17,6 +17,11 @@ using StringTools;
 using Lambda;
 
 class MonkeeLoad {
+	/**
+	 * 0.0.1 	initial
+	 */
+	static inline var VERSION = '0.0.1';
+
 	var DEBUG = false;
 
 	// do we need this?
@@ -34,8 +39,7 @@ class MonkeeLoad {
 	var onLoadReadyEvent = new js.html.Event(App.ON_LOAD_READY);
 
 	public function new() {
-		if (DEBUG)
-			console.info(App.callIn('MonkeeLoad'));
+		console.info(App.callIn('Load', VERSION));
 
 		for (i in 0...arr.length) {
 			var _configName = arr[i];

@@ -10,14 +10,18 @@ using StringTools;
 using Lambda;
 
 class MonkeeBugger {
+	/**
+	 * 0.0.1 	initial
+	 */
+	static inline var VERSION = '0.0.1';
+
 	var DEBUG = true;
 
 	// var file = CompileTime.readFile("style.css");
 
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
-			if (DEBUG)
-				console.info(App.callIn('MonkeeBugger'));
+			console.info(App.callIn('MonkeeBugger', VERSION));
 			init();
 			highjack();
 		});

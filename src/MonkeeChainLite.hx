@@ -36,8 +36,8 @@ class MonkeeChainLite {
 	 * @param obj			see typedef
 	 */
 	public function new(target:EitherType<String, Element>, obj:MonkeeChainObj) {
-		if (DEBUG)
-			console.info(App.callIn('MonkeeChainLite'));
+		// if (DEBUG)
+		// 	console.info(App.callIn('MonkeeChainLite'));
 
 		// convert data to an element if needed
 		if (Std.is(target, String)) {

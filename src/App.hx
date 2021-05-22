@@ -13,10 +13,15 @@ class App {
 	 * @example
 	 * 		console.log(App.callIn('MonkeeRoute'));
 	 *
-	 * @param str
+	 * @param str		name for call out
+	 * @param version	current version for that class (use for release, debug gets current date)
 	 */
-	public static inline function callIn(str:String) {
-		return '${NAME} ${str} - build: ${App.getBuildDate()}';
+	public static inline function callIn(str:String, version:String) {
+		var _version = version;
+		#if debug
+		_version = App.getBuildDate();
+		#end
+		return '${NAME} ${str} - version: ${_version}';
 	}
 
 	public static inline macro function getBuildDate() {
