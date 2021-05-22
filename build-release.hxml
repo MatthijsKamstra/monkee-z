@@ -12,6 +12,12 @@
 
 --each
 
+--cmd echo MonkeeZ
+-main MonkeeZ
+-js docs/js/monkee_z.js
+
+--next
+
 --cmd echo MonkeeLoad
 -main MonkeeLoad
 -js docs/js/monkee_load.js
