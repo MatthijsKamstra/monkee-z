@@ -6,9 +6,10 @@ import js.html.*;
 
 class MonkeeReact {
 	/**
+	 * 0.0.2	version and debug
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.1';
+	static inline var VERSION = '0.0.2';
 
 	var DEBUG = #if debug true #else false #end;
 

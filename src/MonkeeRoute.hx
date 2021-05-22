@@ -7,9 +7,12 @@ import js.html.*;
 
 class MonkeeRoute {
 	/**
-	 * 0.0.1 	initial
+	 * 0.0.4	version and debug
+	 * 0.0.3	more generic navObj
+	 * 0.0.2	working version with hash nav
+	 * 0.0.1 	initial (wip)
 	 */
-	static inline var VERSION = '0.0.1';
+	static inline var VERSION = '0.0.4';
 
 	var DEBUG = #if debug true #else false #end;
 
