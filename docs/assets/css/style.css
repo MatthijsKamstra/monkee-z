@@ -15,7 +15,9 @@ html {
   padding: 0;
   height: 100%;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 /* Custom page CSS
 		-------------------------------------------------- */
 /* Not required for template or sticky footer method. */
