@@ -1,5 +1,6 @@
 package;
 
+import utils.Sanitize;
 import js.Syntax;
 import haxe.Json;
 import js.lib.Function;
@@ -34,7 +35,7 @@ class MonkeeUtil {
 			var html = el.getAttribute('data-escape');
 			// el.innerHTML = (html);
 			// el.innerText = MonkeeUtil.escapeHTML(html);
-			el.innerHTML = MonkeeUtil.escapeHTML(html);
+			el.innerHTML = Sanitize.escapeHTML(html);
 		}
 	}
 
@@ -191,14 +192,15 @@ class MonkeeUtil {
 		// Setup the component
 		var app = new MonkeeChain('${id}', {
 			data: {
-				js: "",
-				code: "test"
+				code: "test",
+				codeEscaped: "",
+				codeType: "js"
 			},
 			template: function(data) {
 				return '
-		        <div class="copy-code-wrapper-${id}" style="position:relative;">
+		        <div class="copy-code-wrapper-${id}" style="position:relative;" data-type="${data.codeType}">
 		        <textarea id="copy-code-input-${id}" style="position:fixed;top:-100px;">${data.code}</textarea>
-		        <pre style="border-radius:4px;"><code class="js">${data.js}</code></pre>
+		        <pre style="border-radius:4px;"><code class="${data.codeType}">${data.codeEscaped}</code></pre>
 		        <button class="btn" id="copy-code-btn-${id}" style="position: absolute; top: 15px; right: 15px;">📋</button>
 		        </div>
 		        ';
@@ -238,9 +240,12 @@ class MonkeeUtil {
 				return response.text();
 			})
 			.then(function(data) {
-				// console.log(data);
-				app.data.code = data;
-				app.data.js = escapeHTML(data);
+				// replace tabs with spaces for easier reading
+				var spaced = data.split('\t').join('  ');
+				app.data.code = spaced;
+				app.data.codeEscaped = utils.Sanitize.escapeHTML(spaced);
+				app.data.codeType = filename.split('.')[filename.split('.').length - 1];
+
 				app.render();
 				window.setTimeout(function() {
 					untyped hljs.highlightAll();
@@ -250,15 +255,6 @@ class MonkeeUtil {
 	};
 
 	// ____________________________________ utils ____________________________________
-
-	public static function escapeHTML(html:String) {
-		// trace(html);
-		return html
-			.replace('&', '&amp;')
-			.replace('"', '&quot;')
-			.replace('<', '&lt;')
-			.replace('>', '&gt;');
-	}
 
 	public static function setLink(href:String) {
 		var one = document.querySelector('[href="${href}"]');
