@@ -28,20 +28,25 @@
     <div class="container my-5">
         <div class="row">
             <div class="col-6">
-                <h3>Monkee-Route-Lite</h3>
-                <a class="float-right btn btn-outline-dark btn-sm" href="lite.html">more</a>
-                <p>A lightweight library for loading text-based-files / (html)templates <i>(< 1KB)</i>
-                </p>
+                <!--
+                    <h3>Monkee-Route-Lite</h3>
+                    <a class="float-right btn btn-outline-dark btn-sm" href="lite.html">more</a>
+                    <p>A lightweight library for spa applictions <i>(< 1KB)</i>
+                    </p>
+                -->
             </div>
             <div class="col-6">
                 <h3>Monkee-Route</h3>
                 <a class="float-right btn btn-outline-dark btn-sm" href="load.html">more</a>
-                <p>A library for loading text-based-files / (html)templates <i>(~ 4KB)</i></p>
+                <p>A library for create spa applictions <i>(~ 2KB)</i></p>
             </div>
         </div>
 
 
     </div>
+
+
+
     <div class="container my-5">
         <div id="app_markdown"></div>
     </div>
@@ -73,14 +78,15 @@
     <!-- <script src="../js/monkee_load_lite.js"></script> -->
     <!-- <script src="./js/monkee_load_lite.min.js"></script> -->
     <script src="../js/monkee_load.min.min.js"></script>
+    <script src="../js/monkee_route.min.min.js"></script>
     <script src="../js/monkee_chain.min.min.js"></script>
 
     <script src="../js/monkee_util.js"></script>
 
     <script>
 
-        MonkeeUtil.embedSpecs('#specs-load', '../assets/json/monkee_route.json');
-        MonkeeUtil.embedSpecs('#specs-route-lite', '../assets/json/monkee_route_lite.json');
+        MonkeeUtil.embedSpecs('#specs-route ', '../assets/json/monkee_route.json');
+        // MonkeeUtil.embedSpecs('#specs-route-lite', '../assets/json/monkee_route_lite.json');
 
         // Setup the component
         var app_markdown = new MonkeeChain("#app_markdown", {

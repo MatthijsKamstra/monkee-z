@@ -79,21 +79,22 @@
 <script>
 	console.warn('Nav Injected code: Here be dragons!');
 
-
 	var rootLocal = 'http://127.0.0.1:5500/docs/';
 	var rootGit = 'https://matthijskamstra.github.io/monkee-z/';
 
-	zinit();
-	function zinit() {
+	setupNav();
+	function setupNav() {
 		//		console.log(window.location.href); // https://matthijskamstra.github.io/monkee-z/chain///
 		//		console.log(window.location.hostname); // matthijskamstra.github.io
 		//		console.log(window.location.pathname); // /monkee-z/chain/
 
 		var root = rootGit;
 		if (window.location.href.indexOf('docs') != -1) {
-			root = rootLocal;
+			// console.log('--->' + window.location.href);
+			// root = rootLocal;
+			root = window.location.href.split('docs')[0] + 'docs/';
 		}
-		console.log(root);
+		// console.log(root);
 		var arr = [];
 		var arr2 = [];
 		var nav = document.getElementsByTagName('nav')[0];
