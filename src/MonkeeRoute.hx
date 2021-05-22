@@ -13,9 +13,6 @@ class MonkeeRoute {
 	public static var defaultTitle = '';
 	public static var defaultUrl = '';
 
-	// change title
-	var title = '';
-
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
 			if (DEBUG)
@@ -38,7 +35,6 @@ class MonkeeRoute {
 				hash: '',
 			});
 		}
-		title = defaultTitle;
 
 		// trace(defaultUrl);
 		// trace(map.get(''));
@@ -104,24 +100,18 @@ class MonkeeRoute {
 	}
 
 	function replaceBody(navObj:NavObj, html:String) {
-		document.title = title + ' : ' + navObj.hash;
+		document.title = defaultTitle + ' : ' + navObj.hash;
 		location.hash = navObj.hash;
 
-		// // trace(html);
-		// var state = {}; // {'page_id': 1, 'user_id': 5};
-		// var title = '';
-		// var url = ''; // 'hello-world.html';
-		// window.history.pushState(state, title, url);
-
-		// before deleting data from body, store it
+		// before deleting all elements from body, store it
 		var all = untyped Array.prototype.slice.call(document.body.children);
 		// trace(all);
 
 		// parse elements
-		// document.body.prepend(html);
-		// [mck] replaces everything... not a good idea
+		// [mck] replaces everything with the new html
 		document.body.innerHTML = (html);
 
+		// [mck] now put scripts back (maybe later other elements as well)
 		for (i in 0...all.length) {
 			var el:Element = cast all[i];
 			// trace(el);
@@ -132,7 +122,7 @@ class MonkeeRoute {
 			}
 		}
 
-		// make sure once the file is parsed, to check for new `<a monkee ` tags
+		// [mck] make sure once the file is parsed, to check for new `<a monkee ` tags
 		window.setTimeout(function() {
 			init();
 		}, 50);
