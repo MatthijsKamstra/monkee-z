@@ -6,16 +6,15 @@ class MonkeeRoute {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " - " + "MonkeeRoute" + " - build: " + "2021-05-22 09:32:50");
+				$global.console.info("[Monkee-Z]" + " " + "MonkeeRoute" + " - build: " + "2021-05-22 09:43:24");
 			}
-			_gthis.init();
+			_gthis.setupRoute();
 		});
 	}
-	init() {
+	setupRoute() {
 		if(MonkeeRoute.defaultTitle == "") {
 			MonkeeRoute.defaultTitle = window.document.title;
 			MonkeeRoute.defaultUrl = window.location.href.split("#").join("");
-			$global.location.hash = "";
 			MonkeeRoute.map.h[""] = { link : null, url : MonkeeRoute.defaultUrl, hash : ""};
 		}
 		let arr = window.document.querySelectorAll("[monkee]");
@@ -42,7 +41,7 @@ class MonkeeRoute {
 			};
 		}
 		window.addEventListener("onLoadUpdate",function(e) {
-			_gthis.init();
+			_gthis.setupRoute();
 		},true);
 		window.onhashchange = $bind(this,this.locationHashChanged);
 	}
@@ -83,7 +82,7 @@ class MonkeeRoute {
 		}
 		let _gthis = this;
 		window.setTimeout(function() {
-			_gthis.init();
+			_gthis.setupRoute();
 		},50);
 	}
 	static main() {
