@@ -4,7 +4,7 @@ class MonkeeRoute {
 	constructor() {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			let _version = "0.0.1";
+			let _version = "0.0.4";
 			$global.console.info("[Monkee-Z]" + " " + "Route" + " - version: " + _version);
 			_gthis.setupRoute();
 		});
@@ -72,7 +72,7 @@ class MonkeeRoute {
 	}
 	locationHashChanged() {
 		let key = window.location.hash.split("#/").join("");
-		console.log("src/MonkeeRoute.hx:120:",key);
+		console.log("src/MonkeeRoute.hx:123:",key);
 		let _gthis = this;
 		if(Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,key)) {
 			let navObj = MonkeeRoute.map.h[key];

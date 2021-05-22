@@ -5,7 +5,7 @@ class MonkeeBugger {
 	constructor() {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			let _version = "0.0.1";
+			let _version = "0.0.2";
 			$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - version: " + _version);
 			_gthis.init();
 			_gthis.highjack();

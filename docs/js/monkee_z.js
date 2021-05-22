@@ -43,7 +43,7 @@ class MonkeeBugger {
 	constructor() {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			let _version = "0.0.1";
+			let _version = "0.0.2";
 			$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - version: " + _version);
 			_gthis.init();
 			_gthis.highjack();
@@ -130,7 +130,7 @@ class MonkeeLoad {
 		this.req = new XMLHttpRequest();
 		this.arr = ["data-load","data-load-replace","data-load-inner"];
 		this.DEBUG = false;
-		let _version = "0.0.1";
+		let _version = "0.0.2";
 		$global.console.info("[Monkee-Z]" + " " + "Load" + " - version: " + _version);
 		let _g = 0;
 		let _g1 = this.arr.length;
@@ -149,7 +149,7 @@ class MonkeeLoad {
 				let _nameArr = _el.querySelectorAll("[data-name]");
 				let _loadObj = { el : _el, url : _url, query : utils_Query.convert(_url), isJson : _isJson, isInner : _configName == "data-load-inner", loaderType : "data-load-inner" == _configName ? "inner" : "outer", target : _target, names : _nameArr, throbber : utils_Throbber.set(_el)};
 				if(this.DEBUG) {
-					console.log("src/MonkeeLoad.hx:66:",_loadObj);
+					console.log("src/MonkeeLoad.hx:67:",_loadObj);
 				}
 				this.loadingArr.push(_loadObj);
 			}
@@ -244,7 +244,7 @@ class MonkeeRoute {
 	constructor() {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			let _version = "0.0.1";
+			let _version = "0.0.4";
 			$global.console.info("[Monkee-Z]" + " " + "Route" + " - version: " + _version);
 			_gthis.setupRoute();
 		});
@@ -312,7 +312,7 @@ class MonkeeRoute {
 	}
 	locationHashChanged() {
 		let key = window.location.hash.split("#/").join("");
-		console.log("src/MonkeeRoute.hx:120:",key);
+		console.log("src/MonkeeRoute.hx:123:",key);
 		let _gthis = this;
 		if(Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,key)) {
 			let navObj = MonkeeRoute.map.h[key];

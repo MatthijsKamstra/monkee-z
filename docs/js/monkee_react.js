@@ -3,7 +3,7 @@
 class MonkeeReact {
 	constructor() {
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			let _version = "0.0.1";
+			let _version = "0.0.2";
 			$global.console.info("[Monkee-Z]" + " " + "React" + " - version: " + _version);
 		});
 		let arr = window.document.querySelectorAll("[data-wrapper]");
