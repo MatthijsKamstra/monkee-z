@@ -6,7 +6,7 @@ class MonkeeReact {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeReact" + " - build: " + "2021-05-22 10:01:21");
+				$global.console.info("[Monkee-Z]" + " " + "MonkeeReact" + " - build: " + "2021-05-22 10:22:36");
 			}
 		});
 		let arr = window.document.querySelectorAll("[data-wrapper]");
