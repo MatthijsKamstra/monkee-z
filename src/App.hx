@@ -16,7 +16,7 @@ class App {
 	 * @param str
 	 */
 	public static inline function callIn(str:String) {
-		return '${NAME} - ${str} - build: ${App.getBuildDate()}';
+		return '${NAME} ${str} - build: ${App.getBuildDate()}';
 	}
 
 	public static inline macro function getBuildDate() {

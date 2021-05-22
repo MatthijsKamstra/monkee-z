@@ -17,18 +17,18 @@ class MonkeeRoute {
 		document.addEventListener('DOMContentLoaded', (event) -> {
 			if (DEBUG)
 				console.info(App.callIn('MonkeeRoute'));
-			init();
+			setupRoute();
 		});
 	}
 
-	function init() {
-		// console.info('------------------ init');
+	function setupRoute() {
+		// console.info('------------------ setupRoute');
 
 		// get one time the defaultTitle and set the hash to zero
 		if (defaultTitle == '') {
 			defaultTitle = document.title;
-			defaultUrl = window.location.href.split('#').join('');
-			location.hash = '';
+			defaultUrl = window.location.href.split('#').join(''); // foo/#
+			// location.hash = ''; // might not be so good idea
 			map.set('', {
 				link: null,
 				url: defaultUrl,
@@ -69,7 +69,7 @@ class MonkeeRoute {
 		window.addEventListener(App.ON_LOAD_UPDATE, function(e) {
 			// console.warn(e);
 			// console.warn('----> ${App.ON_LOAD_UPDATE}');
-			init();
+			setupRoute();
 		}, true);
 		// Listen for the event from MonkeeLoad
 		// window.addEventListener(App.ON_LOAD_READY, function(e) { console.warn(e);}, true);
@@ -124,7 +124,7 @@ class MonkeeRoute {
 
 		// [mck] make sure once the file is parsed, to check for new `<a monkee ` tags
 		window.setTimeout(function() {
-			init();
+			setupRoute();
 		}, 50);
 	}
 
