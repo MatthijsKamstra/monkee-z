@@ -20,13 +20,14 @@ import externs.MonkeeChain;
 @:keep
 class MonkeeUtil {
 	/**
+	 * 0.0.6	version and debug
 	 * 0.0.5 	mdTable2HTMLTable (WIP)
 	 * 0.0.4 	setLink/setScript
 	 * 0.0.3 	embedSpecs
 	 * 0.0.12	embedCode
 	 * 0.0.1 	initial, data-escape on dataload
 	 */
-	static inline var VERSION = '0.0.5';
+	static inline var VERSION = '0.0.6';
 
 	var DEBUG = #if debug true #else false #end;
 
