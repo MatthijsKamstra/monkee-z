@@ -22,7 +22,7 @@ class MonkeeChain {
 	 */
 	static inline var VERSION = '0.0.1';
 
-	var DEBUG = false;
+	var DEBUG = #if debug true #else false #end;
 	var targetName:String = '';
 	var target:Element = null;
 	var data:Dynamic; // original data, set in constructor

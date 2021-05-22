@@ -15,7 +15,7 @@ class MonkeeBugger {
 	 */
 	static inline var VERSION = '0.0.1';
 
-	var DEBUG = true;
+	var DEBUG = #if debug true #else false #end;
 
 	// var file = CompileTime.readFile("style.css");
 

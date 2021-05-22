@@ -13,7 +13,7 @@ using StringTools;
 
 @:expose
 class MonkeeChainLite {
-	var DEBUG = true;
+	var DEBUG = #if debug true #else false #end;
 	var targetName:String = '';
 	var target:Element = null;
 	var data:Dynamic = {};

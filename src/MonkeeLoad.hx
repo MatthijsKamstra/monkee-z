@@ -22,7 +22,7 @@ class MonkeeLoad {
 	 */
 	static inline var VERSION = '0.0.1';
 
-	var DEBUG = false;
+	var DEBUG = #if debug true #else false #end;
 
 	// do we need this?
 	// var config = {
