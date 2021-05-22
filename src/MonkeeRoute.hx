@@ -6,7 +6,11 @@ import js.Browser.*;
 import js.html.*;
 
 class MonkeeRoute {
+	#if debug
 	var DEBUG = true;
+	#else
+	var DEBUG = false;
+	#end
 
 	// get all possible pages to go to, only works when you start at the first page.
 	public static var map:Map<String, NavObj> = [];
@@ -29,6 +33,11 @@ class MonkeeRoute {
 			defaultTitle = document.title;
 			defaultUrl = window.location.href.split('#').join(''); // foo/#
 			// location.hash = ''; // might not be so good idea
+
+			// [mck] strip the first page from hash...
+			// window.location.href = window.location.href.split('#')[0];
+			removeHash();
+
 			map.set('', {
 				link: null,
 				url: defaultUrl,
@@ -39,8 +48,29 @@ class MonkeeRoute {
 		// trace(defaultUrl);
 		// trace(map.get(''));
 
+		var arr:Array<Element> = [];
+
 		//  search all element with tag <a monkee>
-		var arr:Array<Element> = cast document.querySelectorAll('[monkee]');
+		var el:Element = cast document.querySelector('[monkee-404]');
+		if (el != null) {
+			arr.push(el);
+		}
+
+		var _hidden:Array<Element> = cast document.querySelectorAll('[monkee-hidden]');
+		if (_hidden.length > 0) {
+			for (i in 0..._hidden.length) {
+				arr.push(_hidden[i]);
+			}
+		}
+
+		var _monkee:Array<Element> = cast document.querySelectorAll('[monkee]');
+		if (_monkee.length > 0) {
+			for (i in 0..._monkee.length) {
+				arr.push(_monkee[i]);
+			}
+		}
+
+		// var arr:Array<Element> = cast document.querySelectorAll('[monkee]');
 		for (i in 0...arr.length) {
 			var _link:LinkElement = cast arr[i];
 			var _url = (_link.href.indexOf('.html') == -1) ? _link.href + '.html' : _link.href;
@@ -77,6 +107,10 @@ class MonkeeRoute {
 		window.onhashchange = locationHashChanged;
 	}
 
+	function removeHash() {
+		window.history.pushState("", document.title, window.location.pathname + window.location.search);
+	}
+
 	function locationHashChanged() {
 		// console.log("You're visiting : " + location.hash);
 		var key = (location.hash).split('#').join('');
@@ -92,16 +126,24 @@ class MonkeeRoute {
 					.then(data -> replaceBody(navObj, data));
 			}
 		} else {
-			console.info('unknown - ${defaultUrl}');
-			// window.open('?', '_self');
-			window.location.href = defaultUrl;
-			location.reload();
+			if (map.exists('404')) {
+				var navObj = map.get('404');
+				window.fetch(navObj.url)
+					.then(response -> response.text())
+					.then(data -> replaceBody(navObj, data));
+			} else {
+				console.info('unknown - ${defaultUrl}');
+				// window.open('?', '_self');
+				window.location.href = defaultUrl;
+				location.reload();
+			}
 		}
 	}
 
 	function replaceBody(navObj:NavObj, html:String) {
 		document.title = defaultTitle + ' : ' + navObj.hash;
-		location.hash = navObj.hash;
+		if (navObj.hash != '404')
+			location.hash = navObj.hash;
 
 		// before deleting all elements from body, store it
 		var all = untyped Array.prototype.slice.call(document.body.children);
