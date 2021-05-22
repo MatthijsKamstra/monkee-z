@@ -7,7 +7,7 @@ class MonkeeBugger {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			if(_gthis.DEBUG) {
-				$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - build: " + "2021-05-22 09:43:21");
+				$global.console.info("[Monkee-Z]" + " " + "MonkeeBugger" + " - build: " + "2021-05-22 10:01:20");
 			}
 			_gthis.init();
 			_gthis.highjack();
