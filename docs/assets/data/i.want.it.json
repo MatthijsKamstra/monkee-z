@@ -1,4 +1,5 @@
 {
+  "hello": "Matthijs",
   "i": {
     "want": {
       "it": "Oh I know you do...",
@@ -8,9 +9,18 @@
     },
     "watch": {
       "films": [
-        { "title": "foo", "year": "2001" },
-        { "title": "bar", "year": "2002" },
-        { "title": "yoo", "year": "2003" }
+        {
+          "title": "Matrix",
+          "year": "2001"
+        },
+        {
+          "title": "Pink Panther",
+          "year": "2002"
+        },
+        {
+          "title": "Judge Dredd",
+          "year": "2003"
+        }
       ]
     }
   }

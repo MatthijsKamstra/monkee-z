@@ -161,6 +161,7 @@ class MonkeeLoad {
 			if(this.DEBUG) {
 				$global.console.log("MonkeeLoad :: loading ready");
 			}
+			this.loadingArr[nr].el.dispatchEvent(this.onLoadUpdateEvent);
 			window.dispatchEvent(this.onLoadReadyEvent);
 			return;
 		}
@@ -169,7 +170,9 @@ class MonkeeLoad {
 		if(this.DEBUG) {
 			$global.console.log("MonkeeLoad :: loading update");
 		}
-		this.loadingArr[nr].el.dispatchEvent(this.onLoadUpdateEvent);
+		if(nr >= 0) {
+			this.loadingArr[nr - 1].el.dispatchEvent(this.onLoadUpdateEvent);
+		}
 	}
 	loadData(obj) {
 		obj.el.classList.add("monkee-load-loading");

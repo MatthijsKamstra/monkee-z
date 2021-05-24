@@ -86,6 +86,7 @@ class MonkeeLoad {
 		if (nr >= loadingArr.length) {
 			if (DEBUG)
 				console.log('MonkeeLoad :: loading ready');
+			loadingArr[nr].el.dispatchEvent(onLoadUpdateEvent);
 			window.dispatchEvent(onLoadReadyEvent);
 			return;
 		}
@@ -93,7 +94,9 @@ class MonkeeLoad {
 		loadingId++;
 		if (DEBUG)
 			console.log('MonkeeLoad :: loading update');
-		loadingArr[nr].el.dispatchEvent(onLoadUpdateEvent);
+		if (nr >= 0) {
+			loadingArr[nr - 1].el.dispatchEvent(onLoadUpdateEvent);
+		}
 	}
 
 	function loadData(obj:LoadObj) {

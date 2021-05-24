@@ -16,7 +16,7 @@
       "minified": "3.23Kb",
       "uglifyjs": "3.373Kb"
     },
-    "updated": "2021-05-22 22:46:57"
+    "updated": "2021-05-24 14:50:15"
   },
   "monkee_load.js": {
     "compression": {
@@ -31,11 +31,11 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_load.min.js"
     },
     "size": {
-      "original": "9.174Kb",
-      "minified": "5.255Kb",
-      "uglifyjs": "5.349Kb"
+      "original": "9.262Kb",
+      "minified": "5.322Kb",
+      "uglifyjs": "5.416Kb"
     },
-    "updated": "2021-05-22 22:46:54"
+    "updated": "2021-05-24 14:50:12"
   },
   "monkee_react.js": {
     "compression": {
@@ -54,7 +54,7 @@
       "minified": "0.58Kb",
       "uglifyjs": "0.673Kb"
     },
-    "updated": "2021-05-22 22:46:58"
+    "updated": "2021-05-24 14:50:16"
   },
   "monkee_z.js": {
     "compression": {
@@ -69,11 +69,11 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_z.min.js"
     },
     "size": {
-      "original": "25.721Kb",
-      "minified": "16.02Kb",
-      "uglifyjs": "16.163Kb"
+      "original": "25.809Kb",
+      "minified": "16.086Kb",
+      "uglifyjs": "16.229Kb"
     },
-    "updated": "2021-05-22 22:46:53"
+    "updated": "2021-05-24 14:50:11"
   },
   "monkee_chain_lite.js": {
     "compression": {
@@ -92,7 +92,7 @@
       "minified": "0.816Kb",
       "uglifyjs": "0.91Kb"
     },
-    "updated": "2021-05-22 22:47:01"
+    "updated": "2021-05-24 14:50:19"
   },
   "monkee_load_lite.js": {
     "compression": {
@@ -111,7 +111,7 @@
       "minified": "1.045Kb",
       "uglifyjs": "1.139Kb"
     },
-    "updated": "2021-05-22 22:46:55"
+    "updated": "2021-05-24 14:50:13"
   },
   "monkee_chain.js": {
     "compression": {
@@ -130,7 +130,7 @@
       "minified": "1.687Kb",
       "uglifyjs": "1.781Kb"
     },
-    "updated": "2021-05-22 22:47:00"
+    "updated": "2021-05-24 14:50:18"
   },
   "monkee_route.js": {
     "compression": {
@@ -149,7 +149,7 @@
       "minified": "2.905Kb",
       "uglifyjs": "3.041Kb"
     },
-    "updated": "2021-05-22 22:46:59"
+    "updated": "2021-05-24 14:50:17"
   },
   "monkee_util.js": {
     "compression": {
@@ -168,6 +168,6 @@
       "minified": "4.748Kb",
       "uglifyjs": "4.841Kb"
     },
-    "updated": "2021-05-22 22:46:56"
+    "updated": "2021-05-24 14:50:14"
   }
 }
