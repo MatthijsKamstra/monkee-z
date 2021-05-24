@@ -1,20 +1,19 @@
 package;
 
-import utils.Template;
-import utils.Query;
+import AST.LoadObj;
+import haxe.Json;
+import js.Browser.*;
+import js.html.Element;
+import js.html.InputElement;
+import js.html.XMLHttpRequest;
 import utils.Html;
 import utils.JsonPath;
-import haxe.Json;
-import js.html.InputElement;
-import utils.Time;
+import utils.Query;
+import utils.Template;
 import utils.Throbber;
-import js.html.Element;
-import js.Browser.*;
-import js.html.XMLHttpRequest;
-import AST.LoadObj;
 
-using StringTools;
 using Lambda;
+using StringTools;
 
 class MonkeeLoad {
 	/**
@@ -64,8 +63,8 @@ class MonkeeLoad {
 					throbber: Throbber.set(_el),
 				}
 
-				if (DEBUG)
-					trace(_loadObj);
+				// if (DEBUG)
+				// 	trace(_loadObj);
 
 				// if (_isJson) {}
 				loadingArr.push(_loadObj);
@@ -86,17 +85,19 @@ class MonkeeLoad {
 	function startLoading(nr:Int) {
 		if (nr >= loadingArr.length) {
 			if (DEBUG)
-				console.log('MonkeeLoad :: loading ready');
-			loadingArr[loadingArr.length - 1].el.dispatchEvent(onLoadUpdateEvent);
+				console.log('MonkeeLoad :: loading ready : ' + loadingArr[loadingArr.length - 1].url);
+			// loadingArr[loadingArr.length - 1].el.dispatchEvent(onLoadUpdateEvent);
+			window.dispatchEvent(onLoadUpdateEvent);
 			window.dispatchEvent(onLoadReadyEvent);
 			return;
 		}
 		loadData(loadingArr[nr]);
 		loadingId++;
-		if (DEBUG)
-			console.log('MonkeeLoad :: loading update');
-		if (nr >= 0) {
-			loadingArr[nr - 1].el.dispatchEvent(onLoadUpdateEvent);
+		if (nr > 0) {
+			// loadingArr[nr - 1].el.dispatchEvent(onLoadUpdateEvent);
+			window.dispatchEvent(onLoadUpdateEvent);
+			if (DEBUG)
+				console.log('MonkeeLoad :: loading update : ' + loadingArr[nr - 1].url);
 		}
 	}
 

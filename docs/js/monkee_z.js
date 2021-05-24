@@ -148,9 +148,6 @@ class MonkeeLoad {
 				let _target = _el.getAttribute("data-target");
 				let _nameArr = _el.querySelectorAll("[data-name]");
 				let _loadObj = { el : _el, url : _url, query : utils_Query.convert(_url), isJson : _isJson, isInner : _configName == "data-load-inner", loaderType : "data-load-inner" == _configName ? "inner" : "outer", target : _target, names : _nameArr, throbber : utils_Throbber.set(_el)};
-				if(this.DEBUG) {
-					console.log("src/MonkeeLoad.hx:68:",_loadObj);
-				}
 				this.loadingArr.push(_loadObj);
 			}
 		}
@@ -159,19 +156,19 @@ class MonkeeLoad {
 	startLoading(nr) {
 		if(nr >= this.loadingArr.length) {
 			if(this.DEBUG) {
-				$global.console.log("MonkeeLoad :: loading ready");
+				$global.console.log("MonkeeLoad :: loading ready : " + this.loadingArr[this.loadingArr.length - 1].url);
 			}
-			this.loadingArr[this.loadingArr.length - 1].el.dispatchEvent(this.onLoadUpdateEvent);
+			window.dispatchEvent(this.onLoadUpdateEvent);
 			window.dispatchEvent(this.onLoadReadyEvent);
 			return;
 		}
 		this.loadData(this.loadingArr[nr]);
 		this.loadingId++;
-		if(this.DEBUG) {
-			$global.console.log("MonkeeLoad :: loading update");
-		}
-		if(nr >= 0) {
-			this.loadingArr[nr - 1].el.dispatchEvent(this.onLoadUpdateEvent);
+		if(nr > 0) {
+			window.dispatchEvent(this.onLoadUpdateEvent);
+			if(this.DEBUG) {
+				$global.console.log("MonkeeLoad :: loading update : " + this.loadingArr[nr - 1].url);
+			}
 		}
 	}
 	loadData(obj) {
