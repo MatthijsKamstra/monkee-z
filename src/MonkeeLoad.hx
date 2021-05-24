@@ -18,10 +18,11 @@ using Lambda;
 
 class MonkeeLoad {
 	/**
+	 * 0.0.3	fix call onLoadedUpdate and onLoadedReady
 	 * 0.0.2	version and debug
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.2';
+	static inline var VERSION = '0.0.3';
 
 	var DEBUG = #if debug true #else false #end;
 
@@ -86,7 +87,7 @@ class MonkeeLoad {
 		if (nr >= loadingArr.length) {
 			if (DEBUG)
 				console.log('MonkeeLoad :: loading ready');
-			loadingArr[nr].el.dispatchEvent(onLoadUpdateEvent);
+			loadingArr[loadingArr.length - 1].el.dispatchEvent(onLoadUpdateEvent);
 			window.dispatchEvent(onLoadReadyEvent);
 			return;
 		}
