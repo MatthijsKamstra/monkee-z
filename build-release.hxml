@@ -64,4 +64,10 @@ MonkeeChain
 MonkeeChainLite
 -js docs/js/monkee_chain_lite.js
 
+--next
+
+--cmd echo MonkeeGui
+MonkeeGui
+-js docs/js/monkee_gui.js
+
 

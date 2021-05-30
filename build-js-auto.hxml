@@ -17,9 +17,9 @@
 # -js docs/js/monkee_util.js
 # --cmd echo MonkeeUtil
 
--main MonkeeLoad
--js docs/js/monkee_load.js
---cmd echo MonkeeLoad
+# -main MonkeeLoad
+# -js docs/js/monkee_load.js
+# --cmd echo MonkeeLoad
 
 # -main MonkeeRoute
 # -js docs/js/monkee_route.js
@@ -27,4 +27,11 @@
 
 
 
+# MonkeeGui
+# -js docs/js/monkee_gui.js
+# --cmd echo MonkeeGui
 
+
+-main MonkeeGuiTest
+-js docs/js/monkee_gui_test.js
+--cmd echo MonkeeGuiTest
