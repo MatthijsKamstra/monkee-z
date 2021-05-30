@@ -1,10 +1,6 @@
-package ;
+package;
 
 import haxe.Constraints.Function;
-
-
-
-
 import gui.*;
 import js.Browser.*;
 import js.html.*;
@@ -37,15 +33,31 @@ import js.html.*;
 	settings.addTextArea(title, text, callback);                // creates a resizable text area
 	settings.addTime(title, time, callback);                    // adds a time input
  */
+@:expose
 class MonkeeGui {
 	public var _x:Int;
 	public var _y:Int;
 	public var _parent:Element;
+	public var _wrapper:DivElement;
+
+	var css = CompileTime.readFile("monkeegui-style.css");
 
 	public function new(x:Int, y:Int, parent:Element) {
 		_x = x;
 		_y = y;
 		_parent = parent;
+		// create wrapper for classes
+		createWrapper();
+	}
+
+	function createWrapper() {
+		var style = document.createStyleElement();
+		style.innerHTML = css;
+		document.body.append(style);
+
+		_wrapper = document.createDivElement();
+		_wrapper.className = 'monkee-gui-wrapper';
+		_parent.appendChild(_wrapper);
 	}
 
 	public static function create(x:Int, y:Int, parent:Element) {
@@ -65,7 +77,7 @@ class MonkeeGui {
 	 */
 	public function range(title:String, min:Float, max:Float, value:Float, step:Float, callback:Function) {
 		var range = new gui.Range(title, min, max, value, step, callback);
-		range.add(_parent);
+		range.add(_wrapper);
 		return range;
 	}
 
@@ -85,7 +97,7 @@ class MonkeeGui {
 	 */
 	public function number(title:String, min:Float, max:Float, value:Float, step:Float, callback:Function) {
 		var el = new gui.Number(title, min, max, value, step, callback);
-		el.add(_parent);
+		el.add(_wrapper);
 		return el;
 	}
 
@@ -105,7 +117,7 @@ class MonkeeGui {
 	 */
 	public function rangeNumber(title:String, min:Float, max:Float, value:Float, step:Float, callback:Function) {
 		var el = new gui.RangeNumber(title, min, max, value, step, callback);
-		el.add(_parent);
+		el.add(_wrapper);
 		return el;
 	}
 
@@ -121,7 +133,7 @@ class MonkeeGui {
 	 */
 	public function button(title:String, callback:Function) {
 		var el = new gui.Button(title, callback);
-		el.add(_parent);
+		el.add(_wrapper);
 		return el;
 	}
 
@@ -137,7 +149,7 @@ class MonkeeGui {
 	 */
 	public function textArea(title:String, value:String, ?callback:Function) {
 		var el = new gui.TextArea(title, value, callback);
-		el.add(_parent);
+		el.add(_wrapper);
 		return el;
 	}
 
@@ -149,7 +161,7 @@ class MonkeeGui {
 	 */
 	public function text(title:String, value:String, ?callback:Function) {
 		var el = new gui.Text(title, value, callback);
-		el.add(_parent);
+		el.add(_wrapper);
 		return el;
 	}
 
@@ -165,7 +177,7 @@ class MonkeeGui {
 	 */
 	public function image(title:String, url:String) {
 		var el = new gui.Image(title, url);
-		el.add(_parent);
+		el.add(_wrapper);
 		return el;
 	}
 }

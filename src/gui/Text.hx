@@ -1,4 +1,5 @@
 package gui;
+
 import gui.*;
 import js.Browser.*;
 import js.html.*;
@@ -19,6 +20,9 @@ class Text {
 	var stringValue:String;
 	var updateHandler:Function;
 
+	//
+	var map:Map<String, Dynamic> = [];
+
 	public function new(title:String, value:String, ?callback:Function) {
 		this.title = title;
 		this.value = value;
@@ -30,6 +34,28 @@ class Text {
 
 	public function disabled(isDisabled:Bool = true) {
 		input.disabled = isDisabled;
+		return this;
+	}
+
+	public function listen(scope:Dynamic, value:String) {
+		console.warn('Text.listen() --> WIP');
+
+		// map.set(value, Reflect.getProperty(scope, value));
+		// var getValue = Reflect.getProperty(scope, value);
+		// console.log('getValue: ' + getValue);
+		// if (getValue == null) {
+		// 	console.log('do nothing');
+		// } else {
+		// 	var intervalH = window.setInterval(function() {
+		// 		var getValue = Reflect.getProperty(scope, value);
+		// 		console.log('getValue: ' + getValue);
+		// 		if (map.get(value) != getValue) {
+		// 			// Reflect.setProperty(scope, value, getValue);
+		// 			this.value = getValue;
+		// 		}
+		// 	}, 100);
+		// }
+
 		return this;
 	}
 
