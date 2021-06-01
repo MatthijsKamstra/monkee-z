@@ -42,6 +42,8 @@ class MonkeeGui {
 
 	var css = CompileTime.readFile("monkeegui-style.css");
 
+	// var css = '.monkee-gui-wrapper {border: 1px solid silver;}';
+
 	public function new(x:Int, y:Int, parent:Element) {
 		_x = x;
 		_y = y;
