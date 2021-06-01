@@ -1,7 +1,5 @@
 package gui;
-import gui.*;
-import js.Browser.*;
-import js.html.*;
+
 import haxe.Constraints.Function;
 
 class TextArea implements IGuiBase {
@@ -24,7 +22,7 @@ class TextArea implements IGuiBase {
 
 		var label = document.createLabelElement();
 		label.htmlFor = '${this.title}';
-		label.className = 'form-label';
+		label.className = '__form-label';
 		label.innerText = '${this.title}';
 		div.appendChild(label);
 

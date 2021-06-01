@@ -1,10 +1,8 @@
 package gui;
-import gui.*;
-import js.Browser.*;
-import js.html.*;
+
 import haxe.Constraints.Function;
 
-class Number {
+class Number extends InputBase implements IGuiBase {
 	var title:String;
 	var min:Float;
 	var max:Float;
@@ -12,36 +10,24 @@ class Number {
 	var step:Float;
 	var callback:Function;
 
-	public static var ID:Int = 0;
-
 	public function new(title:String, min:Float, max:Float, value:Float, step:Float, callback:Function) {
-		this.title = title; // :String,
-		this.min = min; // :Float,
-		this.max = max; // :Float,
-		this.value = value; // :Float,
-		this.step = step; // :Float,
-		this.callback = callback; // :Function
-
-		ID++;
-
-		init();
+		this.title = title;
+		this.min = min;
+		this.max = max;
+		this.value = value;
+		this.step = step;
+		this.callback = callback;
 	}
-
-	function init() {}
 
 	public function add(parent:Element) {
 		var div = document.createDivElement();
 		parent.appendChild(div);
 
-		var label = document.createLabelElement();
-		label.htmlFor = '${this.title}_${ID}';
-		label.className = 'form-label';
-		label.innerText = '${this.title} (between ${Std.int(this.min)} and ${Std.int(this.max)}):';
-		div.appendChild(label);
+		div.appendChild(createLabel(this.title, '${this.title} (between ${Std.int(this.min)} and ${Std.int(this.max)}):'));
 
 		var input = document.createInputElement();
 		input.type = 'number';
-		input.id = '${this.title}_${ID}';
+		input.id = '${this.title}';
 		input.name = '${this.title}';
 		input.min = '${this.min}';
 		input.max = '${this.max}';
