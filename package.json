@@ -3,14 +3,6 @@
   "version": "1.0.0",
   "description": "It's not alpha, not bravo, but zulu ... the last library you should use (and my personal playground)",
   "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "haxe build-release.hxml && npm run git:release",
-    "git:release": "git add . && git commit -m '🔥 release' && git push --all"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MatthijsKamstra/monkee-z.git"
@@ -20,5 +12,18 @@
   "bugs": {
     "url": "https://github.com/MatthijsKamstra/monkee-z/issues"
   },
-  "homepage": "https://github.com/MatthijsKamstra/monkee-z#readme"
+  "homepage": "https://github.com/MatthijsKamstra/monkee-z#readme",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "haxe build-release.hxml && npm run git:release",
+    "git:release": "git add . && git commit -m '🔥 release' && git push --all",
+    "____": "______",
+    "scss": "node-sass --watch src/monkeegui-style.scss -o src"
+  },
+  "dependencies": {
+    "node-sass": "^6.0.0"
+  }
 }
