@@ -40,6 +40,8 @@ class MonkeeGui {
 	public var _parent:Element;
 	public var _wrapper:DivElement;
 
+	@:isVar public var isFolder(get, set):Bool = false;
+
 	var css = CompileTime.readFile("monkeegui-style.css");
 
 	// var css = '.monkee-gui-wrapper {border: 1px solid silver;}';
@@ -181,5 +183,55 @@ class MonkeeGui {
 		var el = new gui.Image(title, url);
 		el.add(_wrapper);
 		return el;
+	}
+
+	/**
+	 * create a text element
+	 *
+	 * @param title     text title
+	 * @param callback  function
+	 */
+	public function radio(title:String, value:String, callback:Function) {
+		var el = new gui.Radio(title, 1, callback);
+		el.add(_wrapper);
+		return el;
+	}
+
+	/**
+	 * create a text element
+	 *
+	 * @param title     text title
+	 * @param callback  function
+	 */
+	public function checkbox(title:String, value:Bool, callback:Function) {
+		var el = new gui.Checkbox(title, value, callback);
+		el.add(_wrapper);
+		return el;
+	}
+
+	/**
+	 * create a text element
+	 *
+	 * @param title     text title
+	 * @param callback  function
+	 */
+	public function folder(title:String, ?isClosed:Bool = false) {
+		var el = new gui.Folder(title, isClosed);
+		el.add(_wrapper);
+
+		var gui = new MonkeeGui(0, 0, el.content);
+		gui.isFolder = true;
+		return gui;
+	}
+
+	// ____________________________________ getter/setter ____________________________________
+
+	function get_isFolder():Bool {
+		return isFolder;
+	}
+
+	function set_isFolder(value:Bool):Bool {
+		_wrapper.className = '';
+		return isFolder = value;
 	}
 }

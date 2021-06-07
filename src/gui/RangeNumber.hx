@@ -6,7 +6,7 @@ class RangeNumber extends InputBase implements IGuiBase {
 	var title:String;
 	var min:Float;
 	var max:Float;
-	var value:Float;
+	// var value:Float;
 	var step:Float;
 	var callback:Function;
 

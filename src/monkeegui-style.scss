@@ -5,14 +5,74 @@ $monkeegui-radius: 2px;
 $monkeegui-border: 1px;
 $monkeegui-border-color: #dee2e6;
 $monkeegui-dark-color: #303742;
+$monkeegui-font-color: #444;
 
 .monkee-gui-wrapper {
-  border: 1px solid silver;
-  padding: $monkeegui-padding;
   font-size: 13px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid silver;
   border-radius: $monkeegui-radius;
-  color: #444;
+  padding: $monkeegui-padding;
+  color: $monkeegui-font-color;
+
+  // .form-group{
+  //   display: flex; /* or inline-flex */
+  //   border: 1px solid pink;
+  // }
+
+  // // for now a test situation
+  // .range-group {
+  //   display: flex; /* or inline-flex */
+  //   border: 1px solid pink;
+  //   label {
+  //     display: block;
+  //   }
+  // }
+  .range-group {
+    padding-bottom: $monkeegui-padding * 2;
+    label {
+      display: block;
+      width: 100%;
+      color: #444;
+    }
+    input {
+      display: inline-block;
+      width: 90% !important;
+    }
+    span {
+      display: inline-block;
+      width: 9%;
+      text-align: center;
+    }
+
+    &.disabled {
+      opacity: 0.2;
+    }
+    input[type="range"]:disabled {
+      /* Disabled Element */
+      cursor: default;
+    }
+
+    input[type="range"]:disabled::-webkit-slider-runnable-track {
+      /* Disabled slider-runnable-track */
+      cursor: default;
+    }
+
+    input[type="range"]:disabled::-moz-range-track {
+      /* Disabled slider-range-track */
+      cursor: default;
+    }
+
+    input[type="range"]:disabled::-webkit-slider-thumb {
+      /* Disabled slider-thumb */
+      cursor: default;
+    }
+
+    input[type="range"]:disabled::-moz-range-thumb {
+      /* Disabled slider-thumb */
+      cursor: default;
+    }
+  }
 
   input[type="text"] {
     width: 100%;
@@ -41,7 +101,7 @@ $monkeegui-dark-color: #303742;
     padding: $monkeegui-padding-input;
     text-decoration: none;
 
-    margin-bottom: 2px;
+    margin-bottom: $monkeegui-margin;
     cursor: pointer;
     width: 100%;
     border-radius: $monkeegui-radius;
@@ -84,6 +144,7 @@ $monkeegui-dark-color: #303742;
     border-radius: $monkeegui-radius;
     max-width: 100%;
     height: auto;
+    margin-bottom: $monkeegui-margin;
   }
 
   $monkee-range-height: 6px;
@@ -119,6 +180,60 @@ $monkeegui-dark-color: #303742;
       background: $monkeegui-dark-color;
       border-color: $monkeegui-dark-color;
       cursor: pointer; /* Cursor on hover */
+    }
+  }
+
+  .accordion {
+    // margin-bottom: 1rem;
+    margin-bottom: $monkeegui-margin;
+    > input[type="checkbox"] {
+      position: absolute;
+      left: -100vw;
+    }
+    label {
+      display: block;
+      color: $monkeegui-font-color;
+      cursor: pointer;
+      font-weight: normal;
+      padding: $monkeegui-padding-input;
+      background: lighten($monkeegui-dark-color, 70);
+      transition: all 0.5s;
+      border-radius: $monkeegui-radius;
+      line-height: 1.5rem;
+      &:hover,
+      &:focus {
+        background: lighten($monkeegui-dark-color, 50);
+      }
+      &:before {
+        content: "+";
+        font-size: 0.58em;
+        font-family: monospace;
+        font-weight: bold;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+        margin-left: 5px;
+      }
+    }
+    > input[type="checkbox"]:checked ~ label:before {
+      content: "-";
+    }
+    .content {
+      height: 0;
+      overflow-y: hidden;
+      // transition: height 0.3s;
+      border: $monkeegui-border solid lighten($monkeegui-dark-color, 70);
+      border-radius: 0 0 $monkeegui-radius $monkeegui-radius;
+      border-top: 0;
+      p {
+        padding: 0;
+        margin: 0;
+      }
+    }
+    > input[type="checkbox"]:checked ~ .content {
+      height: auto;
+      overflow: visible;
+      padding: $monkeegui-padding * 3;
     }
   }
 }
