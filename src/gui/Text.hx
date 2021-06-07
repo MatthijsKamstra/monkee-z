@@ -16,6 +16,7 @@ class Text extends InputBase implements IGuiBase {
 
 	public function add(parent:Element) {
 		var div = document.createDivElement();
+		div.className = 'form-group';
 		parent.appendChild(div);
 
 		div.appendChild(createLabel(this.title));

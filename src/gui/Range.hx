@@ -21,6 +21,7 @@ class Range extends InputBase implements IGuiBase {
 
 	public function add(parent:Element) {
 		var div = document.createDivElement();
+		div.className = 'form-group';
 		parent.appendChild(div);
 
 		div.appendChild(createLabel(this.title, '${this.title} (between ${Std.int(this.min)} and ${Std.int(this.max)}):'));
@@ -44,5 +45,10 @@ class Range extends InputBase implements IGuiBase {
 		}
 		div.appendChild(input);
 		div.appendChild(txt);
+	}
+
+	public function listen(st:Dynamic) {
+		trace('listen');
+		trace(st);
 	}
 }

@@ -21,6 +21,7 @@ class Number extends InputBase implements IGuiBase {
 
 	public function add(parent:Element) {
 		var div = document.createDivElement();
+		div.className = 'form-group';
 		parent.appendChild(div);
 
 		div.appendChild(createLabel(this.title, '${this.title} (between ${Std.int(this.min)} and ${Std.int(this.max)}):'));

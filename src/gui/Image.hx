@@ -13,6 +13,7 @@ class Image {
 
 	public function add(parent:Element) {
 		var div = document.createDivElement();
+		div.className = 'form-group';
 		parent.appendChild(div);
 
 		var img = document.createImageElement();

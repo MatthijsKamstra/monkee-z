@@ -43,6 +43,11 @@ class InputBase {
 		return this;
 	}
 
+	public function placeHolder(title:String) {
+		input.placeholder = title;
+		return this;
+	}
+
 	/**
 	 * [Description]
 	 * @param scope

@@ -15,6 +15,7 @@ class Button {
 
 	public function add(parent:Element) {
 		var div = document.createDivElement();
+		div.className = 'form-group';
 		parent.appendChild(div);
 
 		var input = document.createInputElement();
