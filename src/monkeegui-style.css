@@ -1,10 +1,40 @@
 .monkee-gui-wrapper {
-  border: 1px solid silver;
-  padding: 2px;
   font-size: 13px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid silver;
   border-radius: 2px;
+  padding: 2px;
   color: #444; }
+  .monkee-gui-wrapper .range-group {
+    padding-bottom: 4px; }
+    .monkee-gui-wrapper .range-group label {
+      display: block;
+      width: 100%;
+      color: #444; }
+    .monkee-gui-wrapper .range-group input {
+      display: inline-block;
+      width: 90% !important; }
+    .monkee-gui-wrapper .range-group span {
+      display: inline-block;
+      width: 9%;
+      text-align: center; }
+    .monkee-gui-wrapper .range-group.disabled {
+      opacity: 0.2; }
+    .monkee-gui-wrapper .range-group input[type="range"]:disabled {
+      /* Disabled Element */
+      cursor: default; }
+    .monkee-gui-wrapper .range-group input[type="range"]:disabled::-webkit-slider-runnable-track {
+      /* Disabled slider-runnable-track */
+      cursor: default; }
+    .monkee-gui-wrapper .range-group input[type="range"]:disabled::-moz-range-track {
+      /* Disabled slider-range-track */
+      cursor: default; }
+    .monkee-gui-wrapper .range-group input[type="range"]:disabled::-webkit-slider-thumb {
+      /* Disabled slider-thumb */
+      cursor: default; }
+    .monkee-gui-wrapper .range-group input[type="range"]:disabled::-moz-range-thumb {
+      /* Disabled slider-thumb */
+      cursor: default; }
   .monkee-gui-wrapper input[type="text"] {
     width: 100%;
     padding: 4px;
@@ -44,7 +74,8 @@
     border: 1px solid #dee2e6;
     border-radius: 2px;
     max-width: 100%;
-    height: auto; }
+    height: auto;
+    margin-bottom: 2px; }
   .monkee-gui-wrapper input[type="range"] {
     border-radius: 5px;
     appearance: none;
@@ -75,3 +106,44 @@
       border-color: #303742;
       cursor: pointer;
       /* Cursor on hover */ }
+  .monkee-gui-wrapper .accordion {
+    margin-bottom: 2px; }
+    .monkee-gui-wrapper .accordion > input[type="checkbox"] {
+      position: absolute;
+      left: -100vw; }
+    .monkee-gui-wrapper .accordion label {
+      display: block;
+      color: #444;
+      cursor: pointer;
+      font-weight: normal;
+      padding: 4px;
+      background: #e8ebef;
+      transition: all 0.5s;
+      border-radius: 2px;
+      line-height: 1.5rem; }
+      .monkee-gui-wrapper .accordion label:hover, .monkee-gui-wrapper .accordion label:focus {
+        background: #adb6c4; }
+      .monkee-gui-wrapper .accordion label:before {
+        content: "+";
+        font-size: 0.58em;
+        font-family: monospace;
+        font-weight: bold;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+        margin-left: 5px; }
+    .monkee-gui-wrapper .accordion > input[type="checkbox"]:checked ~ label:before {
+      content: "-"; }
+    .monkee-gui-wrapper .accordion .content {
+      height: 0;
+      overflow-y: hidden;
+      border: 1px solid #e8ebef;
+      border-radius: 0 0 2px 2px;
+      border-top: 0; }
+      .monkee-gui-wrapper .accordion .content p {
+        padding: 0;
+        margin: 0; }
+    .monkee-gui-wrapper .accordion > input[type="checkbox"]:checked ~ .content {
+      height: auto;
+      overflow: visible;
+      padding: 6px; }
