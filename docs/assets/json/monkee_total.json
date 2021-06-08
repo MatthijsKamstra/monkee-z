@@ -94,6 +94,25 @@
     },
     "updated": "2021-05-30 16:13:44"
   },
+  "null": {
+    "compression": {
+      "original": "100% smaller",
+      "minified": "176% smaller",
+      "uglifyjs": "166% smaller"
+    },
+    "name": null,
+    "url": {
+      "original": "bin/_.js",
+      "minified": "bin/_.min.min.js",
+      "uglifyjs": "bin/_.min.js"
+    },
+    "size": {
+      "original": "2.689Kb",
+      "minified": "1.521Kb",
+      "uglifyjs": "1.615Kb"
+    },
+    "updated": "2021-06-08 08:48:27"
+  },
   "monkee_chain_lite.js": {
     "compression": {
       "original": "100% smaller",

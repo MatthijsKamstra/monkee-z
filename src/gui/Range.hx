@@ -6,9 +6,13 @@ class Range extends InputBase implements IGuiBase {
 	var title:String;
 	var min:Float;
 	var max:Float;
-	var value:Float;
+	// var value:Float; // in InputBase
 	var step:Float;
 	var callback:Function;
+
+	var txt:SpanElement;
+
+	var wrapper:DivElement;
 
 	public function new(title:String, min:Float, max:Float, value:Float, step:Float, callback:Function) {
 		this.title = title; // :String,
@@ -20,17 +24,17 @@ class Range extends InputBase implements IGuiBase {
 	}
 
 	public function add(parent:Element) {
-		var div = document.createDivElement();
-		div.className = 'form-group';
-		parent.appendChild(div);
+		wrapper = document.createDivElement();
+		wrapper.className = 'form-group range-group';
+		parent.appendChild(wrapper);
 
-		div.appendChild(createLabel(this.title, '${this.title} (between ${Std.int(this.min)} and ${Std.int(this.max)}):'));
+		wrapper.appendChild(createLabel(this.title, '${this.title} (between ${Std.int(this.min)} and ${Std.int(this.max)}):'));
 
-		var txt = document.createSpanElement();
+		txt = document.createSpanElement();
 		txt.id = '${this.title}_value';
 		txt.innerText = '${this.value}';
 
-		var input = document.createInputElement();
+		input = document.createInputElement();
 		input.type = 'range';
 		input.id = '${this.title}';
 		input.name = '${this.title}';
@@ -43,12 +47,28 @@ class Range extends InputBase implements IGuiBase {
 			txt.innerHTML = js.Lib.nativeThis.value;
 			Reflect.callMethod(callback, callback, [input]);
 		}
-		div.appendChild(input);
-		div.appendChild(txt);
+		wrapper.appendChild(input);
+		wrapper.appendChild(txt);
 	}
 
-	public function listen(st:Dynamic) {
-		trace('listen');
-		trace(st);
+	override public function listen(scope:Dynamic, variable:String) {
+		// trace('listen');
+		window.setInterval(function() {
+			var __var = (Reflect.getProperty(scope, variable));
+			if (__var != this.value) {
+				// trace('change');
+				this.value = __var;
+				this.input.value = '${this.value}';
+				this.txt.innerHTML = '${this.value}';
+			}
+		}, 50);
+		return this;
+	}
+
+	override public function disabled(isDisabled:Bool = true) {
+		input.disabled = isDisabled;
+		if (isDisabled)
+			wrapper.classList.add('disabled');
+		return this;
 	}
 }

@@ -5,22 +5,12 @@ import haxe.Constraints.Function;
 class TextArea implements IGuiBase {
 	// element
 	var textAreaEl:TextAreaElement;
-	// values
-	var title:String;
-	// var value:String;
-	var callback:Function;
 
+	// values
 	@:isVar public var value(get, set):String;
 
-	function get_value():String {
-		return value;
-	}
-
-	function set_value(str:String):String {
-		if (textAreaEl != null)
-			textAreaEl.value = str;
-		return value = str;
-	}
+	var title:String;
+	var callback:Function;
 
 	public function new(title:String, value:String, ?callback:Function) {
 		this.title = title;
@@ -47,6 +37,8 @@ class TextArea implements IGuiBase {
 		div.appendChild(textAreaEl);
 	}
 
+	// ____________________________________ same as input elements ____________________________________
+
 	public function disabled(isDisabled:Bool = true) {
 		textAreaEl.disabled = isDisabled;
 		return this;
@@ -55,5 +47,17 @@ class TextArea implements IGuiBase {
 	public function placeHolder(title:String) {
 		textAreaEl.placeholder = title;
 		return this;
+	}
+
+	// ____________________________________ getter/setter ____________________________________
+
+	function get_value():String {
+		return value;
+	}
+
+	function set_value(str:String):String {
+		if (textAreaEl != null)
+			textAreaEl.value = str;
+		return value = str;
 	}
 }

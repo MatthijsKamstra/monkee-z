@@ -5,7 +5,7 @@ import haxe.Constraints.Function;
 class Text extends InputBase implements IGuiBase {
 	// values
 	var title:String;
-	var value:String;
+	var _value:String;
 	var callback:Function;
 
 	public function new(title:String, value:String, ?callback:Function) {

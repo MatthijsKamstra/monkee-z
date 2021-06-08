@@ -6,6 +6,9 @@ class InputBase {
 	// default
 	var input:InputElement;
 
+	// input value
+	@:isVar public var value(get, set):Float;
+
 	// autoupdate
 	var isAutoUpdate = false;
 	var scope:Dynamic;
@@ -38,20 +41,57 @@ class InputBase {
 	}
 
 	// public function add(parent:Element) {}
+
+	/**
+	 * default the input is active, so this will disable it
+	 *
+	 * @example
+	 * 			gui.text('Pattern name', this.patternName).disabled(); // disabled
+	 * 			gui.text('Pattern name', this.patternName).disabled(true); // disabled
+	 * 			gui.text('Pattern name', this.patternName).disabled(false); // not disabled
+	 *
+	 * @param isDisabled		disabled the input, default true
+	 */
 	public function disabled(isDisabled:Bool = true) {
 		input.disabled = isDisabled;
 		return this;
 	}
 
-	public function placeHolder(title:String) {
-		input.placeholder = title;
+	/**
+	 * @example
+	 * 				gui.text('Pattern name', this.patternName).placeHolder('What describes this pattern?');
+	 *
+	 * @param text		string used for placeholder info
+	 */
+	public function placeHolder(text:String) {
+		input.placeholder = text;
 		return this;
 	}
 
 	/**
-	 * [Description]
-	 * @param scope
-	 * @param value
+	 * listen to a var changing, might be stressfull for browser...
+	 *
+	 * @param scope		where is the variable located (class?)
+	 * @param variable 	string representing the var name (will use Reflect to get new var name)
+	 */
+	public function listen(scope:Dynamic, variable:String) {
+		// trace('listen');
+		window.setInterval(function() {
+			var __var = (Reflect.getProperty(scope, variable));
+			if (__var != this.value) {
+				// trace('change');
+				this.value = __var;
+				this.input.value = '${this.value}';
+			}
+		}, 50);
+		return this;
+	}
+
+	/**
+	 * not sure what this does...
+	 *
+	 * @param scope		where is the variable located (class?)
+	 * @param variable 	string representing the var name (will use Reflect to get new var name)
 	 */
 	public function update(scope:Dynamic, value:String) {
 		this.scope = scope;
@@ -61,8 +101,23 @@ class InputBase {
 		return this;
 	}
 
+	/**
+	 * does this work?
+	 *
+	 * @param handler
+	 */
 	public function onUpdateHandler(handler:Function) {
 		this.updateHandler = handler;
 		return this;
+	}
+
+	// ____________________________________ getter/setter ____________________________________
+
+	function get_value():Float {
+		return value;
+	}
+
+	function set_value(v:Float):Float {
+		return value = v;
 	}
 }
