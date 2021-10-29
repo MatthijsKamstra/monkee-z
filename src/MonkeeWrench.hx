@@ -1,5 +1,9 @@
 package;
 
+import utils.Emoji;
+import js.html.Headers;
+import haxe.macro.Expr.Catch;
+import js.html.LinkElement;
 import js.html.Element;
 import haxe.Log;
 import js.html.VideoElement;
@@ -12,7 +16,7 @@ using StringTools;
 
 /**
  * simple way to replace missing images
- * add querystring '?replaceimages' to url (example: http://localhost:8888/?replaceimages)
+ * add querystring '?monkeewrench' to url (example: http://localhost:8888/?monkeewrench)
  */
 @:expose
 @:keep
@@ -30,7 +34,7 @@ class MonkeeWrench {
 		document.addEventListener("DOMContentLoaded", function(event) {
 			console.group('Monkee ${utils.Emoji.monkeeWrench}');
 			console.log('focus browser and press "m"');
-			console.log('or use ${window.location.href}?replaceimages');
+			console.log('or use ${window.location.href}?monkeewrench');
 			console.groupEnd();
 
 			init();
@@ -71,12 +75,54 @@ class MonkeeWrench {
 		window.onkeydown = (e) -> getkey(e);
 
 		var urlParams = new URLSearchParams(window.location.search);
-		var myParam = urlParams.get('replaceimages');
+		var myParam = urlParams.get('monkeewrench');
 
 		if (myParam != null) {
 			buildIcon();
 			replaceMissingAssets();
 		}
+	}
+
+	function addImageLabel(el:Element) {
+		var div = document.createDivElement();
+		div.innerHTML = '${Emoji.monkeeWrench} img';
+		div.style.position = 'absolute';
+		// div.style.top = '0px';
+		// div.style.left = '0px';
+		div.style.bottom = '0px';
+		div.style.right = '50%';
+		div.style.backgroundColor = 'yellow';
+		div.style.fontSize = '8px';
+		div.style.padding = '0px';
+		div.style.paddingLeft = '5px';
+		div.style.paddingRight = '5px';
+		div.style.textTransform = 'uppercase';
+		div.style.transform = 'translate(50%)';
+		div.style.borderRadius = '1px';
+		div.style.opacity = '0.5';
+		el.parentElement.appendChild(div);
+		el.style.position = 'relative';
+	}
+
+	function addBGImageLabel(el:Element) {
+		var div = document.createDivElement();
+		div.innerHTML = '${Emoji.monkeeWrench} bg-img';
+		div.style.position = 'absolute';
+		// div.style.top = '0px';
+		// div.style.left = '0px';
+		div.style.bottom = '0px';
+		div.style.right = '50%';
+		div.style.backgroundColor = 'yellow';
+		div.style.fontSize = '8px';
+		div.style.padding = '0px';
+		div.style.paddingLeft = '5px';
+		div.style.paddingRight = '5px';
+		div.style.textTransform = 'uppercase';
+		div.style.transform = 'translate(50%)';
+		div.style.borderRadius = '1px';
+		div.style.opacity = '0.5';
+		el.appendChild(div);
+		el.style.position = 'relative';
 	}
 
 	function replaceMissingAssets() {
@@ -97,24 +143,35 @@ class MonkeeWrench {
 			if (!UrlExists(url)) {
 				// console.log('xxxx');
 				// https://picsum.photos/500/500
-				element.dataset.replaceimage = 'true';
+				element.dataset.monkeeWrenchImageReplace = 'true';
 				element.src = '../assets/img/debug/1031-500x500.jpg';
+				addImageLabel(element);
 			}
 		}
 
+		// check all elements for background images
 		var elementsWithBG = document.getElementsByTagName("*");
 		for (i in 0...elementsWithBG.length) {
 			var element:Element = cast elementsWithBG[i];
 			var url = element.style.backgroundImage.replace('\'', '').replace('\"', '').replace('url(', "").replace(')', '');
+			if (element.style.backgroundImage != "") {
+				element.dataset.monkeeWrenchCheck = 'true';
+			}
 			// if (element.style.backgroundImage != "") {
 			// 	console.log(element.style.backgroundImage);
 			// 	console.log(url);
 			// 	console.log('-------------' + UrlExists(url));
 			// }
-			if (!UrlExists(url)) {
-				// console.log('xxx');
-				element.dataset.replaceimage = 'true';
-				element.style.backgroundImage = 'url(../assets/img/debug/500x500.jpg)';
+			try {
+				if (!UrlExists(url)) {
+					// console.log('xxx');
+					element.dataset.monkeeWrenchCheck = 'true';
+					element.dataset.monkeeWrenchImageReplace = 'true';
+					element.style.backgroundImage = 'url(../assets/img/debug/500x500.jpg)';
+					addBGImageLabel(element);
+				}
+			} catch (e) {
+				trace(e);
 			}
 		}
 
@@ -122,12 +179,27 @@ class MonkeeWrench {
 		var elementsVideo = document.getElementsByTagName("video");
 		for (i in 0...elementsVideo.length) {
 			var element:VideoElement = cast elementsVideo[i];
+			element.dataset.monkeeWrenchCheck = 'true';
 			var url = element.poster;
 			// console.log(url);
 			if (!UrlExists(url)) {
 				// https://picsum.photos/500/500
-				element.dataset.replaceimage = 'true';
+				element.dataset.monkeeWrenchImageReplace = 'true';
 				element.poster = '../assets/img/debug/146-500x500.jpg';
+			}
+		}
+		// check all video
+		var elementsLinks = document.getElementsByTagName("a");
+		for (i in 0...elementsLinks.length) {
+			var element:LinkElement = cast elementsLinks[i];
+			element.dataset.monkeeWrenchCheck = 'true';
+			var url = element.href;
+			var href = element.getAttribute('href');
+			var id = element.id;
+			// console.log(url);
+			if (href == '' || href == '#') {
+				element.dataset.monkeeWrenchEmptyLink = 'true';
+				element.innerHTML = '${utils.Emoji.monkeeWrench} ${element.innerHTML}';
 			}
 		}
 

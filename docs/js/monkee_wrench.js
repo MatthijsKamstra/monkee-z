@@ -8,7 +8,7 @@ class MonkeeWrench {
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			$global.console.group("Monkee " + "🔧");
 			$global.console.log("focus browser and press \"m\"");
-			$global.console.log("or use " + window.location.href + "?replaceimages");
+			$global.console.log("or use " + window.location.href + "?monkeewrench");
 			$global.console.groupEnd();
 			_gthis.init();
 		});
@@ -43,11 +43,47 @@ class MonkeeWrench {
 			_gthis.getkey(e);
 		};
 		let urlParams = new URLSearchParams(window.location.search);
-		let myParam = urlParams.get("replaceimages");
+		let myParam = urlParams.get("monkeewrench");
 		if(myParam != null) {
 			this.buildIcon();
 			this.replaceMissingAssets();
 		}
+	}
+	addImageLabel(el) {
+		let div = window.document.createElement("div");
+		div.innerHTML = "🔧" + " img";
+		div.style.position = "absolute";
+		div.style.bottom = "0px";
+		div.style.right = "50%";
+		div.style.backgroundColor = "yellow";
+		div.style.fontSize = "8px";
+		div.style.padding = "0px";
+		div.style.paddingLeft = "5px";
+		div.style.paddingRight = "5px";
+		div.style.textTransform = "uppercase";
+		div.style.transform = "translate(50%)";
+		div.style.borderRadius = "1px";
+		div.style.opacity = "0.5";
+		el.parentElement.appendChild(div);
+		el.style.position = "relative";
+	}
+	addBGImageLabel(el) {
+		let div = window.document.createElement("div");
+		div.innerHTML = "🔧" + " bg-img";
+		div.style.position = "absolute";
+		div.style.bottom = "0px";
+		div.style.right = "50%";
+		div.style.backgroundColor = "yellow";
+		div.style.fontSize = "8px";
+		div.style.padding = "0px";
+		div.style.paddingLeft = "5px";
+		div.style.paddingRight = "5px";
+		div.style.textTransform = "uppercase";
+		div.style.transform = "translate(50%)";
+		div.style.borderRadius = "1px";
+		div.style.opacity = "0.5";
+		el.appendChild(div);
+		el.style.position = "relative";
 	}
 	replaceMissingAssets() {
 		let elementsImg = window.document.getElementsByTagName("img");
@@ -58,8 +94,9 @@ class MonkeeWrench {
 			let element = elementsImg[i];
 			let url = element.src;
 			if(!this.UrlExists(url)) {
-				element.dataset.replaceimage = "true";
+				element.dataset.monkeeWrenchImageReplace = "true";
 				element.src = "../assets/img/debug/1031-500x500.jpg";
+				this.addImageLabel(element);
 			}
 		}
 		let elementsWithBG = window.document.getElementsByTagName("*");
@@ -69,9 +106,19 @@ class MonkeeWrench {
 			let i = _g2++;
 			let element = elementsWithBG[i];
 			let url = StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(element.style.backgroundImage,"'",""),"\"",""),"url(",""),")","");
-			if(!this.UrlExists(url)) {
-				element.dataset.replaceimage = "true";
-				element.style.backgroundImage = "url(../assets/img/debug/500x500.jpg)";
+			if(element.style.backgroundImage != "") {
+				element.dataset.monkeeWrenchCheck = "true";
+			}
+			try {
+				if(!this.UrlExists(url)) {
+					element.dataset.monkeeWrenchCheck = "true";
+					element.dataset.monkeeWrenchImageReplace = "true";
+					element.style.backgroundImage = "url(../assets/img/debug/500x500.jpg)";
+					this.addBGImageLabel(element);
+				}
+			} catch( _g ) {
+				let e = haxe_Exception.caught(_g);
+				console.log("src/MonkeeWrench.hx:174:",e);
 			}
 		}
 		let elementsVideo = window.document.getElementsByTagName("video");
@@ -80,10 +127,26 @@ class MonkeeWrench {
 		while(_g4 < _g5) {
 			let i = _g4++;
 			let element = elementsVideo[i];
+			element.dataset.monkeeWrenchCheck = "true";
 			let url = element.poster;
 			if(!this.UrlExists(url)) {
-				element.dataset.replaceimage = "true";
+				element.dataset.monkeeWrenchImageReplace = "true";
 				element.poster = "../assets/img/debug/146-500x500.jpg";
+			}
+		}
+		let elementsLinks = window.document.getElementsByTagName("a");
+		let _g6 = 0;
+		let _g7 = elementsLinks.length;
+		while(_g6 < _g7) {
+			let i = _g6++;
+			let element = elementsLinks[i];
+			element.dataset.monkeeWrenchCheck = "true";
+			let url = element.href;
+			let href = element.getAttribute("href");
+			let id = element.id;
+			if(href == "" || href == "#") {
+				element.dataset.monkeeWrenchEmptyLink = "true";
+				element.innerHTML = "🔧" + " " + element.innerHTML;
 			}
 		}
 	}
@@ -95,6 +158,29 @@ $hx_exports["MonkeeWrench"] = MonkeeWrench;
 class StringTools {
 	static replace(s,sub,by) {
 		return s.split(sub).join(by);
+	}
+}
+class haxe_Exception extends Error {
+	constructor(message,previous,native) {
+		super(message);
+		this.message = message;
+		this.__previousException = previous;
+		this.__nativeException = native != null ? native : this;
+	}
+	static caught(value) {
+		if(((value) instanceof haxe_Exception)) {
+			return value;
+		} else if(((value) instanceof Error)) {
+			return new haxe_Exception(value.message,null,value);
+		} else {
+			return new haxe_ValueException(value,null,value);
+		}
+	}
+}
+class haxe_ValueException extends haxe_Exception {
+	constructor(value,previous,native) {
+		super(String(value),previous,native);
+		this.value = value;
 	}
 }
 class haxe_iterators_ArrayIterator {
