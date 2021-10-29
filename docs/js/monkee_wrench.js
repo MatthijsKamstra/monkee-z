@@ -124,13 +124,13 @@ class MonkeeWrench {
 			try {
 				if(!this.UrlExists(url)) {
 					element.dataset.monkeeWrenchCheck = "true";
-					element.dataset.monkeeWrenchImageReplace = "true";
+					element.dataset.monkeeWrenchBgImageReplace = "true";
 					element.style.backgroundImage = "url(" + this.DEBUG_IMAGES[1] + ")";
 					this.addBGImageLabel(element);
 				}
 			} catch( _g ) {
 				let e = haxe_Exception.caught(_g);
-				console.log("src/MonkeeWrench.hx:209:",e);
+				console.log("src/MonkeeWrench.hx:198:",e);
 			}
 		}
 		let elementsVideo = window.document.getElementsByTagName("video");
@@ -142,7 +142,7 @@ class MonkeeWrench {
 			element.dataset.monkeeWrenchCheck = "true";
 			let url = element.poster;
 			if(!this.UrlExists(url)) {
-				element.dataset.monkeeWrenchImageReplace = "true";
+				element.dataset.monkeeWrenchPosterImageReplace = "true";
 				element.poster = this.DEBUG_IMAGES[2];
 			}
 		}

@@ -150,24 +150,13 @@ class MonkeeWrench {
 			var url = el.src;
 			var w = el.width;
 			var h = el.height;
-			// console.log(el);
-			// console.log(el.getAttribute('width'));
-			// console.log(el.getAttribute('height'));
-			// console.log(w);
-			// console.log(h);
-			// console.log(url);
-			// console.log(UrlExists(url));
 			if (!UrlExists(url)) {
-				// console.log('xxxx');
+				// image doesn't exists
+
 				// https://picsum.photos/500/500
 				el.dataset.monkeeWrenchImageReplace = 'true';
 				el.src = DEBUG_IMAGES[0];
 				addImageLabel(el);
-				// console.info(el);
-				// console.info(w);
-				// console.info(h);
-
-				// image doesn't exists
 
 				if (el.getAttribute('width') != null && el.getAttribute('height') != null) {
 					el.style.width = '${w}px';
@@ -176,8 +165,8 @@ class MonkeeWrench {
 					el.style.height = '250px';
 					el.style.objectFit = 'cover';
 
-					// console.log(el.width);
-					// console.log(el.height);
+					// calculate new image height
+
 					// el.height = Math.round(h * (h / w));
 					el.style.height = '${Math.round(el.width * (h / w))}px';
 				}
@@ -201,7 +190,7 @@ class MonkeeWrench {
 				if (!UrlExists(url)) {
 					// console.log('xxx');
 					element.dataset.monkeeWrenchCheck = 'true';
-					element.dataset.monkeeWrenchImageReplace = 'true';
+					element.dataset.monkeeWrenchBgImageReplace = 'true';
 					element.style.backgroundImage = 'url(${DEBUG_IMAGES[1]})';
 					addBGImageLabel(element);
 				}
@@ -219,7 +208,7 @@ class MonkeeWrench {
 			// console.log(url);
 			if (!UrlExists(url)) {
 				// https://picsum.photos/500/500
-				element.dataset.monkeeWrenchImageReplace = 'true';
+				element.dataset.monkeeWrenchPosterImageReplace = 'true';
 				element.poster = DEBUG_IMAGES[2];
 			}
 		}
