@@ -54,6 +54,13 @@
 
 --next
 
+--cmd echo MonkeeWrench
+-main MonkeeWrench
+-js docs/js/monkee_wrench.js
+
+
+--next
+
 --cmd echo MonkeeChain
 MonkeeChain
 -js docs/js/monkee_chain.js
@@ -71,10 +78,5 @@ MonkeeGui
 -js docs/js/monkee_gui.js
 
 
---next
-
---cmd echo MonkeeWrench
-MonkeeGui
--js docs/js/monkee_wrench.js
 
 
