@@ -57,7 +57,7 @@ class BuildToolSimple {
 			// generate json, small test
 			var json = {};
 			Reflect.setField(json, 'name', outPath.split('js/')[1]);
-			Reflect.setField(json, 'updated', Date.now());
+			Reflect.setField(json, 'updated', DateTools.format(Date.now(), "%F"));
 			Reflect.setField(json, 'size', {});
 			Reflect.setField(json, 'compression', {});
 			Reflect.setField(json, 'url', {});
