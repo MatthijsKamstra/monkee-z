@@ -2,9 +2,8 @@
 class MonkeeWrench {
 	constructor() {
 		this.DEBUG_IMAGES = ["../assets/img/debug/146-500x500.jpg","../assets/img/debug/500x500.jpg","../assets/img/debug/1031-500x500.jpg"];
-		this.DEBUG = true;
+		this.DEBUG = false;
 		let _version = "0.0.1";
-		_version = "2021-10-29 13:16:08";
 		$global.console.info("[Monkee-Z]" + " " + ("Wrench " + "🔧") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
@@ -203,5 +202,3 @@ class haxe_iterators_ArrayIterator {
 MonkeeWrench.VERSION = "0.0.1";
 MonkeeWrench.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_wrench.js.map
