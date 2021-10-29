@@ -28,6 +28,12 @@ class MonkeeWrench {
 
 	var DEBUG = #if debug true #else false #end;
 
+	var DEBUG_IMAGES = [
+		'../assets/img/debug/146-500x500.jpg',
+		'../assets/img/debug/500x500.jpg',
+		'../assets/img/debug/1031-500x500.jpg'
+	];
+
 	public function new() {
 		console.info(App.callIn('Wrench ${utils.Emoji.monkeeWrench}', VERSION));
 
@@ -101,7 +107,7 @@ class MonkeeWrench {
 		div.style.borderRadius = '1px';
 		div.style.opacity = '0.5';
 		el.parentElement.appendChild(div);
-		el.style.position = 'relative';
+		// el.style.position = 'relative';
 	}
 
 	function addBGImageLabel(el:Element) {
@@ -136,16 +142,28 @@ class MonkeeWrench {
 		// check all images
 		var elementsImg = document.getElementsByTagName("img");
 		for (i in 0...elementsImg.length) {
-			var element:ImageElement = cast elementsImg[i];
-			var url = element.src;
+			var el:ImageElement = cast elementsImg[i];
+			var url = el.src;
+			var w = el.width;
+			var h = el.height;
+			// console.log(w);
 			// console.log(url);
 			// console.log(UrlExists(url));
 			if (!UrlExists(url)) {
 				// console.log('xxxx');
 				// https://picsum.photos/500/500
-				element.dataset.monkeeWrenchImageReplace = 'true';
-				element.src = '../assets/img/debug/1031-500x500.jpg';
-				addImageLabel(element);
+				el.dataset.monkeeWrenchImageReplace = 'true';
+				el.src = DEBUG_IMAGES[0];
+				addImageLabel(el);
+
+				// if (w > 0) {
+				// 	el.style.width = '${w}px';
+				// 	el.style.display = 'block';
+				// }
+				// if (h > 0) {
+				// 	el.style.width = '${h}px';
+				// 	el.style.display = 'block';
+				// }
 			}
 		}
 
@@ -167,7 +185,7 @@ class MonkeeWrench {
 					// console.log('xxx');
 					element.dataset.monkeeWrenchCheck = 'true';
 					element.dataset.monkeeWrenchImageReplace = 'true';
-					element.style.backgroundImage = 'url(../assets/img/debug/500x500.jpg)';
+					element.style.backgroundImage = 'url(${DEBUG_IMAGES[1]})';
 					addBGImageLabel(element);
 				}
 			} catch (e) {
@@ -185,7 +203,7 @@ class MonkeeWrench {
 			if (!UrlExists(url)) {
 				// https://picsum.photos/500/500
 				element.dataset.monkeeWrenchImageReplace = 'true';
-				element.poster = '../assets/img/debug/146-500x500.jpg';
+				element.poster = DEBUG_IMAGES[2];
 			}
 		}
 		// check all video

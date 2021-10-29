@@ -1,8 +1,10 @@
 (function ($hx_exports, $global) { "use strict";
 class MonkeeWrench {
 	constructor() {
-		this.DEBUG = false;
+		this.DEBUG_IMAGES = ["../assets/img/debug/146-500x500.jpg","../assets/img/debug/500x500.jpg","../assets/img/debug/1031-500x500.jpg"];
+		this.DEBUG = true;
 		let _version = "0.0.1";
+		_version = "2021-10-29 13:16:08";
 		$global.console.info("[Monkee-Z]" + " " + ("Wrench " + "🔧") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
@@ -65,7 +67,6 @@ class MonkeeWrench {
 		div.style.borderRadius = "1px";
 		div.style.opacity = "0.5";
 		el.parentElement.appendChild(div);
-		el.style.position = "relative";
 	}
 	addBGImageLabel(el) {
 		let div = window.document.createElement("div");
@@ -91,12 +92,14 @@ class MonkeeWrench {
 		let _g1 = elementsImg.length;
 		while(_g < _g1) {
 			let i = _g++;
-			let element = elementsImg[i];
-			let url = element.src;
+			let el = elementsImg[i];
+			let url = el.src;
+			let w = el.width;
+			let h = el.height;
 			if(!this.UrlExists(url)) {
-				element.dataset.monkeeWrenchImageReplace = "true";
-				element.src = "../assets/img/debug/1031-500x500.jpg";
-				this.addImageLabel(element);
+				el.dataset.monkeeWrenchImageReplace = "true";
+				el.src = this.DEBUG_IMAGES[0];
+				this.addImageLabel(el);
 			}
 		}
 		let elementsWithBG = window.document.getElementsByTagName("*");
@@ -113,12 +116,12 @@ class MonkeeWrench {
 				if(!this.UrlExists(url)) {
 					element.dataset.monkeeWrenchCheck = "true";
 					element.dataset.monkeeWrenchImageReplace = "true";
-					element.style.backgroundImage = "url(../assets/img/debug/500x500.jpg)";
+					element.style.backgroundImage = "url(" + this.DEBUG_IMAGES[1] + ")";
 					this.addBGImageLabel(element);
 				}
 			} catch( _g ) {
 				let e = haxe_Exception.caught(_g);
-				console.log("src/MonkeeWrench.hx:174:",e);
+				console.log("src/MonkeeWrench.hx:192:",e);
 			}
 		}
 		let elementsVideo = window.document.getElementsByTagName("video");
@@ -131,7 +134,7 @@ class MonkeeWrench {
 			let url = element.poster;
 			if(!this.UrlExists(url)) {
 				element.dataset.monkeeWrenchImageReplace = "true";
-				element.poster = "../assets/img/debug/146-500x500.jpg";
+				element.poster = this.DEBUG_IMAGES[2];
 			}
 		}
 		let elementsLinks = window.document.getElementsByTagName("a");
@@ -200,3 +203,5 @@ class haxe_iterators_ArrayIterator {
 MonkeeWrench.VERSION = "0.0.1";
 MonkeeWrench.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_wrench.js.map
