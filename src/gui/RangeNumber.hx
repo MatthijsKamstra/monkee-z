@@ -1,5 +1,8 @@
 package gui;
 
+import gui.*;
+import js.Browser.*;
+import js.html.*;
 import haxe.Constraints.Function;
 
 class RangeNumber extends InputBase implements IGuiBase {

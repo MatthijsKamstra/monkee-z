@@ -1,5 +1,9 @@
 package gui;
 
+import gui.*;
+import js.Browser.*;
+import js.html.*;
+
 class Folder extends InputBase implements IGuiBase {
 	var title:String;
 	var isClosed:Bool;
