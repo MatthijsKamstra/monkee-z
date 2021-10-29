@@ -71,3 +71,10 @@ MonkeeGui
 -js docs/js/monkee_gui.js
 
 
+--next
+
+--cmd echo MonkeeWrench
+MonkeeGui
+-js docs/js/monkee_wrench.js
+
+

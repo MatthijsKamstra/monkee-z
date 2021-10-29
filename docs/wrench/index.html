@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🙈</text></svg>">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪓</text></svg>">
+
+    <!-- Monkee Style custom styling -->
+    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <title>Monkee - Z 🐵 Wrench</title>
+
+    <style>
+        .h-250px {
+            height: 250px;
+            background-color: silver;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <div data-load="../components/nav.html"></div>
+    <div data-load="../components/hero.html"></div>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col">
+                <h1>Monkee Wrench 🔧</h1>
+                <p>fix some issues I have when working on front end. this fixes the images with dummy images and lets
+                    you know which links don't work</p>
+                <ul>
+                    <li>missing images</li>
+                    <li>missing background images</li>
+                    <li>missing video</li>
+                    <li>dead links</li>
+                    <li>links to 404 pages</li>
+                </ul>
+
+                <h2>usage</h2>
+
+                <ol>
+                    <li>
+
+                        focus browser and press "m"
+
+                    </li>
+                    <li>
+
+                        or use http://url/?replaceimages
+
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <!--
+                        <h3>Monkee-Route-Lite</h3>
+                        <a class="float-right btn btn-outline-dark btn-sm" href="lite.html">more</a>
+                        <p>A lightweight library for spa applictions <i>(< 1KB)</i>
+                        </p>
+                    -->
+            </div>
+            <div class="col-6">
+                <h3>Monkee-Wrench</h3>
+                <a class="float-right btn btn-outline-dark btn-sm" href="wrench.html">more</a>
+                <p>A library for fixing websites <i>(~ 12KB)</i></p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="container">
+
+        <h2>Replace missing images</h2>
+
+        <div class="row">
+            <div class="col-6">
+                <p>normal image</p>
+                <img src='https://picsum.photos/seed/normal/500/500' class="img-fluid" />
+            </div>
+            <div class="col-6">
+                <p>missing image, replace by script</p>
+                <img src='foo/bar/missing.jpg' class="img-fluid" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="h-250px" style="background-image: url(https://picsum.photos/seed/background/500/500)">
+                    <p>background image</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="h-250px" style="background-image: url(foo/bar/missing_background_image.jpg)">
+                    <p>background missing image, replace by script</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-6">
+                <div id="specs-route-lite"></div>
+            </div>
+            <div class="col-6">
+                <div id="specs-route"></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-load="../components/footer.html"></div>
+
+
+    <span id="bottom"></span>
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+    <!-- Monkee-Z -->
+    <!-- <script src="../js/monkee_load_lite.js"></script> -->
+    <!-- <script src="./js/monkee_load_lite.min.js"></script> -->
+    <script src="../js/monkee_load.min.min.js"></script>
+    <script src="../js/monkee_route.min.min.js"></script>
+    <script src="../js/monkee_chain.min.min.js"></script>
+
+    <script src="../js/monkee_util.js"></script>
+    <script src="../js/monkee_wrench.js"></script>
+
+    <script>
+        MonkeeUtil.embedSpecs('#specs-route ', '../assets/json/monkee_wrench.json');
+    </script>
+
+</body>
+
+</html>

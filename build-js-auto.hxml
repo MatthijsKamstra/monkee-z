@@ -32,6 +32,10 @@
 # --cmd echo MonkeeGui
 
 
--main MonkeeGuiTest
--js docs/js/monkee_gui_test.js
---cmd echo MonkeeGuiTest
+# -main MonkeeGuiTest
+# -js docs/js/monkee_gui_test.js
+# --cmd echo MonkeeGuiTest
+
+-main MonkeeWrench
+-js docs/js/monkee_wrench.js
+--cmd echo MonkeeWrench
