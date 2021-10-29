@@ -1,10 +1,12 @@
 (function ($hx_exports, $global) { "use strict";
 class MonkeeWrench {
 	constructor() {
+		this.ROOT = window.location.host;
 		this.DEBUG_IMAGES = ["../assets/img/debug/146-500x500.jpg","../assets/img/debug/500x500.jpg","../assets/img/debug/1031-500x500.jpg"];
 		this.DEBUG = false;
 		let _version = "0.0.1";
 		$global.console.info("[Monkee-Z]" + " " + ("Wrench " + "🔧") + " - version: " + _version);
+		$global.console.log(this.ROOT);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			$global.console.group("Monkee " + "🔧");
@@ -99,6 +101,14 @@ class MonkeeWrench {
 				el.dataset.monkeeWrenchImageReplace = "true";
 				el.src = this.DEBUG_IMAGES[0];
 				this.addImageLabel(el);
+				if(el.getAttribute("width") != null && el.getAttribute("height") != null) {
+					el.style.width = "" + w + "px";
+					el.style.display = "block";
+					el.style.width = "500px";
+					el.style.height = "250px";
+					el.style.objectFit = "cover";
+					el.style.height = "" + Math.round(el.width * (h / w)) + "px";
+				}
 			}
 		}
 		let elementsWithBG = window.document.getElementsByTagName("*");
@@ -120,7 +130,7 @@ class MonkeeWrench {
 				}
 			} catch( _g ) {
 				let e = haxe_Exception.caught(_g);
-				console.log("src/MonkeeWrench.hx:192:",e);
+				console.log("src/MonkeeWrench.hx:209:",e);
 			}
 		}
 		let elementsVideo = window.document.getElementsByTagName("video");
@@ -141,14 +151,20 @@ class MonkeeWrench {
 		let _g7 = elementsLinks.length;
 		while(_g6 < _g7) {
 			let i = _g6++;
-			let element = elementsLinks[i];
-			element.dataset.monkeeWrenchCheck = "true";
-			let url = element.href;
-			let href = element.getAttribute("href");
-			let id = element.id;
+			let el = elementsLinks[i];
+			el.dataset.monkeeWrenchCheck = "true";
+			let url = el.href;
+			let href = el.getAttribute("href");
+			let id = el.id;
 			if(href == "" || href == "#") {
-				element.dataset.monkeeWrenchEmptyLink = "true";
-				element.innerHTML = "🔧" + " " + element.innerHTML;
+				el.dataset.monkeeWrenchEmptyLink = "true";
+				el.innerHTML = "🔧" + " " + el.innerHTML;
+			}
+			if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {
+				if(!this.UrlExists(url)) {
+					el.dataset.monkeeWrenchDeadlink = "true";
+					el.innerHTML = "❌" + " " + el.innerHTML;
+				}
 			}
 		}
 	}

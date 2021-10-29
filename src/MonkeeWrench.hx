@@ -26,16 +26,20 @@ class MonkeeWrench {
 	 */
 	static inline var VERSION = '0.0.1';
 
-	var DEBUG = #if debug true #else false #end;
+	final DEBUG = #if debug true #else false #end;
 
-	var DEBUG_IMAGES = [
+	final DEBUG_IMAGES = [
 		'../assets/img/debug/146-500x500.jpg',
 		'../assets/img/debug/500x500.jpg',
 		'../assets/img/debug/1031-500x500.jpg'
 	];
 
+	final ROOT = window.location.host;
+
 	public function new() {
 		console.info(App.callIn('Wrench ${utils.Emoji.monkeeWrench}', VERSION));
+
+		console.log(ROOT);
 
 		document.addEventListener("DOMContentLoaded", function(event) {
 			console.group('Monkee ${utils.Emoji.monkeeWrench}');
@@ -146,7 +150,11 @@ class MonkeeWrench {
 			var url = el.src;
 			var w = el.width;
 			var h = el.height;
+			// console.log(el);
+			// console.log(el.getAttribute('width'));
+			// console.log(el.getAttribute('height'));
 			// console.log(w);
+			// console.log(h);
 			// console.log(url);
 			// console.log(UrlExists(url));
 			if (!UrlExists(url)) {
@@ -155,15 +163,24 @@ class MonkeeWrench {
 				el.dataset.monkeeWrenchImageReplace = 'true';
 				el.src = DEBUG_IMAGES[0];
 				addImageLabel(el);
+				// console.info(el);
+				// console.info(w);
+				// console.info(h);
 
-				// if (w > 0) {
-				// 	el.style.width = '${w}px';
-				// 	el.style.display = 'block';
-				// }
-				// if (h > 0) {
-				// 	el.style.width = '${h}px';
-				// 	el.style.display = 'block';
-				// }
+				// image doesn't exists
+
+				if (el.getAttribute('width') != null && el.getAttribute('height') != null) {
+					el.style.width = '${w}px';
+					el.style.display = 'block';
+					el.style.width = '500px';
+					el.style.height = '250px';
+					el.style.objectFit = 'cover';
+
+					// console.log(el.width);
+					// console.log(el.height);
+					// el.height = Math.round(h * (h / w));
+					el.style.height = '${Math.round(el.width * (h / w))}px';
+				}
 			}
 		}
 
@@ -206,18 +223,26 @@ class MonkeeWrench {
 				element.poster = DEBUG_IMAGES[2];
 			}
 		}
-		// check all video
+		// check all links
 		var elementsLinks = document.getElementsByTagName("a");
 		for (i in 0...elementsLinks.length) {
-			var element:LinkElement = cast elementsLinks[i];
-			element.dataset.monkeeWrenchCheck = 'true';
-			var url = element.href;
-			var href = element.getAttribute('href');
-			var id = element.id;
+			var el:LinkElement = cast elementsLinks[i];
+			el.dataset.monkeeWrenchCheck = 'true';
+			var url = el.href;
+			var href = el.getAttribute('href');
+			var id = el.id;
 			// console.log(url);
 			if (href == '' || href == '#') {
-				element.dataset.monkeeWrenchEmptyLink = 'true';
-				element.innerHTML = '${utils.Emoji.monkeeWrench} ${element.innerHTML}';
+				el.dataset.monkeeWrenchEmptyLink = 'true';
+				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
+			}
+
+			if (href.startsWith('/') || href.indexOf(ROOT) != -1) {
+				if (!UrlExists(url)) {
+					// https://picsum.photos/500/500
+					el.dataset.monkeeWrenchDeadlink = 'true';
+					el.innerHTML = '${utils.Emoji.x} ${el.innerHTML}';
+				}
 			}
 		}
 

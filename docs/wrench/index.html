@@ -42,11 +42,12 @@
                 <p>fix some issues I have when working on front end. this fixes the images with dummy images and lets
                     you know which links don't work</p>
                 <ul>
-                    <li>missing images</li>
-                    <li>missing background images</li>
+                    <li>missing images (404)</li>
+                    <li>missing background images (404)</li>
                     <li>missing video</li>
-                    <li>dead links</li>
-                    <li>links to 404 pages</li>
+                    <li>missing links</li>
+                    <li>dead links (internal pages)</li>
+                    <li>links to 404 pages (internal pages)</li>
                 </ul>
 
                 <h2>usage</h2>
@@ -80,7 +81,7 @@
             <div class="col-6">
                 <h3>Monkee-Wrench</h3>
                 <a class="float-right btn btn-outline-dark btn-sm" href="wrench.html">more</a>
-                <p>A library for fixing websites <i>(~ 2KB)</i></p>
+                <p>A library for fixing websites <i>(~ 4KB)</i></p>
             </div>
         </div>
 
@@ -107,11 +108,11 @@
         <div class="row">
             <div class="col-6">
                 <p>normal image</p>
-                <img src='https://picsum.photos/seed/normal2/500/200' width="500" height="200" class="img-fluid" />
+                <img src='https://picsum.photos/seed/normal2/500/250' width="500" height="250" class="img-fluid" />
             </div>
             <div class="col-6">
                 <p>missing image, replace by script</p>
-                <img src='foo/bar/missing.jpg' width="500" height="200" class="img-fluid" />
+                <img src='foo/bar/missing.jpg' width="500" height="250" class="img-fluid" />
             </div>
         </div>
 
@@ -135,6 +136,11 @@
                 <ul>
                     <li><a href="https://github.com/MatthijsKamstra/monkee-z">monkee-z</a></li>
                     <li><a href="https://ah.nl">ah</a></li>
+                    <li><a href="https://github.com/MatthijsKamstra/monkee-z" class='btn btn-primary'>btn-primary</a>
+                    <li><a href="../assets/img/monkee-wrench-console.png" class='btn btn-primary'>image</a></li>
+                    </li>
+                    <li><a href="http://127.0.0.1:5501/docs/assets/img/monkee-wrench-console.png"
+                            class='btn btn-primary'>image</a></li>
                 </ul>
             </div>
             <div class="col-6">
@@ -143,6 +149,11 @@
                     <li><a href="">missing/empty link</a></li>
                     <li><a href="#">#</a></li>
                     <li><a href="#" class='btn btn-primary'>btn-primary</a></li>
+                    <li><a href="/not" class='btn btn-primary'>/not</a></li>
+                    <li><a href="https://matthijskamstra.github.io/monkee-z/assets/img/monkee-wrench-console.png"
+                            class='btn btn-primary'>image</a></li>
+                    <li><a href="http://127.0.0.1:5501/docs/assets/img/monkee-wrench-console2.png"
+                            class='btn btn-primary'>image</a></li>
                 </ul>
             </div>
         </div>

@@ -6,4 +6,5 @@ class Emoji {
 	public static inline var monkeeHearNo = '🙉';
 	public static inline var monkeeSpeakNo = '🙊';
 	public static inline var monkeeWrench = '🔧';
+	public static inline var x = '❌';
 }
