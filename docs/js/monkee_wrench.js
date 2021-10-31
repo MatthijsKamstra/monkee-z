@@ -3,10 +3,9 @@ class MonkeeWrench {
 	constructor() {
 		this.ROOT = window.location.host;
 		this.DEBUG_IMAGES = ["../assets/img/debug/146-500x500.jpg","../assets/img/debug/500x500.jpg","../assets/img/debug/1031-500x500.jpg"];
-		this.DEBUG = false;
 		let _version = "0.0.1";
+		_version = "2021-10-29 13:16:08";
 		$global.console.info("[Monkee-Z]" + " " + ("Wrench " + "🔧") + " - version: " + _version);
-		$global.console.log(this.ROOT);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			$global.console.group("Monkee " + "🔧");
@@ -121,16 +120,11 @@ class MonkeeWrench {
 			if(element.style.backgroundImage != "") {
 				element.dataset.monkeeWrenchCheck = "true";
 			}
-			try {
-				if(!this.UrlExists(url)) {
-					element.dataset.monkeeWrenchCheck = "true";
-					element.dataset.monkeeWrenchBgImageReplace = "true";
-					element.style.backgroundImage = "url(" + this.DEBUG_IMAGES[1] + ")";
-					this.addBGImageLabel(element);
-				}
-			} catch( _g ) {
-				let e = haxe_Exception.caught(_g);
-				console.log("src/MonkeeWrench.hx:198:",e);
+			if(!this.UrlExists(url)) {
+				element.dataset.monkeeWrenchCheck = "true";
+				element.dataset.monkeeWrenchBgImageReplace = "true";
+				element.style.backgroundImage = "url(" + this.DEBUG_IMAGES[1] + ")";
+				this.addBGImageLabel(element);
 			}
 		}
 		let elementsVideo = window.document.getElementsByTagName("video");
@@ -178,29 +172,6 @@ class StringTools {
 		return s.split(sub).join(by);
 	}
 }
-class haxe_Exception extends Error {
-	constructor(message,previous,native) {
-		super(message);
-		this.message = message;
-		this.__previousException = previous;
-		this.__nativeException = native != null ? native : this;
-	}
-	static caught(value) {
-		if(((value) instanceof haxe_Exception)) {
-			return value;
-		} else if(((value) instanceof Error)) {
-			return new haxe_Exception(value.message,null,value);
-		} else {
-			return new haxe_ValueException(value,null,value);
-		}
-	}
-}
-class haxe_ValueException extends haxe_Exception {
-	constructor(value,previous,native) {
-		super(String(value),previous,native);
-		this.value = value;
-	}
-}
 class haxe_iterators_ArrayIterator {
 	constructor(array) {
 		this.current = 0;
@@ -216,5 +187,8 @@ class haxe_iterators_ArrayIterator {
 {
 }
 MonkeeWrench.VERSION = "0.0.1";
+MonkeeWrench.DEBUG = true;
 MonkeeWrench.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_wrench.js.map

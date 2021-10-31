@@ -26,7 +26,7 @@ class MonkeeWrench {
 	 */
 	static inline var VERSION = '0.0.1';
 
-	final DEBUG = #if debug true #else false #end;
+	static inline final DEBUG = #if debug true #else false #end;
 
 	final DEBUG_IMAGES = [
 		'../assets/img/debug/146-500x500.jpg',
@@ -39,7 +39,7 @@ class MonkeeWrench {
 	public function new() {
 		console.info(App.callIn('Wrench ${utils.Emoji.monkeeWrench}', VERSION));
 
-		console.log(ROOT);
+		// console.log(ROOT);
 
 		document.addEventListener("DOMContentLoaded", function(event) {
 			console.group('Monkee ${utils.Emoji.monkeeWrench}');
@@ -186,17 +186,17 @@ class MonkeeWrench {
 			// 	console.log(url);
 			// 	console.log('-------------' + UrlExists(url));
 			// }
-			try {
-				if (!UrlExists(url)) {
-					// console.log('xxx');
-					element.dataset.monkeeWrenchCheck = 'true';
-					element.dataset.monkeeWrenchBgImageReplace = 'true';
-					element.style.backgroundImage = 'url(${DEBUG_IMAGES[1]})';
-					addBGImageLabel(element);
-				}
-			} catch (e) {
-				trace(e);
+			// try {
+			if (!UrlExists(url)) {
+				// console.log('xxx');
+				element.dataset.monkeeWrenchCheck = 'true';
+				element.dataset.monkeeWrenchBgImageReplace = 'true';
+				element.style.backgroundImage = 'url(${DEBUG_IMAGES[1]})';
+				addBGImageLabel(element);
 			}
+			// } catch (e) {
+			// 	trace(e);
+			// }
 		}
 
 		// check all video
