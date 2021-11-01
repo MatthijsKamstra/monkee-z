@@ -209,6 +209,8 @@
                 <code>
 <!-- Monkee-Wrench -->
 <script src="https://matthijskamstra.github.io/monkee-z/js/monkee_wrench.min.min.js"></script>
+<!-- Monkee-Wrench-Lite -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_wrench_lite.min.min.js"></script>
                 </code>
             </pre>
         </div>
@@ -235,10 +237,12 @@
     <script src="../js/monkee_chain.min.min.js"></script>
 
     <script src="../js/monkee_util.js"></script>
-    <script src="../js/monkee_wrench.js"></script>
+    <script src="../js/monkee_wrench_lite.js"></script>
+    <!-- <script src="../js/monkee_wrench.js"></script> -->
 
     <script>
-        MonkeeUtil.embedSpecs('#js-specs-wrench ', '../assets/json/monkee_wrench.json');
+        MonkeeUtil.embedSpecs('#js-specs-wrench', '../assets/json/monkee_wrench.json');
+        MonkeeUtil.embedSpecs('#js-specs-wrench-lite', '../assets/json/monkee_wrench_lite.json');
         MonkeeUtil.embedCode('#js-twig-snippet');
         MonkeeUtil.embedCode('#js-embed-snippet');
     </script>

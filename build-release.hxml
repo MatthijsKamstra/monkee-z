@@ -58,6 +58,12 @@
 -main MonkeeWrench
 -js docs/js/monkee_wrench.js
 
+--next
+
+--cmd echo MonkeeWrenchLite
+-main MonkeeWrenchLite
+-js docs/js/monkee_wrench_lite.js
+
 
 --next
 

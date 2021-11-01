@@ -20,6 +20,7 @@ import externs.MonkeeChain;
 @:keep
 class MonkeeUtil {
 	/**
+	 * 0.0.7	simplere version embedCode
 	 * 0.0.6	version and debug
 	 * 0.0.5 	mdTable2HTMLTable (WIP)
 	 * 0.0.4 	setLink/setScript
@@ -27,7 +28,7 @@ class MonkeeUtil {
 	 * 0.0.2	embedCode
 	 * 0.0.1 	initial, data-escape on dataload
 	 */
-	static inline var VERSION = '0.0.6';
+	static inline var VERSION = '0.0.7';
 
 	var DEBUG = #if debug true #else false #end;
 
@@ -116,7 +117,7 @@ class MonkeeUtil {
 				}
 				arr.push(tempColArr);
 			}
-			console.log(arr);
+			// console.log(arr);
 			app_markdown.data.md = data;
 			app_markdown.data.arr = arr;
 			app_markdown.render();
@@ -204,16 +205,16 @@ class MonkeeUtil {
 	 */
 	public static function embedCode(id:String, ?filename:String) {
 		console.info(App.callIn('Util :: embedCode', MonkeeUtil.VERSION));
-		trace(id, filename);
+		// trace(id, filename);
 
 		var _code = '';
 
 		if (filename == null) {
 			var _d = document.querySelector('${id}');
-			console.log(_d);
+			// console.log(_d);
 			_code = _d.getElementsByTagName('code')[0].innerHTML;
 
-			console.log(_code);
+			// console.log(_code);
 		}
 
 		// setup up highlight.js
