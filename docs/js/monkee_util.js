@@ -96,7 +96,7 @@ class MonkeeUtil {
 	static embedCode(id,filename) {
 		let _version = "0.0.6";
 		$global.console.info("[Monkee-Z]" + " " + "Util :: embedCode" + " - version: " + _version);
-		haxe_Log.trace(id,{ fileName : "src/MonkeeUtil.hx", lineNumber : 205, className : "MonkeeUtil", methodName : "embedCode", customParams : [filename]});
+		haxe_Log.trace(id,{ fileName : "src/MonkeeUtil.hx", lineNumber : 207, className : "MonkeeUtil", methodName : "embedCode", customParams : [filename]});
 		let _code = "";
 		if(filename == null) {
 			let _d = window.document.querySelector("" + id);

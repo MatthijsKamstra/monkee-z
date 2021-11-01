@@ -1,11 +1,8 @@
 package;
 
 import utils.Emoji;
-import js.html.Headers;
-import haxe.macro.Expr.Catch;
 import js.html.LinkElement;
 import js.html.Element;
-import haxe.Log;
 import js.html.VideoElement;
 import js.html.ImageElement;
 import js.html.URLSearchParams;
@@ -29,9 +26,9 @@ class MonkeeWrench {
 	static inline final DEBUG = #if debug true #else false #end;
 
 	final DEBUG_IMAGES = [
-		'../assets/img/debug/146-500x500.jpg',
-		'../assets/img/debug/500x500.jpg',
-		'../assets/img/debug/1031-500x500.jpg'
+		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg',
+		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg',
+		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg'
 	];
 
 	final ROOT = window.location.host;
