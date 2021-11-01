@@ -24,7 +24,7 @@ class MonkeeUtil {
 	 * 0.0.5 	mdTable2HTMLTable (WIP)
 	 * 0.0.4 	setLink/setScript
 	 * 0.0.3 	embedSpecs
-	 * 0.0.12	embedCode
+	 * 0.0.2	embedCode
 	 * 0.0.1 	initial, data-escape on dataload
 	 */
 	static inline var VERSION = '0.0.6';
@@ -181,17 +181,40 @@ class MonkeeUtil {
 	}
 
 	/**
+	 * Might want to revisit this script
+	 *
 	 * Embed js code into page, and a copy button for easy copy/paste
+	 *
+	 * It's possible to use the same in the code:
+	 *
+	 * ```html
+	 * 	<div id="js-twig-code">
+	 * 		<pre><code>
+	 * 			some code here
+	 * 		</code></pre>
+	 * 	</div>
+	 * ```
 	 *
 	 * @example
 	 * 			MonkeeUtil.embedCode('#app', 'test.js');
+	 * 			MonkeeUtil.embedCode('#js-twig-code');
 	 *
 	 * @param id			element to parse Monkee-Z Chain code in
-	 * @param filename		the file we want to use
+	 * @param ?filename		the file we want to use
 	 */
-	public static function embedCode(id:String, filename:String) {
+	public static function embedCode(id:String, ?filename:String) {
 		console.info(App.callIn('Util :: embedCode', MonkeeUtil.VERSION));
-		// trace(id, filename);
+		trace(id, filename);
+
+		var _code = '';
+
+		if (filename == null) {
+			var _d = document.querySelector('${id}');
+			console.log(_d);
+			_code = _d.getElementsByTagName('code')[0].innerHTML;
+
+			console.log(_code);
+		}
 
 		// setup up highlight.js
 		setLink('//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css');
@@ -243,26 +266,36 @@ class MonkeeUtil {
 
 		setButton(); // first try
 
-		// Fetch API data
-		window.fetch('${filename}')
-			.then(function(response) {
-				return response.text();
-			})
-			.then(function(data) {
-				// replace tabs with spaces for easier reading
-				var spaced = data.split('\t').join('  ');
-				app.data.code = spaced;
-				app.data.codeEscaped = utils.Sanitize.escapeHTML(spaced);
-				app.data.codeType = filename.split('.')[filename.split('.').length - 1];
+		if (filename != null) {
+			// Fetch API data
+			window.fetch('${filename}')
+				.then(function(response) {
+					return response.text();
+				})
+				.then(function(data) {
+					// replace tabs with spaces for easier reading
+					var spaced = data.split('\t').join('  ');
+					app.data.code = spaced;
+					app.data.codeEscaped = utils.Sanitize.escapeHTML(spaced);
+					app.data.codeType = filename.split('.')[filename.split('.').length - 1];
 
-				app.render();
-				window.setTimeout(function() {
-					untyped hljs.highlightAll();
-					setButton(); // second try
-				}, 500);
-			});
+					app.render();
+					window.setTimeout(function() {
+						untyped hljs.highlightAll();
+						setButton(); // second try
+					}, 500);
+				});
+		} else {
+			var spaced = _code.split('\t').join('  ');
+			app.data.code = spaced;
+			app.data.codeEscaped = utils.Sanitize.escapeHTML(spaced);
+			app.render();
+			window.setTimeout(function() {
+				untyped hljs.highlightAll();
+				setButton(); // second try
+			}, 500);
+		}
 	};
-
 
 	// ____________________________________ utils ____________________________________
 

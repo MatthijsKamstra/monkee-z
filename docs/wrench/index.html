@@ -178,13 +178,39 @@
 
 
     <div class="container my-5">
+
+
         <div class="row">
             <div class="col-6">
-                <div id="specs-route-lite"></div>
+                <div id="js-specs-wrench-lite"></div>
             </div>
             <div class="col-6">
-                <div id="specs-route"></div>
+                <div id="js-specs-wrench"></div>
             </div>
+        </div>
+    </div>
+
+
+    <div class="container my-5">
+        <h2>Code snippets</h2>
+        <div id="js-twig-snippet">
+            <pre>
+                <code>
+{% if env == "dev" %}
+{# script only available in DEV mode, it can update missing images with dummy #}
+<!-- Monkee-Wrench -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_wrench.min.min.js"></script>
+{% endif %}
+                </code>
+            </pre>
+        </div>
+        <div id="js-embed-snippet">
+            <pre>
+                <code>
+<!-- Monkee-Wrench -->
+<script src="https://matthijskamstra.github.io/monkee-z/js/monkee_wrench.min.min.js"></script>
+                </code>
+            </pre>
         </div>
     </div>
 
@@ -212,7 +238,9 @@
     <script src="../js/monkee_wrench.js"></script>
 
     <script>
-        MonkeeUtil.embedSpecs('#specs-route ', '../assets/json/monkee_wrench.json');
+        MonkeeUtil.embedSpecs('#js-specs-wrench ', '../assets/json/monkee_wrench.json');
+        MonkeeUtil.embedCode('#js-twig-snippet');
+        MonkeeUtil.embedCode('#js-embed-snippet');
     </script>
 
 </body>

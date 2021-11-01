@@ -2,11 +2,8 @@ package;
 
 import haxe.Constraints.Function;
 import utils.Emoji;
-import js.html.Headers;
-import haxe.macro.Expr.Catch;
 import js.html.LinkElement;
 import js.html.Element;
-import haxe.Log;
 import js.html.VideoElement;
 import js.html.ImageElement;
 import js.html.URLSearchParams;
@@ -23,16 +20,17 @@ using StringTools;
 @:keep
 class MonkeeWrench {
 	/**
+	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.1';
+	static inline var VERSION = '0.0.2';
 
 	static inline final DEBUG = #if debug true #else false #end;
 
 	final DEBUG_IMAGES = [
-		'../assets/img/debug/146-500x500.jpg',
-		'../assets/img/debug/500x500.jpg',
-		'../assets/img/debug/1031-500x500.jpg'
+		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg',
+		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg',
+		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg'
 	];
 
 	final ROOT = window.location.host;
