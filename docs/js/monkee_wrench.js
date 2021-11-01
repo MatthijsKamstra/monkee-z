@@ -21,6 +21,24 @@ class MonkeeWrench {
 		http.send();
 		return http.status != 404;
 	}
+	isUrlValid(url,cb) {
+		let request = new XMLHttpRequest();
+		request.open("GET",url,true);
+		let _gthis = this;
+		request.onload = function() {
+			if(request.status >= 200 && request.status < 400) {
+				let json = request.responseText;
+				console.log("src/MonkeeWrench.hx:75:","json: " + json);
+				cb.apply(_gthis,[]);
+			} else {
+				console.log("src/MonkeeWrench.hx:80:","oeps: status: " + request.status + " // json: " + request.responseText);
+			}
+		};
+		request.onerror = function() {
+			console.log("src/MonkeeWrench.hx:86:","error");
+		};
+		request.send();
+	}
 	getkey(e) {
 		if(e.key == "m") {
 			this.buildIcon();

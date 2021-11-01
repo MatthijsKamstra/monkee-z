@@ -21,7 +21,7 @@ using StringTools;
  */
 @:expose
 @:keep
-class MonkeeWrench {
+class MonkeeWrenchLite {
 	/**
 	 * 0.0.1 	initial
 	 */
@@ -271,6 +271,6 @@ class MonkeeWrench {
 	}
 
 	static public function main() {
-		var app = new MonkeeWrench();
+		var app = new MonkeeWrenchLite();
 	}
 }
