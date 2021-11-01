@@ -56,7 +56,7 @@ class MonkeeWrenchLite {
 		var myParam = urlParams.get('monkeewrench');
 
 		if (myParam != null) {
-			buildIcon();
+			// buildIcon();
 			replaceMissingAssets();
 		}
 	}

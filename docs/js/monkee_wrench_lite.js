@@ -22,7 +22,6 @@ class MonkeeWrenchLite {
 		let urlParams = new URLSearchParams(window.location.search);
 		let myParam = urlParams.get("monkeewrench");
 		if(myParam != null) {
-			this.buildIcon();
 			this.replaceMissingAssets();
 		}
 	}
@@ -30,18 +29,6 @@ class MonkeeWrenchLite {
 		if(e.key == "m") {
 			this.replaceMissingAssets();
 		}
-	}
-	buildIcon() {
-		let btn = window.document.createElement("div");
-		btn.innerHTML = "🔧";
-		btn.className = "btn btn-outline-dark";
-		btn.title = "Monkee Wrench is used";
-		btn.setAttribute("style","position: fixed;bottom: 10px;left: 10px;");
-		let _gthis = this;
-		btn.onclick = function() {
-			_gthis.replaceMissingAssets();
-		};
-		window.document.body.appendChild(btn);
 	}
 	replaceMissingAssets() {
 		let elementsImg = window.document.getElementsByTagName("img");
