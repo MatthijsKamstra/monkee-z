@@ -181,6 +181,8 @@ class MonkeeUtil {
 	}
 
 	/**
+	 * Might want to revisit this script
+	 *
 	 * Embed js code into page, and a copy button for easy copy/paste
 	 *
 	 * It's possible to use the same in the code:
