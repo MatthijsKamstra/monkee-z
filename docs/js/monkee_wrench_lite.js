@@ -5,7 +5,6 @@ class MonkeeWrenchLite {
 		this.ROOT = window.location.host;
 		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
 		let _version = "0.0.4";
-		_version = "2021-11-02 08:58:33";
 		$global.console.info("[Monkee-Z]" + " " + ("Wrench-Lite " + "🔧") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
@@ -124,8 +123,6 @@ $global.$haxeUID |= 0;
 {
 }
 MonkeeWrenchLite.VERSION = "0.0.4";
-MonkeeWrenchLite.DEBUG = true;
+MonkeeWrenchLite.DEBUG = false;
 MonkeeWrenchLite.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_wrench_lite.js.map
