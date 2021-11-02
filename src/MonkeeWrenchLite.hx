@@ -19,11 +19,12 @@ using StringTools;
 @:keep
 class MonkeeWrenchLite {
 	/**
+	 * 0.0.4 	href == null?
 	 * 0.0.3 	lite/async
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.3';
+	static inline var VERSION = '0.0.4';
 
 	static inline final DEBUG = #if debug true #else false #end;
 
@@ -36,11 +37,11 @@ class MonkeeWrenchLite {
 	final ROOT = window.location.host;
 
 	public function new() {
-		console.info(App.callIn('Wrench-lite ${utils.Emoji.monkeeWrench}', VERSION));
+		console.info(App.callIn('Wrench-Lite ${utils.Emoji.monkeeWrench}', VERSION));
 		document.addEventListener("DOMContentLoaded", function(event) {
-			console.group('Monkee ${utils.Emoji.monkeeWrench}');
-			console.log('focus browser and press "m"');
-			console.log('or use ${window.location.href}?monkeewrench');
+			console.group('Monkee-Wrench-Lite ${utils.Emoji.monkeeWrench} - ${VERSION}');
+			console.log('Focus browser and press "m"');
+			console.log('Or use ${window.location.href}?monkeewrench');
 			console.groupEnd();
 			init();
 		});
@@ -125,8 +126,7 @@ class MonkeeWrenchLite {
 			if (href == '' || href == '#' || href == null) {
 				// el.dataset.monkeeWrenchEmptyLink = 'true';
 				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
-			}
-			if (href.startsWith('/') || href.indexOf(ROOT) != -1) {
+			} else if (href.startsWith('/') || href.indexOf(ROOT) != -1) {
 				isUrlValid(el.href, setXEmoji, [el]);
 			}
 		}
