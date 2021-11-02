@@ -84,5 +84,10 @@ MonkeeGui
 -js docs/js/monkee_gui.js
 
 
+# --next
+
+--cmd 'git add -A'
+--cmd 'git commit -m "Release build"'
+--cmd 'git push'
 
 
