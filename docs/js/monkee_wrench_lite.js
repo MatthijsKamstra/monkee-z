@@ -4,13 +4,13 @@ class MonkeeWrenchLite {
 	constructor() {
 		this.ROOT = window.location.host;
 		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
-		let _version = "0.0.3";
-		$global.console.info("[Monkee-Z]" + " " + ("Wrench-lite " + "🔧") + " - version: " + _version);
+		let _version = "0.0.4";
+		$global.console.info("[Monkee-Z]" + " " + ("Wrench-Lite " + "🔧") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.group("Monkee " + "🔧");
-			$global.console.log("focus browser and press \"m\"");
-			$global.console.log("or use " + window.location.href + "?monkeewrench");
+			$global.console.group("Monkee-Wrench-Lite " + "🔧" + " - " + "0.0.4");
+			$global.console.log("Focus browser and press \"m\"");
+			$global.console.log("Or use " + window.location.href + "?monkeewrench");
 			$global.console.groupEnd();
 			_gthis.init();
 		});
@@ -58,8 +58,7 @@ class MonkeeWrenchLite {
 			let href = el.getAttribute("href");
 			if(href == "" || href == "#" || href == null) {
 				el.innerHTML = "🔧" + " " + el.innerHTML;
-			}
-			if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {
+			} else if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {
 				this.isUrlValid(el.href,$bind(this,this.setXEmoji),[el]);
 			}
 		}
@@ -121,7 +120,7 @@ function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id
 $global.$haxeUID |= 0;
 {
 }
-MonkeeWrenchLite.VERSION = "0.0.3";
+MonkeeWrenchLite.VERSION = "0.0.4";
 MonkeeWrenchLite.DEBUG = false;
 MonkeeWrenchLite.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

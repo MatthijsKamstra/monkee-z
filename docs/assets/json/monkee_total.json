@@ -107,9 +107,9 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_wrench_lite.min.js"
     },
     "size": {
-      "original": "4.083Kb",
-      "minified": "2.439Kb",
-      "uglifyjs": "2.576Kb"
+      "original": "4.114Kb",
+      "minified": "2.456Kb",
+      "uglifyjs": "2.592Kb"
     },
     "updated": "2021-11-02"
   },
