@@ -48,7 +48,7 @@ class MonkeeWrenchLite {
 	}
 
 	/**
-	 * [Description]
+	 * Set up key listener, and check if we can start checking page
 	 */
 	function init() {
 		window.onkeydown = (e) -> getkey(e);
@@ -58,19 +58,20 @@ class MonkeeWrenchLite {
 
 		if (myParam != null) {
 			// buildIcon();
-			replaceMissingAssets();
+			validateElementsOnPage();
 		}
 	}
 
 	/**
-	 * [Description]
+	 * Listen to `m`
 	 * @param e
 	 */
 	function getkey(e) {
 		// console.log(e);
 		if (e.key == 'm') {
+			console.info('${utils.Emoji.monkeeWrench} Start checking document');
 			// buildIcon();
-			replaceMissingAssets();
+			validateElementsOnPage();
 		}
 	}
 
@@ -83,11 +84,11 @@ class MonkeeWrenchLite {
 	// 	btn.className = 'btn btn-outline-dark';
 	// 	btn.title = 'Monkee Wrench is used';
 	// 	btn.setAttribute('style', 'position: fixed;bottom: 10px;left: 10px;');
-	// 	btn.onclick = () -> replaceMissingAssets();
+	// 	btn.onclick = () -> validateElementsOnPage();
 	// 	document.body.appendChild(btn);
 	// }
 
-	function replaceMissingAssets() {
+	function validateElementsOnPage() {
 		// <video autoplay="" muted="" loop="" playsinline="" poster="/content/homepage/BPFD_home_still.jpeg" width="100%">
 		// <source type="video/mp4" src="/content/videos/BPFD_home_animation.mp4">
 
@@ -130,6 +131,8 @@ class MonkeeWrenchLite {
 				isUrlValid(el.href, setXEmoji, [el]);
 			}
 		}
+
+		console.info('${utils.Emoji.monkeeWrench} Done checking document');
 	}
 
 	/**

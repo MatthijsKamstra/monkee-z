@@ -5,6 +5,7 @@ class MonkeeWrenchLite {
 		this.ROOT = window.location.host;
 		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
 		let _version = "0.0.4";
+		_version = "2021-11-02 08:58:33";
 		$global.console.info("[Monkee-Z]" + " " + ("Wrench-Lite " + "🔧") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
@@ -23,15 +24,16 @@ class MonkeeWrenchLite {
 		let urlParams = new URLSearchParams(window.location.search);
 		let myParam = urlParams.get("monkeewrench");
 		if(myParam != null) {
-			this.replaceMissingAssets();
+			this.validateElementsOnPage();
 		}
 	}
 	getkey(e) {
 		if(e.key == "m") {
-			this.replaceMissingAssets();
+			$global.console.info("🔧" + " Start checking document");
+			this.validateElementsOnPage();
 		}
 	}
-	replaceMissingAssets() {
+	validateElementsOnPage() {
 		let elementsImg = window.document.getElementsByTagName("img");
 		let _g = 0;
 		let _g1 = elementsImg.length;
@@ -62,6 +64,7 @@ class MonkeeWrenchLite {
 				this.isUrlValid(el.href,$bind(this,this.setXEmoji),[el]);
 			}
 		}
+		$global.console.info("🔧" + " Done checking document");
 	}
 	isUrlValid(url,cb,arr) {
 		let request = new XMLHttpRequest();
@@ -121,6 +124,8 @@ $global.$haxeUID |= 0;
 {
 }
 MonkeeWrenchLite.VERSION = "0.0.4";
-MonkeeWrenchLite.DEBUG = false;
+MonkeeWrenchLite.DEBUG = true;
 MonkeeWrenchLite.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_wrench_lite.js.map
