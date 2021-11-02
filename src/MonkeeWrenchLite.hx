@@ -122,7 +122,7 @@ class MonkeeWrenchLite {
 			// el.dataset.monkeeWrenchCheck = 'true';
 			// var url = el.href;
 			var href = el.getAttribute('href');
-			if (href == '' || href == '#') {
+			if (href == '' || href == '#' || href == null) {
 				// el.dataset.monkeeWrenchEmptyLink = 'true';
 				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
 			}
