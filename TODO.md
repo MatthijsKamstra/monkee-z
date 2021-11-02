@@ -1,5 +1,13 @@
 # TODO
 
+wrench
+
+- [ ] use async instead sync for images checking
+- [ ] split up, - [ ] image - [ ] links
+- [ ] more documentation
+- [ ] explain icons
+- [ ] more copy paste examples
+
 stuff to watch for
 
 - [ ] xss
