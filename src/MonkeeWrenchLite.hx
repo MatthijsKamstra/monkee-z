@@ -19,12 +19,13 @@ using StringTools;
 @:keep
 class MonkeeWrenchLite {
 	/**
+	 * 0.0.4 	cleaning up
 	 * 0.0.4 	href == null?
 	 * 0.0.3 	lite/async
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.4';
+	static inline var VERSION = '0.0.5';
 
 	static inline final DEBUG = #if debug true #else false #end;
 
@@ -37,11 +38,12 @@ class MonkeeWrenchLite {
 	final ROOT = window.location.host;
 
 	public function new() {
-		console.info(App.callIn('Wrench-Lite ${utils.Emoji.monkeeWrench}', VERSION));
+		// console.info(App.callIn('Wrench-Lite ${utils.Emoji.monkeeWrench}', VERSION));
 		document.addEventListener("DOMContentLoaded", function(event) {
-			console.group('Monkee-Wrench-Lite ${utils.Emoji.monkeeWrench} - ${VERSION}');
+			console.groupCollapsed('${utils.Emoji.monkeeWrench} Monkee-Wrench-Lite - v${VERSION}');
 			console.log('Focus browser and press "m"');
 			console.log('Or use ${window.location.href}?monkeewrench');
+			console.log('WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/');
 			console.groupEnd();
 			init();
 		});

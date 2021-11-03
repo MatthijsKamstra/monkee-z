@@ -2,11 +2,16 @@
 
 wrench
 
-- [ ] use async instead sync for images checking
-- [ ] split up, - [ ] image - [ ] links
+- [x] use async instead sync for images checking
+- [ ] split up,
+  - [ ] image
+  - [ ] links
 - [ ] more documentation
 - [ ] explain icons
 - [ ] more copy paste examples
+- [x] ingeklapt group log
+- [x] geen info aan het begin
+- [x] url in menu group log
 
 stuff to watch for
 
