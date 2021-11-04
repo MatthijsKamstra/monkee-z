@@ -12,6 +12,8 @@ wrench
 - [x] ingeklapt group log
 - [x] geen info aan het begin
 - [x] url in menu group log
+- [x] drag script in bookmarks
+- [ ] adjust bookmarks script
 
 stuff to watch for
 
