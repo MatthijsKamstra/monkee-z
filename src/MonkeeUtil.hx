@@ -1,15 +1,8 @@
 package;
 
 import utils.Sanitize;
-import js.Syntax;
-import haxe.Json;
-import js.lib.Function;
-import js.html.SupportedType;
-import js.html.DOMParser;
-import js.lib.Error;
 import js.html.Element;
 import js.html.InputElement;
-import haxe.extern.EitherType;
 import js.Browser.*;
 
 using StringTools;
@@ -212,7 +205,7 @@ class MonkeeUtil {
 		if (filename == null) {
 			var _d = document.querySelector('${id}');
 			// console.log(_d);
-			_code = _d.getElementsByTagName('code')[0].innerHTML;
+			_code = Sanitize.escapeHTML(_d.getElementsByTagName('code')[0].innerHTML);
 
 			// console.log(_code);
 		}
