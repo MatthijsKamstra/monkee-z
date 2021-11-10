@@ -13,6 +13,7 @@ import externs.MonkeeChain;
 @:keep
 class MonkeeUtil {
 	/**
+	 * 0.0.8	auto embedCode
 	 * 0.0.7	simplere version embedCode
 	 * 0.0.6	version and debug
 	 * 0.0.5 	mdTable2HTMLTable (WIP)
@@ -21,13 +22,26 @@ class MonkeeUtil {
 	 * 0.0.2	embedCode
 	 * 0.0.1 	initial, data-escape on dataload
 	 */
-	static inline var VERSION = '0.0.7';
+	static inline var VERSION = '0.0.8';
 
 	var DEBUG = #if debug true #else false #end;
 
 	public function new() {
 		console.info(App.callIn('Util', VERSION));
 		init();
+		autoEmbedCode();
+	}
+
+	function autoEmbedCode() {
+		var all = document.querySelectorAll('[data-monkee]');
+		for (i in 0...all.length) {
+			var el:Element = cast all[i];
+			var type = el.getAttribute('data-monkee');
+			trace(type);
+			// el.innerHTML = (html);
+			// el.innerText = MonkeeUtil.escapeHTML(html);
+			// el.innerHTML = Sanitize.escapeHTML(html);
+		}
 	}
 
 	function init() {

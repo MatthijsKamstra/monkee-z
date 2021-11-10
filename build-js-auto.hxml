@@ -13,9 +13,9 @@
 # --cmd echo MonkeeChain
 
 
-# -main MonkeeUtil
-# -js docs/js/monkee_util.js
-# --cmd echo MonkeeUtil
+-main MonkeeUtil
+-js docs/js/monkee_util.js
+--cmd echo MonkeeUtil
 
 # -main MonkeeLoad
 # -js docs/js/monkee_load.js
@@ -41,6 +41,6 @@
 # --cmd echo MonkeeWrench
 
 
--main MonkeeWrenchLite
--js docs/js/monkee_wrench_lite.js
---cmd echo MonkeeWrenchLite
+# -main MonkeeWrenchLite
+# -js docs/js/monkee_wrench_lite.js
+# --cmd echo MonkeeWrenchLite
