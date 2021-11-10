@@ -33,16 +33,81 @@ class MonkeeUtil {
 	}
 
 	function autoEmbedCode() {
-		var all = document.querySelectorAll('[data-monkee]');
+		var all = document.querySelectorAll('[data-monkee-code]');
 		for (i in 0...all.length) {
 			var el:Element = cast all[i];
-			var type = el.getAttribute('data-monkee');
-			trace(type);
-			// el.innerHTML = (html);
-			// el.innerText = MonkeeUtil.escapeHTML(html);
-			// el.innerHTML = Sanitize.escapeHTML(html);
+			var type = el.getAttribute('data-monkee-code');
+			embedCode2(el, type);
 		}
 	}
+
+	function embedCode2(el:Element, type:String) {
+		console.info(App.callIn('Util :: embedCode2', MonkeeUtil.VERSION));
+
+		if (el.id == "") {
+			el.id = 'monkee-util-embed-' + Date.now().getTime() + '-${Std.random(10000)}-${Std.random(10000)}';
+		}
+
+		var id = el.id;
+
+		// get inner code
+		var _code = Sanitize.escapeHTML(el.getElementsByTagName('code')[0].innerHTML);
+		var spaced = _code.split('\t').join('  ');
+
+		// setup up highlight.js
+		setLink('//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css');
+		setLink('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css');
+		setScript('//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js');
+
+		// Setup the component
+		var app = new MonkeeChain('#${id}', {
+			data: {
+				code: spaced,
+				codeEscaped: utils.Sanitize.escapeHTML(spaced),
+				codeType: type
+			},
+			template: function(data) {
+				return '
+		        <div class="copy-code-wrapper-${id}" style="position:relative;" data-type="${data.codeType}">
+		        <textarea id="copy-code-input-${id}" style="position:fixed;top:-100px;">${data.code}</textarea>
+		        <pre style="border-radius:4px;"><code class="${data.codeType}">${data.codeEscaped}</code></pre>
+		        <button class="btn" id="copy-code-btn-${id}" style="position: absolute; top: 15px; right: 15px;">📋</button>
+		        </div>
+		        ';
+			}
+		});
+
+		function setButton() {
+			var wrapper:Element = document.getElementById('copy-code-wrapper-${id}');
+			var btn = document.getElementById('copy-code-btn-${id}');
+			btn.classList.add('btn-light');
+			// console.log(btn);
+
+			var input:InputElement = cast document.getElementById('copy-code-input-${id}');
+			input.setAttribute('style', 'position:fixed;top:-100px;'); // console.log(input);
+
+			// console.log(input.value);
+
+			btn.onclick = function(e) {
+				e.preventDefault();
+				untyped input.select();
+				document.execCommand('copy');
+
+				// console.log('click');
+				window.alert('Code is copied');
+
+				// var code = document.getElementById(`${id}`).querySelector('.hljs');
+				// console.log(code);
+				// code.classList.add('flash');
+			};
+		};
+
+		setButton(); // first try
+		// window.setTimeout(function() {
+		// 	untyped hljs.highlightAll();
+		// 	setButton(); // second try
+		// }, 500);
+	};
 
 	function init() {
 		var all = document.querySelectorAll('[data-escape]');
