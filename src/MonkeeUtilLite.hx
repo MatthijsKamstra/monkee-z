@@ -18,8 +18,9 @@ import externs.MonkeeChain;
 
 @:expose
 @:keep
-class MonkeeUtil {
+class MonkeeUtilLite {
 	/**
+	 * 0.1.0	lite
 	 * 0.0.7	simplere version embedCode
 	 * 0.0.6	version and debug
 	 * 0.0.5 	mdTable2HTMLTable (WIP)
@@ -28,7 +29,7 @@ class MonkeeUtil {
 	 * 0.0.2	embedCode
 	 * 0.0.1 	initial, data-escape on dataload
 	 */
-	static inline var VERSION = '0.0.7';
+	static inline var VERSION = '0.1.0';
 
 	var DEBUG = #if debug true #else false #end;
 
@@ -342,7 +343,7 @@ class MonkeeUtil {
 
 	static public function main() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
-			var app = new MonkeeUtil();
+			var app = new MonkeeUtilLite();
 		});
 	}
 }

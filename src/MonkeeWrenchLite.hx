@@ -8,6 +8,7 @@ import js.html.URLSearchParams;
 import js.html.VideoElement;
 import js.html.XMLHttpRequest;
 import utils.Emoji;
+import haxe.Constraints.Function;
 
 using StringTools;
 
