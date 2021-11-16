@@ -1,9 +1,8 @@
 (function ($hx_exports, $global) { "use strict";
 class MonkeeUtil {
 	constructor() {
-		this.DEBUG = true;
+		this.DEBUG = false;
 		let _version = "0.0.8";
-		_version = "2021-11-10 21:28:02";
 		$global.console.info("[Monkee-Z]" + " " + "Util" + " - version: " + _version);
 		this.init();
 		this.autoEmbedCode();
@@ -21,7 +20,6 @@ class MonkeeUtil {
 	}
 	embedCode2(el,type) {
 		let _version = "0.0.8";
-		_version = "2021-11-10 21:28:02";
 		$global.console.info("[Monkee-Z]" + " " + "Util :: embedCode2" + " - version: " + _version);
 		if(el.id == "") {
 			el.id = "monkee-util-embed-" + new Date().getTime() + ("-" + Std.random(10000) + "-" + Std.random(10000));
@@ -63,7 +61,6 @@ class MonkeeUtil {
 	}
 	static mdTable2HTMLTable(id,filename) {
 		let _version = "0.0.8";
-		_version = "2021-11-10 21:28:02";
 		$global.console.info("[Monkee-Z]" + " " + "Util :: embedSpecs" + " - version: " + _version);
 		let createTable = function(arr) {
 			let html = "<table class=\"table table-striped table-sm\">";
@@ -98,7 +95,7 @@ class MonkeeUtil {
 			while(_g < _g1) {
 				let i = _g++;
 				let _linesArr = linesArr[i];
-				console.log("src/MonkeeUtil.hx:175:",_linesArr);
+				console.log("src/MonkeeUtil.hx:176:",_linesArr);
 				if(i == 1) {
 					continue;
 				}
@@ -124,7 +121,6 @@ class MonkeeUtil {
 	}
 	static embedSpecs(id,filename) {
 		let _version = "0.0.8";
-		_version = "2021-11-10 21:28:02";
 		$global.console.info("[Monkee-Z]" + " " + "Util :: embedSpecs" + " - version: " + _version);
 		let app = new MonkeeChain("" + id,{ data : { json : { name : "", updated : "", size : { minified : "", original : "", uglifyjs : ""}, url : { minified : "", original : "", uglifyjs : ""}}}, template : function(props) {
 			return "\n                    <div class=\"card\">\n            \t\t\t<div class=\"card-body\">\n    \t\t\t\t\t\t<strong>File " + props.json.name + ":</strong>\n    \t\t\t\t\t\t<p class=\"text-muted\">Updated: " + props.json.updated + "</p>\n    \t\t\t\t\t\t<ul>\n    \t\t\t\t\t\t\t<li>Download original file: <a href=\"" + props.json.url.original + "\">" + StringTools.replace(props.json.name,".js",".js") + "</a> (" + props.json.size.original + ")</li>\n    \t\t\t\t\t\t\t<li>UglifyJs file size: <a href=\"" + props.json.url.uglifyjs + "\">" + StringTools.replace(props.json.name,".js",".min.js") + "</a> (" + props.json.size.uglifyjs + ")</li>\n    \t\t\t\t\t\t\t<li>Extra minified file size: <a href=\"" + props.json.url.minified + "\">" + StringTools.replace(props.json.name,".js",".min.min.js") + "</a> (" + props.json.size.minified + ")</li>\n    \t\t\t\t\t\t</ul>\n    \t\t    \t    </div>\n    \t\t\t    </div>\n                    ";
@@ -138,7 +134,6 @@ class MonkeeUtil {
 	}
 	static embedCode(id,filename) {
 		let _version = "0.0.8";
-		_version = "2021-11-10 21:28:02";
 		$global.console.info("[Monkee-Z]" + " " + "Util :: embedCode" + " - version: " + _version);
 		let _code = "";
 		if(filename == null) {
@@ -199,12 +194,18 @@ class MonkeeUtil {
 			window.document.body.appendChild(link);
 		}
 	}
-	static setScript(src) {
+	static setScript(src,callback) {
 		let one = window.document.querySelector("[src=\"" + src + "\"]");
 		if(one == null) {
 			let script = window.document.createElement("script");
+			script.onload = function(e) {
+				$global.console.log(e);
+				callback.apply(callback,[]);
+			};
 			script.src = src;
 			window.document.body.appendChild(script);
+		} else if(callback != null) {
+			callback.apply(callback,[]);
 		}
 	}
 	static main() {
@@ -256,5 +257,3 @@ class utils_Sanitize {
 MonkeeUtil.VERSION = "0.0.8";
 MonkeeUtil.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_util.js.map

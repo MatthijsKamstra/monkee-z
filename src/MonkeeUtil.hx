@@ -1,5 +1,6 @@
 package;
 
+import haxe.Constraints.Function;
 import utils.Sanitize;
 import js.html.Element;
 import js.html.InputElement;
