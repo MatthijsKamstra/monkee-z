@@ -64,6 +64,12 @@
 -main MonkeeWrenchLite
 -js docs/js/monkee_wrench_lite.js
 
+--next
+
+--cmd echo MonkeeFullpage
+-main MonkeeFullpage
+-js docs/js/monkee_fullpage.js
+
 
 --next
 

@@ -1,5 +1,6 @@
 package;
 
+import js.Lib;
 import js.Browser.*;
 import js.html.*;
 import utils.Emoji;
