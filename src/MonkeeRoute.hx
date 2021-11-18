@@ -120,7 +120,7 @@ class MonkeeRoute {
 	function locationHashChanged() {
 		// console.log("You're visiting : " + window.location.hash);
 		var key = (window.location.hash).split('#/').join('');
-		trace(key);
+		// trace(key);
 		if (map.exists(key)) {
 			var navObj = map.get(key);
 			// trace(navObj);

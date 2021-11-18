@@ -6,7 +6,7 @@ class MonkeeFullpage {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			let _version = "0.0.1";
-			_version = "2021-11-12 20:46:43";
+			_version = "2021-11-18 09:51:06";
 			$global.console.info("[Monkee-Z]" + " " + "Fullpage" + " - version: " + _version);
 			_gthis.setupStyle();
 			_gthis.init();
