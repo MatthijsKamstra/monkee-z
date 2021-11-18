@@ -98,7 +98,7 @@
     "compression": {
       "original": "100% smaller",
       "minified": "162% smaller",
-      "uglifyjs": "153% smaller"
+      "uglifyjs": "154% smaller"
     },
     "name": "monkee_wrench_lite.js",
     "url": {
@@ -107,9 +107,9 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_wrench_lite.min.js"
     },
     "size": {
-      "original": "4.13Kb",
-      "minified": "2.545Kb",
-      "uglifyjs": "2.682Kb"
+      "original": "4.11Kb",
+      "minified": "2.53Kb",
+      "uglifyjs": "2.666Kb"
     },
     "updated": "2021-11-18"
   },

@@ -5,10 +5,7 @@ import js.html.Element;
 import js.html.ImageElement;
 import js.html.LinkElement;
 import js.html.URLSearchParams;
-import js.html.VideoElement;
 import js.html.XMLHttpRequest;
-import utils.Emoji;
-import haxe.Constraints.Function;
 
 using StringTools;
 
@@ -20,13 +17,14 @@ using StringTools;
 @:keep
 class MonkeeWrenchLite {
 	/**
+	 * 0.0.6	minify
 	 * 0.0.5	cleaning up
 	 * 0.0.4 	href == null?
 	 * 0.0.3 	lite/async
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.5';
+	static inline var VERSION = '0.0.6';
 
 	static inline final DEBUG = #if debug true #else false #end;
 
@@ -35,13 +33,11 @@ class MonkeeWrenchLite {
 		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg'
 	];
 
-	final ROOT = window.location.host;
-
 	public function new() {
 		// console.info(App.callIn('Wrench-Lite ${utils.Emoji.monkeeWrench}', VERSION));
 		document.addEventListener("DOMContentLoaded", function(event) {
 			console.groupCollapsed('${utils.Emoji.monkeeWrench} Monkee-Wrench-Lite - v${VERSION}');
-			console.log('Monkee Wrench is a JavaScript tool to replace missing (background)images, and show brokken links');
+			console.log('Monkee Wrench Lite is a JavaScript tool to replace missing (background)images, and show broken links');
 			console.log('Use by focussing the browser and press "m"');
 			console.log('Or use ${window.location.href}?monkeewrench');
 			console.log('WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/');
@@ -59,10 +55,8 @@ class MonkeeWrenchLite {
 		var urlParams = new URLSearchParams(window.location.search);
 		var myParam = urlParams.get('monkeewrench');
 
-		if (myParam != null) {
-			// buildIcon();
+		if (myParam != null)
 			validateElementsOnPage();
-		}
 	}
 
 	/**
@@ -73,23 +67,9 @@ class MonkeeWrenchLite {
 		// console.log(e);
 		if (e.key == 'm') {
 			// console.info('${utils.Emoji.monkeeWrench} Start checking document');
-			// buildIcon();
 			validateElementsOnPage();
 		}
 	}
-
-	// /**
-	//  * [Description]
-	//  */
-	// function buildIcon() {
-	// 	var btn = document.createElement('div');
-	// 	btn.innerHTML = '${utils.Emoji.monkeeWrench}';
-	// 	btn.className = 'btn btn-outline-dark';
-	// 	btn.title = 'Monkee Wrench is used';
-	// 	btn.setAttribute('style', 'position: fixed;bottom: 10px;left: 10px;');
-	// 	btn.onclick = () -> validateElementsOnPage();
-	// 	document.body.appendChild(btn);
-	// }
 
 	function validateElementsOnPage() {
 		// <video autoplay="" muted="" loop="" playsinline="" poster="/content/homepage/BPFD_home_still.jpeg" width="100%">
@@ -130,7 +110,7 @@ class MonkeeWrenchLite {
 			if (href == '' || href == '#' || href == null) {
 				// el.dataset.monkeeWrenchEmptyLink = 'true';
 				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
-			} else if (href.startsWith('/') || href.indexOf(ROOT) != -1) {
+			} else if (href.startsWith('/') || href.indexOf(window.location.host) != -1) {
 				isUrlValid(el.href, setXEmoji, [el]);
 			}
 		}
@@ -147,35 +127,19 @@ class MonkeeWrenchLite {
 	function isUrlValid(url:String, cb, arr:Array<Dynamic>) {
 		var request = new js.html.XMLHttpRequest();
 		request.open('GET', url, true);
-
 		request.onload = function() {
 			if (request.status >= 400) {
 				Reflect.callMethod(this, cb, arr);
 			}
-			// if (request.status >= 200 && request.status < 400) {
-			// 	// Success!
-			// } else {
-			// 	// We reached our target server, but it returned an error
-			// 	Reflect.callMethod(this, cb, arr);
-			// }
 		};
-
-		// request.onerror = function() {
-		// 	// There was a connection error of some sort
-		// 	console.warn('error: ${url}');
-		// };
-
 		request.send();
 	}
 
 	function setXEmoji(el:Element) {
-		// el.dataset.monkeeWrenchDeadlink = 'true';
 		el.innerHTML = '${utils.Emoji.x} ${el.innerHTML}';
 	}
 
 	function setBgImage(el:Element) {
-		// el.dataset.monkeeWrenchCheck = 'true';
-		// el.dataset.monkeeWrenchBgImageReplace = 'true';
 		el.style.backgroundImage = 'url(${DEBUG_IMAGES[1]})';
 	}
 
@@ -183,7 +147,6 @@ class MonkeeWrenchLite {
 		var w:Int = el.width;
 		var h:Int = el.height;
 
-		// el.dataset.monkeeWrenchImageReplace = 'true';
 		el.src = DEBUG_IMAGES[0];
 
 		if (el.getAttribute('width') != null && el.getAttribute('height') != null) {
