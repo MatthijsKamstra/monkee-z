@@ -20,7 +20,7 @@ using StringTools;
 @:keep
 class MonkeeWrenchLite {
 	/**
-	 * 0.0.4 	cleaning up
+	 * 0.0.5	cleaning up
 	 * 0.0.4 	href == null?
 	 * 0.0.3 	lite/async
 	 * 0.0.2 	absolute images paths
@@ -32,8 +32,7 @@ class MonkeeWrenchLite {
 
 	final DEBUG_IMAGES = [
 		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg',
-		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg',
-		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg'
+		'https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg'
 	];
 
 	final ROOT = window.location.host;
@@ -73,7 +72,7 @@ class MonkeeWrenchLite {
 	function getkey(e) {
 		// console.log(e);
 		if (e.key == 'm') {
-			console.info('${utils.Emoji.monkeeWrench} Start checking document');
+			// console.info('${utils.Emoji.monkeeWrench} Start checking document');
 			// buildIcon();
 			validateElementsOnPage();
 		}
@@ -136,7 +135,7 @@ class MonkeeWrenchLite {
 			}
 		}
 
-		console.info('${utils.Emoji.monkeeWrench} Done checking document');
+		// console.info('${utils.Emoji.monkeeWrench} Done checking document');
 	}
 
 	/**

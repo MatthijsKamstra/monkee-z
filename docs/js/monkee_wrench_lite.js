@@ -2,7 +2,7 @@
 class MonkeeWrenchLite {
 	constructor() {
 		this.ROOT = window.location.host;
-		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
+		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg"];
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.5");
@@ -27,7 +27,6 @@ class MonkeeWrenchLite {
 	}
 	getkey(e) {
 		if(e.key == "m") {
-			$global.console.info("🔧" + " Start checking document");
 			this.validateElementsOnPage();
 		}
 	}
@@ -62,7 +61,6 @@ class MonkeeWrenchLite {
 				this.isUrlValid(el.href,$bind(this,this.setXEmoji),[el]);
 			}
 		}
-		$global.console.info("🔧" + " Done checking document");
 	}
 	isUrlValid(url,cb,arr) {
 		let request = new XMLHttpRequest();
