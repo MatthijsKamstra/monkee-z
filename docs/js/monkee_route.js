@@ -71,7 +71,6 @@ class MonkeeRoute {
 	}
 	locationHashChanged() {
 		let key = window.location.hash.split("#/").join("");
-		console.log("src/MonkeeRoute.hx:123:",key);
 		let _gthis = this;
 		if(Object.prototype.hasOwnProperty.call(MonkeeRoute.map.h,key)) {
 			let navObj = MonkeeRoute.map.h[key];
