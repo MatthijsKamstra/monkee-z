@@ -17,8 +17,8 @@ class MonkeeFullpage {
 	var DEBUG = #if debug true #else false #end;
 
 	var colors = [
-		'#001f3f', '#0074d9', '#7fdbff', '#39cccc', '#3d9970', '#2ecc40', '#01ff70', '#ffdc00', '#ff851b', '#ff4136', '#f012be', '#b10dc9', '#85144b',
-		'#ffffff', '#dddddd', '#aaaaaa', '#111111',
+		'#7fdbff', '#39cccc', '#3d9970', '#2ecc40', '#01ff70', '#ffdc00', '#ff851b', '#ff4136', '#f012be', '#b10dc9', '#85144b', '#ffffff', '#dddddd',
+		'#aaaaaa', '#111111', '#001f3f', '#0074d9',
 	];
 
 	var linkArray = [];
@@ -27,22 +27,24 @@ class MonkeeFullpage {
 	public function new() {
 		document.addEventListener('DOMContentLoaded', (event) -> {
 			console.info(App.callIn('Fullpage', VERSION));
+			setupStyle();
 			init();
-			initToggle();
+			// initToggle();
 		});
 	}
 
 	function init() {
-		var ul:Element = cast document.querySelector('[monkee-fullpage]');
+		var ul:Element = cast document.querySelector('[monkee-fullpage-slides]');
 		ul.classList.add('monkee-fullpage-list');
 
-		// var lis = ul.getElementsByTagName('li');
-		// for (i in 0...lis.length) {
-		// 	var li = lis[i];
-		// 	var href = li.getElementsByTagName(a);
-		// 	trace(li);
-		// }
-		// // trace(li);
+		// slides
+		var lis = ul.getElementsByTagName('li');
+		for (i in 0...lis.length) {
+			// slide
+			var li = lis[i];
+			li.classList.add('monkee-fullpage-slide');
+			li.setAttribute('style', 'background-color: ${colors[i]}');
+		}
 
 		var links = document.getElementsByTagName('a');
 		var first = false;
@@ -54,12 +56,7 @@ class MonkeeFullpage {
 					link.classList.add('active');
 				}
 				// trace("link: " + link.getAttribute('href'));
-				console.log('<li id="${link.getAttribute('href').replace('#', '')}">${link.getAttribute('href')}</li>');
-
-				var slide = document.querySelector(link.getAttribute('href'));
-				slide.classList.add('monkee-fullpage-slide');
-				slide.setAttribute('style', 'background-color: ${colors[i]}');
-
+				// console.log('<li id="${link.getAttribute('href').replace('#', '')}">${link.getAttribute('href')}</li>');
 				linkArray.push(link);
 
 				link.onclick = onclickHandler;
@@ -104,6 +101,38 @@ class MonkeeFullpage {
 		}
 		untyped e.currentTarget.classList.add('active');
 		// trace(e);
+	}
+
+	function setupStyle() {
+		var style = document.createElement('style');
+		style.innerHTML = '
+
+.monkee-fullpage-list {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  list-style-type: none;
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+.monkee-fullpage-list-horizontal {
+  display: block ruby;
+}
+.monkee-fullpage-slide {
+  border: 0px solid pink;
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+  ';
+
+		document.head.appendChild(style);
+
+		// trace('injectStyle');
 	}
 
 	static public function main() {

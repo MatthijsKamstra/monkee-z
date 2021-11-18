@@ -34,6 +34,12 @@
 -main MonkeeUtil
 -js docs/js/monkee_util.js
 
+# --next
+
+# --cmd echo MonkeeUtilLite
+# -main MonkeeUtil
+# -js docs/js/monkee_util_lite.js
+
 --next
 
 --cmd echo MonkeeBugger

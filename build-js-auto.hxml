@@ -8,14 +8,19 @@
 -debug
 
 
+--cmd echo MonkeeFullpage
+-main MonkeeFullpage
+-js docs/js/monkee_fullpage.js
+
+
 # MonkeeChain
 # -js docs/js/monkee_chain.js
 # --cmd echo MonkeeChain
 
 
--main MonkeeUtil
--js docs/js/monkee_util.js
---cmd echo MonkeeUtil
+# -main MonkeeUtil
+# -js docs/js/monkee_util.js
+# --cmd echo MonkeeUtil
 
 # -main MonkeeLoad
 # -js docs/js/monkee_load.js

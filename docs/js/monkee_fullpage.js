@@ -1,56 +1,45 @@
 (function ($global) { "use strict";
 class MonkeeFullpage {
 	constructor() {
-		this.isVertical = true;
 		this.linkArray = [];
-		this.colors = ["#001f3f","#0074d9","#7fdbff","#39cccc","#3d9970","#2ecc40","#01ff70","#ffdc00","#ff851b","#ff4136","#f012be","#b10dc9","#85144b","#ffffff","#dddddd","#aaaaaa","#111111"];
+		this.colors = ["#7fdbff","#39cccc","#3d9970","#2ecc40","#01ff70","#ffdc00","#ff851b","#ff4136","#f012be","#b10dc9","#85144b","#ffffff","#dddddd","#aaaaaa","#111111","#001f3f","#0074d9"];
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			let _version = "0.0.1";
+			_version = "2021-11-12 20:46:43";
 			$global.console.info("[Monkee-Z]" + " " + "Fullpage" + " - version: " + _version);
+			_gthis.setupStyle();
 			_gthis.init();
-			_gthis.initToggle();
 		});
 	}
 	init() {
-		let ul = window.document.querySelector("[monkee-fullpage]");
+		let ul = window.document.querySelector("[monkee-fullpage-slides]");
 		ul.classList.add("monkee-fullpage-list");
-		let links = window.document.getElementsByTagName("a");
-		let first = false;
+		let lis = ul.getElementsByTagName("li");
 		let _g = 0;
-		let _g1 = links.length;
+		let _g1 = lis.length;
 		while(_g < _g1) {
 			let i = _g++;
+			let li = lis[i];
+			li.classList.add("monkee-fullpage-slide");
+			li.setAttribute("style","background-color: " + this.colors[i]);
+		}
+		let links = window.document.getElementsByTagName("a");
+		let first = false;
+		let _g2 = 0;
+		let _g3 = links.length;
+		while(_g2 < _g3) {
+			let i = _g2++;
 			let link = links[i];
 			if(link.getAttribute("href").charAt(0) == "#" && link.getAttribute("href").length > 1) {
 				if(first == false) {
 					link.classList.add("active");
 				}
-				$global.console.log("<li id=\"" + StringTools.replace(link.getAttribute("href"),"#","") + "\">" + link.getAttribute("href") + "</li>");
-				let slide = window.document.querySelector(link.getAttribute("href"));
-				slide.classList.add("monkee-fullpage-slide");
-				slide.setAttribute("style","background-color: " + this.colors[i]);
 				this.linkArray.push(link);
 				link.onclick = $bind(this,this.onclickHandler);
 				first = true;
 			}
 		}
-	}
-	initToggle() {
-		let btn = window.document.getElementById("btn-toggle-dir");
-		let _gthis = this;
-		btn.onclick = function(e) {
-			let ul = window.document.querySelector("[monkee-fullpage]");
-			if(_gthis.isVertical) {
-				_gthis.isVertical = false;
-				this.innerHTML = "<i class=\"fa fa-arrows-v\" aria-hidden=\"true\"></i>";
-				ul.classList.add("monkee-fullpage-list-horizontal");
-			} else {
-				_gthis.isVertical = true;
-				this.innerHTML = "<i class=\"fa fa-arrows-h\" aria-hidden=\"true\"></i>";
-				ul.classList.remove("monkee-fullpage-list-horizontal");
-			}
-		};
 	}
 	onclickHandler(e) {
 		let _g = 0;
@@ -62,13 +51,13 @@ class MonkeeFullpage {
 		}
 		e.currentTarget.classList.add("active");
 	}
+	setupStyle() {
+		let style = window.document.createElement("style");
+		style.innerHTML = "\n\n.monkee-fullpage-list {\n  display: inline-block;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  list-style-type: none;\n  overflow: auto;\n  scroll-behavior: smooth;\n}\n.monkee-fullpage-list-horizontal {\n  display: block ruby;\n}\n.monkee-fullpage-slide {\n  border: 0px solid pink;\n  width: 100%;\n  height: 100%;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n}\n  ";
+		window.document.head.appendChild(style);
+	}
 	static main() {
 		let app = new MonkeeFullpage();
-	}
-}
-class StringTools {
-	static replace(s,sub,by) {
-		return s.split(sub).join(by);
 	}
 }
 class haxe_iterators_ArrayIterator {
@@ -90,3 +79,5 @@ $global.$haxeUID |= 0;
 }
 MonkeeFullpage.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_fullpage.js.map
