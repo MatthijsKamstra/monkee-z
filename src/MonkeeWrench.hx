@@ -41,9 +41,11 @@ class MonkeeWrench {
 		// console.log(ROOT);
 
 		document.addEventListener("DOMContentLoaded", function(event) {
-			console.group('Monkee ${utils.Emoji.monkeeWrench}');
-			console.log('focus browser and press "m"');
-			console.log('or use ${window.location.href}?monkeewrench');
+			console.groupCollapsed('${utils.Emoji.monkeeWrench} Monkee-Wrench-Lite - v${VERSION}');
+			console.log('Monkee Wrench is a JavaScript tool to replace missing (background)images, and show brokken links');
+			console.log('Use by focussing the browser and press "m"');
+			console.log('Or use ${window.location.href}?monkeewrench');
+			console.log('WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/');
 			console.groupEnd();
 
 			init();

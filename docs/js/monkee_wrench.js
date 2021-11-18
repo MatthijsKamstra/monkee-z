@@ -7,9 +7,11 @@ class MonkeeWrench {
 		$global.console.info("[Monkee-Z]" + " " + ("Wrench " + "🔧") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.group("Monkee " + "🔧");
-			$global.console.log("focus browser and press \"m\"");
-			$global.console.log("or use " + window.location.href + "?monkeewrench");
+			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.2");
+			$global.console.log("Monkee Wrench is a JavaScript tool to replace missing (background)images, and show brokken links");
+			$global.console.log("Use by focussing the browser and press \"m\"");
+			$global.console.log("Or use " + window.location.href + "?monkeewrench");
+			$global.console.log("WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/");
 			$global.console.groupEnd();
 			_gthis.init();
 		});
@@ -27,14 +29,14 @@ class MonkeeWrench {
 		request.onload = function() {
 			if(request.status >= 200 && request.status < 400) {
 				let json = request.responseText;
-				console.log("src/MonkeeWrench.hx:73:","json: " + json);
+				console.log("src/MonkeeWrench.hx:75:","json: " + json);
 				cb.apply(_gthis,[]);
 			} else {
-				console.log("src/MonkeeWrench.hx:78:","oeps: status: " + request.status + " // json: " + request.responseText);
+				console.log("src/MonkeeWrench.hx:80:","oeps: status: " + request.status + " // json: " + request.responseText);
 			}
 		};
 		request.onerror = function() {
-			console.log("src/MonkeeWrench.hx:84:","error");
+			console.log("src/MonkeeWrench.hx:86:","error");
 		};
 		request.send();
 	}

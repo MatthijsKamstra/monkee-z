@@ -6,7 +6,8 @@ class MonkeeWrenchLite {
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.5");
-			$global.console.log("Focus browser and press \"m\"");
+			$global.console.log("Monkee Wrench is a JavaScript tool to replace missing (background)images, and show brokken links");
+			$global.console.log("Use by focussing the browser and press \"m\"");
 			$global.console.log("Or use " + window.location.href + "?monkeewrench");
 			$global.console.log("WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/");
 			$global.console.groupEnd();
