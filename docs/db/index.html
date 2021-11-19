@@ -32,9 +32,51 @@
         <div class="row">
             <div class="col">
                 <h1>Monkee DB ☢️</h1>
-                <p>a browser DB util, to store data easy via local storage</p>
+                <p>a browser DB util, to store data easy via local storage <i>(~ 2KB)</i></p>
+
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-6"> </div>
+            <div class="col-6">
+                <h3>Monkee-DB</h3>
+                <a class="float-right btn btn-outline-dark btn-sm" href="db/">more</a>
+                <p>a browser DB util, to store data easy via local storage <i>(~ 2KB)</i></p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container my-5">
+
+
+        <div class="row">
+            <div class="col-6">
+                <div id="js-specs-wrench-lite"></div>
+            </div>
+            <div class="col-6">
+                <div id="js-specs-wrench"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container my-5">
+        <h2>Code snippets</h2>
+        <div id="js-twig-snippet">
+            <pre>
+                <code>
+        var dbName = 'test1';
+        MonkeeDB.create(dbName);
+        console.log(MonkeeDB.read(dbName));
+        MonkeeDB.update(dbName, 'hello', 'Matthijs');
+        console.log(MonkeeDB.read(dbName, 'hello'));
+                </code>
+            </pre>
+        </div>
+
     </div>
 
     <div data-load="../components/footer.html"></div>
@@ -65,6 +107,11 @@
     <!-- <script src="../js/monkee_db.min.js"></script> -->
 
 
+    <script>
+        MonkeeUtil.embedSpecs('#js-specs-wrench', '../assets/json/monkee_db.json');
+        // MonkeeUtil.embedSpecs('#js-specs-wrench-lite', '../assets/json/monkee_wrench_lite.json');
+        MonkeeUtil.embedCode('#js-twig-snippet');
+    </script>
 
 </body>
 
