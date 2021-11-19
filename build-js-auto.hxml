@@ -8,6 +8,19 @@
 -debug
 
 
+
+--cmd echo MonkeeDB
+MonkeeDB
+-js docs/js/monkee_db.js
+
+--next
+
+--cmd echo MonkeeDBTest
+-main MonkeeDBTest
+-js docs/js/monkee_db_test.js
+
+--next
+
 --cmd echo MonkeeFullpage
 -main MonkeeFullpage
 -js docs/js/monkee_fullpage.js
