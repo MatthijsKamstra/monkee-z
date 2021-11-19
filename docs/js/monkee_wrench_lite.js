@@ -1,12 +1,12 @@
 (function ($hx_exports, $global) { "use strict";
 class MonkeeWrenchLite {
 	constructor() {
-		this.ROOT = window.location.host;
-		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
+		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg"];
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.5");
-			$global.console.log("Focus browser and press \"m\"");
+			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.6");
+			$global.console.log("Monkee Wrench Lite is a JavaScript tool to replace missing (background)images, and show broken links");
+			$global.console.log("Use by focussing the browser and press \"m\"");
 			$global.console.log("Or use " + window.location.href + "?monkeewrench");
 			$global.console.log("WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/");
 			$global.console.groupEnd();
@@ -26,7 +26,6 @@ class MonkeeWrenchLite {
 	}
 	getkey(e) {
 		if(e.key == "m") {
-			$global.console.info("🔧" + " Start checking document");
 			this.validateElementsOnPage();
 		}
 	}
@@ -57,11 +56,10 @@ class MonkeeWrenchLite {
 			let href = el.getAttribute("href");
 			if(href == "" || href == "#" || href == null) {
 				el.innerHTML = "🔧" + " " + el.innerHTML;
-			} else if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {
+			} else if(href.startsWith("/") || href.indexOf(window.location.host) != -1) {
 				this.isUrlValid(el.href,$bind(this,this.setXEmoji),[el]);
 			}
 		}
-		$global.console.info("🔧" + " Done checking document");
 	}
 	isUrlValid(url,cb,arr) {
 		let request = new XMLHttpRequest();
@@ -120,7 +118,7 @@ function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id
 $global.$haxeUID |= 0;
 {
 }
-MonkeeWrenchLite.VERSION = "0.0.5";
+MonkeeWrenchLite.VERSION = "0.0.6";
 MonkeeWrenchLite.DEBUG = false;
 MonkeeWrenchLite.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
