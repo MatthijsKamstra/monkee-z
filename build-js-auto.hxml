@@ -8,6 +8,7 @@
 -debug
 
 
+--each
 
 --cmd echo MonkeeDB
 MonkeeDB
