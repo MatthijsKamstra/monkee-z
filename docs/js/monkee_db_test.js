@@ -91,7 +91,7 @@ class MonkeeDBTest {
 		this.DEBUG = true;
 		this.isDebug = true;
 		if(this.DEBUG) {
-			$global.console.log("[Monkee-Z]" + " - MonkeeDBTest - " + "2021-11-19 16:24:40");
+			$global.console.log("[Monkee-Z]" + " - MonkeeDBTest - " + "2021-11-19 22:17:51");
 		}
 		this.init1();
 	}
@@ -196,3 +196,5 @@ if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : 
 MonkeeDB.isDebug = true;
 MonkeeDBTest.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_db_test.js.map

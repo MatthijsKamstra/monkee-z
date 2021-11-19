@@ -148,3 +148,5 @@ if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : 
 }
 MonkeeDB.isDebug = true;
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_db.js.map
