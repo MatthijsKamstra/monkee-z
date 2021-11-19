@@ -36,6 +36,7 @@ class MonkeeFullpage {
 	function init() {
 		var ul:Element = cast document.querySelector('[monkee-fullpage-slides]');
 		ul.classList.add('monkee-fullpage-list');
+		ul.onscroll = onScrollHandler;
 
 		// slides
 		var lis = ul.getElementsByTagName('li');
@@ -43,7 +44,8 @@ class MonkeeFullpage {
 			// slide
 			var li = lis[i];
 			li.classList.add('monkee-fullpage-slide');
-			li.setAttribute('style', 'background-color: ${colors[i]}');
+			if (DEBUG)
+				li.setAttribute('style', 'background-color: ${colors[i]}');
 		}
 
 		var links = document.getElementsByTagName('a');
@@ -63,6 +65,11 @@ class MonkeeFullpage {
 				first = true;
 			}
 		}
+	}
+
+	function onScrollHandler(e:MouseScrollEvent) {
+		trace(e);
+		// document.getElementById('showScroll').innerHTML = window.pageYOffset + 'px';
 	}
 
 	/**

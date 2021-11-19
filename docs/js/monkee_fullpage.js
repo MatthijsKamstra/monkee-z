@@ -3,9 +3,11 @@ class MonkeeFullpage {
 	constructor() {
 		this.linkArray = [];
 		this.colors = ["#7fdbff","#39cccc","#3d9970","#2ecc40","#01ff70","#ffdc00","#ff851b","#ff4136","#f012be","#b10dc9","#85144b","#ffffff","#dddddd","#aaaaaa","#111111","#001f3f","#0074d9"];
+		this.DEBUG = true;
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
 			let _version = "0.0.1";
+			_version = "2021-11-18 09:51:06";
 			$global.console.info("[Monkee-Z]" + " " + "Fullpage" + " - version: " + _version);
 			_gthis.setupStyle();
 			_gthis.init();
@@ -14,6 +16,7 @@ class MonkeeFullpage {
 	init() {
 		let ul = window.document.querySelector("[monkee-fullpage-slides]");
 		ul.classList.add("monkee-fullpage-list");
+		ul.onscroll = $bind(this,this.onScrollHandler);
 		let lis = ul.getElementsByTagName("li");
 		let _g = 0;
 		let _g1 = lis.length;
@@ -21,7 +24,9 @@ class MonkeeFullpage {
 			let i = _g++;
 			let li = lis[i];
 			li.classList.add("monkee-fullpage-slide");
-			li.setAttribute("style","background-color: " + this.colors[i]);
+			if(this.DEBUG) {
+				li.setAttribute("style","background-color: " + this.colors[i]);
+			}
 		}
 		let links = window.document.getElementsByTagName("a");
 		let first = false;
@@ -39,6 +44,9 @@ class MonkeeFullpage {
 				first = true;
 			}
 		}
+	}
+	onScrollHandler(e) {
+		console.log("src/MonkeeFullpage.hx:71:",e);
 	}
 	onclickHandler(e) {
 		let _g = 0;
@@ -78,3 +86,5 @@ $global.$haxeUID |= 0;
 }
 MonkeeFullpage.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_fullpage.js.map
