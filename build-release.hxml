@@ -101,11 +101,11 @@ MonkeeGui
 MonkeeDB
 -js docs/js/monkee_db.js
 
---next
+# --next
 
---cmd echo MonkeeDBTest
--main MonkeeDBTest
--js docs/js/monkee_db_test.js
+# --cmd echo MonkeeDBTest
+# -main MonkeeDBTest
+# -js docs/js/monkee_db_test.js
 
 
 
