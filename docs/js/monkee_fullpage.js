@@ -11,7 +11,7 @@ class MonkeeFullpage {
 		this.colors = ["#7fdbff","#39cccc","#3d9970","#2ecc40","#01ff70","#ffdc00","#ff851b","#ff4136","#f012be","#b10dc9","#85144b","#ffffff","#dddddd","#aaaaaa","#111111","#001f3f","#0074d9"];
 		this.DEBUG = true;
 		let _version = "0.0.1";
-		_version = "2021-11-19 10:02:49";
+		_version = "2021-11-18 21:26:53";
 		$global.console.info("[Monkee-Z]" + " " + ("Fullpage " + "📃") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
@@ -23,15 +23,17 @@ class MonkeeFullpage {
 		let ul = window.document.querySelector("[monkee-fullpage-slides]");
 		ul.classList.add("monkee-fullpage-list");
 		let lis = ul.getElementsByTagName("li");
-		this.slideHeight = lis[0].scrollHeight;
+		this.slideHeight = Math.floor(lis[0].scrollHeight);
+		this.map = new haxe_ds_IntMap();
 		let _g = 0;
 		let _g1 = lis.length;
 		while(_g < _g1) {
 			let i = _g++;
 			let li = lis[i];
-			let t = Math.round(i * this.slideHeight + this.slideHeight * 0.5);
+			let t = Math.floor(i * this.slideHeight + this.slideHeight * 0.5);
 			this.map.h[t] = li.id;
 		}
+		$global.console.warn(this.map);
 	}
 	init() {
 		let ul = window.document.querySelector("[monkee-fullpage-slides]");
@@ -73,19 +75,38 @@ class MonkeeFullpage {
 		}
 	}
 	onScrollStop() {
-		$global.console.log("stopped scrolling");
+		$global.console.group("stopped scrolling");
+		let gotoKey = 0;
+		let id = "";
 		let key = this.map.keys();
 		while(key.hasNext()) {
 			let key1 = key.next();
 			if(this.currentPos >= key1) {
-				console.log("src/MonkeeFullpage.hx:127:",key1);
+				$global.console.log("dirPos: " + this.dirPos + " ");
+				$global.console.log("currentPos: " + this.currentPos + " ");
+				$global.console.log("key: " + key1 + " // " + this.map.h[key1]);
+				let prevKey = key1 - this.slideHeight;
 				let nextKey = key1 + this.slideHeight;
-				console.log("src/MonkeeFullpage.hx:129:",nextKey);
-				console.log("src/MonkeeFullpage.hx:131:","" + this.map.h[key1]);
-				console.log("src/MonkeeFullpage.hx:132:","scroll to");
-				console.log("src/MonkeeFullpage.hx:133:","" + this.map.h[nextKey]);
+				if(prevKey < 0) {
+					prevKey = Math.floor(this.slideHeight * 0.5);
+				}
+				$global.console.log("prevKey: " + prevKey + " // " + this.map.h[prevKey]);
+				$global.console.log("nextKey: " + nextKey + " // " + this.map.h[nextKey]);
+				$global.console.log(">> scroll to");
+				if(this.dirPos > 0) {
+					$global.console.log("next-id: " + this.map.h[nextKey]);
+					gotoKey = nextKey;
+					id = this.map.h[nextKey];
+				} else {
+					$global.console.log("next-id: " + this.map.h[prevKey]);
+					gotoKey = prevKey;
+					id = this.map.h[prevKey];
+				}
+				$global.console.log("-------");
 			}
 		}
+		$global.console.groupEnd();
+		window.document.getElementById(id).scrollIntoView();
 	}
 	onScrollHandler(e) {
 		if(this.timer != null) {

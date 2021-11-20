@@ -25,7 +25,7 @@ class MonkeeFullpage {
 
 	var linkArray = [];
 	var isVertical = true;
-	var slideHeight = 0;
+	var slideHeight:Int = 0;
 	var scrolltracker = document.getElementById('js-scroll-tracker');
 
 	var currentPos = 0.0;
@@ -54,19 +54,20 @@ class MonkeeFullpage {
 		// slides
 		var lis = ul.getElementsByTagName('li');
 		// trace(lis[0].scrollHeight);
-		slideHeight = lis[0].scrollHeight;
+		slideHeight = Math.floor(lis[0].scrollHeight);
 
-		// slides
+		map = [];
+		// set up break points slides
 		for (i in 0...lis.length) {
 			// slide
 			var li:LIElement = cast lis[i];
 			// trace(li);
 			// trace(li.scrollHeight);
-			var t = Math.round((i * slideHeight) + (slideHeight * 0.5));
+			var t:Int = Math.floor((i * slideHeight) + (slideHeight * 0.5));
 			map.set(t, li.id);
 		}
 
-		// console.warn(map);
+		console.warn(map);
 	}
 
 	function init() {
@@ -90,7 +91,7 @@ class MonkeeFullpage {
 			}
 
 			// Syntax.construct('foo', 'app');
-
+			// styling
 			li.classList.add('monkee-fullpage-slide');
 			if (DEBUG)
 				li.setAttribute('style', 'background-color: ${colors[i]}');
@@ -116,23 +117,48 @@ class MonkeeFullpage {
 	}
 
 	function onScrollStop() {
-		console.log('stopped scrolling');
+		console.group('stopped scrolling');
 		// if (currentPos >= (slideHeight * 0.5)) {
 		// 	trace('next');
 		// }
 
+		var gotoKey:Int = 0;
+		var id:String = '';
+
 		for (key in map.keys()) {
 			// your code
 			if (currentPos >= key) {
-				trace(key);
+				console.log('dirPos: ${dirPos} ');
+				console.log('currentPos: ${currentPos} ');
+				console.log('key: ${key} // ${map[key]}');
+				var prevKey = (key - slideHeight);
 				var nextKey = (key + slideHeight);
-				trace(nextKey);
-
-				trace('${map[key]}');
-				trace('scroll to');
-				trace('${map[nextKey]}');
+				if (prevKey < 0)
+					prevKey = Math.floor(slideHeight * 0.5);
+				console.log('prevKey: ${prevKey} // ${map[prevKey]]}');
+				console.log('nextKey: ${nextKey} // ${map[nextKey]}');
+				console.log('>> scroll to');
+				if (dirPos > 0) {
+					console.log('next-id: ${map[nextKey]}');
+					gotoKey = nextKey;
+					id = map[nextKey];
+				} else {
+					console.log('next-id: ${map[prevKey]]}');
+					gotoKey = prevKey;
+					id = map[prevKey];
+				}
+				console.log('-------');
+				// break;
 			}
 		}
+		console.groupEnd();
+
+		// var ul:Element = cast document.querySelector('[monkee-fullpage-slides]');
+		// ul.scrollTo(map.get(gotoKey));
+		// ul.scrollTo();
+
+		// trace(map.get(gotoKey));
+		document.getElementById(id).scrollIntoView();
 	}
 
 	function onScrollHandler(e:MouseScrollEvent) {
