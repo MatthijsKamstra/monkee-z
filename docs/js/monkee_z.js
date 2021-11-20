@@ -1,5 +1,13 @@
 (function ($hx_exports, $global) { "use strict";
 class HxOverrides {
+	static dateStr(date) {
+		let m = date.getMonth() + 1;
+		let d = date.getDate();
+		let h = date.getHours();
+		let mi = date.getMinutes();
+		let s = date.getSeconds();
+		return date.getFullYear() + "-" + (m < 10 ? "0" + m : "" + m) + "-" + (d < 10 ? "0" + d : "" + d) + " " + (h < 10 ? "0" + h : "" + h) + ":" + (mi < 10 ? "0" + mi : "" + mi) + ":" + (s < 10 ? "0" + s : "" + s);
+	}
 	static cca(s,index) {
 		let x = s.charCodeAt(index);
 		if(x != x) {
@@ -120,6 +128,136 @@ class MonkeeBugger {
 	}
 }
 MonkeeBugger.__name__ = true;
+class MonkeeDB {
+	constructor() {
+		let _version = "0.0.1";
+		$global.console.info("[Monkee-Z]" + " " + ("DB " + "☢️") + " - version: " + _version);
+	}
+	static create(dbName,isOverwrite) {
+		if(isOverwrite == null) {
+			isOverwrite = false;
+		}
+		MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
+		if(MonkeeDB.dbJson == null || isOverwrite) {
+			MonkeeDB.dbJson = { _id : "localdata-" + new Date().getTime(), version : "0.0.1", created : HxOverrides.dateStr(new Date()), updated : HxOverrides.dateStr(new Date())};
+			MonkeeDB.saveData(dbName);
+		}
+	}
+	static read(dbName,key) {
+		if(MonkeeDB.dbJson == null) {
+			MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
+		}
+		if(key == null) {
+			return MonkeeDB.dbJson;
+		}
+		if(Object.prototype.hasOwnProperty.call(MonkeeDB.dbJson,key)) {
+			return Reflect.getProperty(MonkeeDB.dbJson,key);
+		} else {
+			return null;
+		}
+	}
+	static load(dbName) {
+		if(MonkeeDB.dbJson == null) {
+			MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
+		}
+		if(MonkeeDB.dbJson == null) {
+			return null;
+		} else {
+			return MonkeeDB.dbJson;
+		}
+	}
+	static update(dbName,key,value) {
+		if(MonkeeDB.dbJson == null) {
+			MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
+		}
+		Reflect.setProperty(MonkeeDB.dbJson,key,value);
+		Reflect.setProperty(MonkeeDB.dbJson,"updated",HxOverrides.dateStr(new Date()));
+		MonkeeDB.saveData(dbName);
+	}
+	static delete(dbName,key) {
+		if(MonkeeDB.dbJson == null) {
+			MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
+		}
+		if(Object.prototype.hasOwnProperty.call(MonkeeDB.dbJson,key)) {
+			Reflect.deleteField(MonkeeDB.dbJson,key);
+		}
+		MonkeeDB.saveData(dbName);
+	}
+	static clear(dbName) {
+		MonkeeDB.dbJson = null;
+		window.localStorage.removeItem(dbName);
+	}
+	static saveData(dbName) {
+		window.localStorage.setItem(dbName,JSON.stringify(MonkeeDB.dbJson));
+	}
+}
+$hx_exports["MonkeeDB"] = MonkeeDB;
+MonkeeDB.__name__ = true;
+class MonkeeFullpage {
+	constructor() {
+		this.linkArray = [];
+		this.colors = ["#7fdbff","#39cccc","#3d9970","#2ecc40","#01ff70","#ffdc00","#ff851b","#ff4136","#f012be","#b10dc9","#85144b","#ffffff","#dddddd","#aaaaaa","#111111","#001f3f","#0074d9"];
+		this.DEBUG = false;
+		let _gthis = this;
+		window.document.addEventListener("DOMContentLoaded",function(event) {
+			let _version = "0.0.1";
+			$global.console.info("[Monkee-Z]" + " " + "Fullpage" + " - version: " + _version);
+			_gthis.setupStyle();
+			_gthis.init();
+		});
+	}
+	init() {
+		let ul = window.document.querySelector("[monkee-fullpage-slides]");
+		ul.classList.add("monkee-fullpage-list");
+		ul.onscroll = $bind(this,this.onScrollHandler);
+		let lis = ul.getElementsByTagName("li");
+		let _g = 0;
+		let _g1 = lis.length;
+		while(_g < _g1) {
+			let i = _g++;
+			let li = lis[i];
+			li.classList.add("monkee-fullpage-slide");
+			if(this.DEBUG) {
+				li.setAttribute("style","background-color: " + this.colors[i]);
+			}
+		}
+		let links = window.document.getElementsByTagName("a");
+		let first = false;
+		let _g2 = 0;
+		let _g3 = links.length;
+		while(_g2 < _g3) {
+			let i = _g2++;
+			let link = links[i];
+			if(link.getAttribute("href").charAt(0) == "#" && link.getAttribute("href").length > 1) {
+				if(first == false) {
+					link.classList.add("active");
+				}
+				this.linkArray.push(link);
+				link.onclick = $bind(this,this.onclickHandler);
+				first = true;
+			}
+		}
+	}
+	onScrollHandler(e) {
+		console.log("src/MonkeeFullpage.hx:71:",e);
+	}
+	onclickHandler(e) {
+		let _g = 0;
+		let _g1 = this.linkArray.length;
+		while(_g < _g1) {
+			let i = _g++;
+			let link = this.linkArray[i];
+			link.classList.remove("active");
+		}
+		e.currentTarget.classList.add("active");
+	}
+	setupStyle() {
+		let style = window.document.createElement("style");
+		style.innerHTML = "\n\n.monkee-fullpage-list {\n  display: inline-block;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  list-style-type: none;\n  overflow: auto;\n  scroll-behavior: smooth;\n}\n.monkee-fullpage-list-horizontal {\n  display: block ruby;\n}\n.monkee-fullpage-slide {\n  border: 0px solid pink;\n  width: 100%;\n  height: 100%;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n}\n  ";
+		window.document.head.appendChild(style);
+	}
+}
+MonkeeFullpage.__name__ = true;
 class MonkeeLoad {
 	constructor() {
 		this.onLoadReadyEvent = new Event("onLoadReady");
@@ -585,6 +723,194 @@ class MonkeeUtil {
 }
 $hx_exports["MonkeeUtil"] = MonkeeUtil;
 MonkeeUtil.__name__ = true;
+class MonkeeWrench {
+	constructor() {
+		this.ROOT = window.location.host;
+		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
+		let _version = "0.0.2";
+		$global.console.info("[Monkee-Z]" + " " + ("Wrench " + "🔧") + " - version: " + _version);
+		let _gthis = this;
+		window.document.addEventListener("DOMContentLoaded",function(event) {
+			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.2");
+			$global.console.log("Monkee Wrench is a JavaScript tool to replace missing (background)images, and show brokken links");
+			$global.console.log("Use by focussing the browser and press \"m\"");
+			$global.console.log("Or use " + window.location.href + "?monkeewrench");
+			$global.console.log("WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/");
+			$global.console.groupEnd();
+			_gthis.init();
+		});
+	}
+	UrlExists(url) {
+		let http = new XMLHttpRequest();
+		http.open("HEAD",url,false);
+		http.send();
+		return http.status != 404;
+	}
+	isUrlValid(url,cb) {
+		let request = new XMLHttpRequest();
+		request.open("GET",url,true);
+		let _gthis = this;
+		request.onload = function() {
+			if(request.status >= 200 && request.status < 400) {
+				let json = request.responseText;
+				console.log("src/MonkeeWrench.hx:75:","json: " + json);
+				cb.apply(_gthis,[]);
+			} else {
+				console.log("src/MonkeeWrench.hx:80:","oeps: status: " + request.status + " // json: " + request.responseText);
+			}
+		};
+		request.onerror = function() {
+			console.log("src/MonkeeWrench.hx:86:","error");
+		};
+		request.send();
+	}
+	getkey(e) {
+		if(e.key == "m") {
+			this.buildIcon();
+			this.replaceMissingAssets();
+		}
+	}
+	buildIcon() {
+		let btn = window.document.createElement("div");
+		btn.innerHTML = "🔧";
+		btn.className = "btn btn-outline-dark";
+		btn.title = "Monkee Wrench is used";
+		btn.setAttribute("style","position: fixed;bottom: 10px;left: 10px;");
+		let _gthis = this;
+		btn.onclick = function() {
+			_gthis.replaceMissingAssets();
+		};
+		window.document.body.appendChild(btn);
+	}
+	init() {
+		let _gthis = this;
+		window.onkeydown = function(e) {
+			_gthis.getkey(e);
+		};
+		let urlParams = new URLSearchParams(window.location.search);
+		let myParam = urlParams.get("monkeewrench");
+		if(myParam != null) {
+			this.buildIcon();
+			this.replaceMissingAssets();
+		}
+	}
+	addImageLabel(el) {
+		let div = window.document.createElement("div");
+		div.innerHTML = "🔧" + " img";
+		div.style.position = "absolute";
+		div.style.bottom = "0px";
+		div.style.right = "50%";
+		div.style.backgroundColor = "yellow";
+		div.style.fontSize = "8px";
+		div.style.padding = "0px";
+		div.style.paddingLeft = "5px";
+		div.style.paddingRight = "5px";
+		div.style.textTransform = "uppercase";
+		div.style.transform = "translate(50%)";
+		div.style.borderRadius = "1px";
+		div.style.opacity = "0.5";
+		el.parentElement.appendChild(div);
+	}
+	addBGImageLabel(el) {
+		let div = window.document.createElement("div");
+		div.innerHTML = "🔧" + " bg-img";
+		div.style.position = "absolute";
+		div.style.bottom = "0px";
+		div.style.right = "50%";
+		div.style.backgroundColor = "yellow";
+		div.style.fontSize = "8px";
+		div.style.padding = "0px";
+		div.style.paddingLeft = "5px";
+		div.style.paddingRight = "5px";
+		div.style.textTransform = "uppercase";
+		div.style.transform = "translate(50%)";
+		div.style.borderRadius = "1px";
+		div.style.opacity = "0.5";
+		el.appendChild(div);
+		el.style.position = "relative";
+	}
+	replaceMissingAssets() {
+		let elementsImg = window.document.getElementsByTagName("img");
+		let _g = 0;
+		let _g1 = elementsImg.length;
+		while(_g < _g1) {
+			let i = _g++;
+			let el = elementsImg[i];
+			let url = el.src;
+			let w = el.width;
+			let h = el.height;
+			if(!this.UrlExists(url)) {
+				el.dataset.monkeeWrenchImageReplace = "true";
+				el.src = this.DEBUG_IMAGES[0];
+				this.addImageLabel(el);
+				if(el.getAttribute("width") != null && el.getAttribute("height") != null) {
+					el.style.width = "" + w + "px";
+					el.style.display = "block";
+					el.style.width = "500px";
+					el.style.height = "250px";
+					el.style.objectFit = "cover";
+					el.style.height = "" + Math.round(el.width * (h / w)) + "px";
+				}
+			}
+		}
+		let elementsWithBG = window.document.getElementsByTagName("*");
+		let _g2 = 0;
+		let _g3 = elementsWithBG.length;
+		while(_g2 < _g3) {
+			let i = _g2++;
+			let element = elementsWithBG[i];
+			let url = StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(element.style.backgroundImage,"'",""),"\"",""),"url(",""),")","");
+			if(element.style.backgroundImage != "") {
+				element.dataset.monkeeWrenchCheck = "true";
+			}
+			if(!this.UrlExists(url)) {
+				element.dataset.monkeeWrenchCheck = "true";
+				element.dataset.monkeeWrenchBgImageReplace = "true";
+				element.style.backgroundImage = "url(" + this.DEBUG_IMAGES[1] + ")";
+				this.addBGImageLabel(element);
+			}
+		}
+		let elementsVideo = window.document.getElementsByTagName("video");
+		let _g4 = 0;
+		let _g5 = elementsVideo.length;
+		while(_g4 < _g5) {
+			let i = _g4++;
+			let element = elementsVideo[i];
+			element.dataset.monkeeWrenchCheck = "true";
+			let url = element.poster;
+			if(!this.UrlExists(url)) {
+				element.dataset.monkeeWrenchPosterImageReplace = "true";
+				element.poster = this.DEBUG_IMAGES[2];
+			}
+		}
+		let elementsLinks = window.document.getElementsByTagName("a");
+		let _g6 = 0;
+		let _g7 = elementsLinks.length;
+		while(_g6 < _g7) {
+			let i = _g6++;
+			let el = elementsLinks[i];
+			el.dataset.monkeeWrenchCheck = "true";
+			let url = el.href;
+			let href = el.getAttribute("href");
+			let id = el.id;
+			if(href == "" || href == "#") {
+				el.dataset.monkeeWrenchEmptyLink = "true";
+				el.innerHTML = "🔧" + " " + el.innerHTML;
+			}
+			if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {
+				if(!this.UrlExists(url)) {
+					el.dataset.monkeeWrenchDeadlink = "true";
+					el.innerHTML = "❌" + " " + el.innerHTML;
+				}
+			}
+		}
+	}
+	static main() {
+		let app = new MonkeeWrench();
+	}
+}
+$hx_exports["MonkeeWrench"] = MonkeeWrench;
+MonkeeWrench.__name__ = true;
 class utils_Query {
 	static convert(url) {
 		let obj = { };
@@ -659,6 +985,28 @@ class Reflect {
 				return o[field];
 			}
 		}
+	}
+	static setProperty(o,field,value) {
+		let tmp;
+		let tmp1;
+		if(o.__properties__) {
+			tmp = o.__properties__["set_" + field];
+			tmp1 = tmp;
+		} else {
+			tmp1 = false;
+		}
+		if(tmp1) {
+			o[tmp](value);
+		} else {
+			o[field] = value;
+		}
+	}
+	static deleteField(o,field) {
+		if(!Object.prototype.hasOwnProperty.call(o,field)) {
+			return false;
+		}
+		delete(o[field]);
+		return true;
 	}
 }
 Reflect.__name__ = true;
@@ -946,15 +1294,23 @@ if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : 
 	Date.__name__ = "Date";
 }
 js_Boot.__toStr = ({ }).toString;
+MonkeeDB.VERSION = "0.0.1";
+MonkeeDB.DEBUG = false;
 MonkeeRoute.map = new haxe_ds_StringMap();
 MonkeeRoute.defaultTitle = "";
 MonkeeRoute.defaultUrl = "";
 MonkeeRoute.previousLocationHref = "";
 MonkeeUtil.VERSION = "0.0.9";
+MonkeeWrench.VERSION = "0.0.2";
+MonkeeWrench.DEBUG = false;
 MonkeeZ.VERSION = "0.0.1";
 MonkeeZ.load = new MonkeeLoad();
-MonkeeZ.route = new MonkeeRoute();
 MonkeeZ.bugger = new MonkeeBugger();
+MonkeeZ.db = new MonkeeDB();
+MonkeeZ.fullpage = new MonkeeFullpage();
+MonkeeZ.route = new MonkeeRoute();
+MonkeeZ.loading = new MonkeeLoad();
 MonkeeZ.util = new MonkeeUtil();
+MonkeeZ.wrench = new MonkeeWrench();
 MonkeeZ.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
