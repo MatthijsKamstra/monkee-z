@@ -15,21 +15,24 @@ class HxOverrides {
 class MonkeeDB {
 	constructor() {
 		let _version = "0.0.1";
+		_version = "2021-11-19 10:02:49";
 		$global.console.info("[Monkee-Z]" + " " + ("DB " + "☢️") + " - version: " + _version);
 	}
 	static create(dbName,isOverwrite) {
 		if(isOverwrite == null) {
 			isOverwrite = false;
 		}
-		MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
+		$global.console.info("get local storage");
+		MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
 		if(MonkeeDB.dbJson == null || isOverwrite) {
 			MonkeeDB.dbJson = { _id : "localdata-" + new Date().getTime(), version : "0.0.1", created : HxOverrides.dateStr(new Date()), updated : HxOverrides.dateStr(new Date())};
+			$global.console.log("initialize database:" + JSON.stringify(MonkeeDB.dbJson));
 			MonkeeDB.saveData(dbName);
 		}
 	}
 	static read(dbName,key) {
 		if(MonkeeDB.dbJson == null) {
-			MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
+			MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
 		}
 		if(key == null) {
 			return MonkeeDB.dbJson;
@@ -42,7 +45,7 @@ class MonkeeDB {
 	}
 	static load(dbName) {
 		if(MonkeeDB.dbJson == null) {
-			MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
+			MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
 		}
 		if(MonkeeDB.dbJson == null) {
 			return null;
@@ -52,7 +55,7 @@ class MonkeeDB {
 	}
 	static update(dbName,key,value) {
 		if(MonkeeDB.dbJson == null) {
-			MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
+			MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
 		}
 		Reflect.setProperty(MonkeeDB.dbJson,key,value);
 		Reflect.setProperty(MonkeeDB.dbJson,"updated",HxOverrides.dateStr(new Date()));
@@ -60,7 +63,7 @@ class MonkeeDB {
 	}
 	static delete(dbName,key) {
 		if(MonkeeDB.dbJson == null) {
-			MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
+			MonkeeDB.dbJson = JSON.parse(window.localStorage.getItem(dbName));
 		}
 		if(Object.prototype.hasOwnProperty.call(MonkeeDB.dbJson,key)) {
 			Reflect.deleteField(MonkeeDB.dbJson,key);
@@ -70,9 +73,11 @@ class MonkeeDB {
 	static clear(dbName) {
 		MonkeeDB.dbJson = null;
 		window.localStorage.removeItem(dbName);
+		$global.console.log("cleared data \"" + dbName + "\"");
 	}
 	static saveData(dbName) {
-		window.localStorage.setItem(dbName,MonkeeDB.dbJson.stringify(MonkeeDB.dbJson));
+		window.localStorage.setItem(dbName,JSON.stringify(MonkeeDB.dbJson));
+		$global.console.log(MonkeeDB.dbJson);
 	}
 }
 $hx_exports["MonkeeDB"] = MonkeeDB;
@@ -137,5 +142,7 @@ if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : 
 {
 }
 MonkeeDB.VERSION = "0.0.1";
-MonkeeDB.DEBUG = false;
+MonkeeDB.DEBUG = true;
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_db.js.map

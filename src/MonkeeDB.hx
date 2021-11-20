@@ -8,7 +8,7 @@ import js.html.*;
 
 @:expose
 class MonkeeDB {
-	static var dbJson:Dynamic;
+	static var dbJson:Dynamic = null;
 
 	/**
 	 * 0.0.1 	initial
@@ -36,19 +36,19 @@ class MonkeeDB {
 		if (DEBUG)
 			console.info("get local storage");
 
-		dbJson = dbJson.parse(window.localStorage.getItem(dbName));
+		dbJson = Json.parse(window.localStorage.getItem(dbName));
 		// if (DEBUG) console.info(dbJson);
 		if (dbJson == null || isOverwrite) {
 			dbJson = {
 				_id: 'localdata-${Date.now().getTime()}',
-				version: '0.0.1',
+				version: VERSION,
 				created: Date.now().toString(),
 				updated: Date.now().toString(),
 			}
-			// window.localStorage.setItem(dbName, dbJson.stringify(dbJson));
+			// window.localStorage.setItem(dbName, Json.stringify(dbJson));
 
 			if (DEBUG) {
-				console.log('initialize database:' + dbJson.stringify(dbJson));
+				console.log('initialize database:' + Json.stringify(dbJson));
 			}
 
 			saveData(dbName);
@@ -70,7 +70,7 @@ class MonkeeDB {
 	 */
 	public static function read(dbName:String, ?key:String) {
 		if (dbJson == null) {
-			dbJson = dbJson.parse(window.localStorage.getItem(dbName));
+			dbJson = Json.parse(window.localStorage.getItem(dbName));
 		}
 
 		if (key == null) {
@@ -91,12 +91,11 @@ class MonkeeDB {
 	 * 				var dbJson = LocalData.load('databasedbName'); // get dbJson
 	 *
 	 * @param dbName		dataBase name
-	 * @param key			(optional) key to get from dbJson
-	 * @return Dynamic		dbJson/object or null
+	 * @return Dynamic		dbJson or null
 	 */
 	public static function load(dbName:String):Dynamic {
 		if (dbJson == null) {
-			dbJson = dbJson.parse(window.localStorage.getItem(dbName));
+			dbJson = Json.parse(window.localStorage.getItem(dbName));
 		}
 		if (dbJson == null) {
 			return null;
@@ -121,7 +120,7 @@ class MonkeeDB {
 	 */
 	public static function update(dbName:String, key:String, value:Dynamic) {
 		if (dbJson == null) {
-			dbJson = dbJson.parse(window.localStorage.getItem(dbName));
+			dbJson = Json.parse(window.localStorage.getItem(dbName));
 		}
 
 		// if (Reflect.hasField(dbJson, key)) {
@@ -144,7 +143,7 @@ class MonkeeDB {
 	 */
 	public static function delete(dbName:String, key:String) {
 		if (dbJson == null) {
-			dbJson = dbJson.parse(window.localStorage.getItem(dbName));
+			dbJson = Json.parse(window.localStorage.getItem(dbName));
 		}
 
 		if (Reflect.hasField(dbJson, key)) {
@@ -169,7 +168,7 @@ class MonkeeDB {
 	// ____________________________________ private ____________________________________
 
 	private static function saveData(dbName:String) {
-		window.localStorage.setItem(dbName, dbJson.stringify(dbJson));
+		window.localStorage.setItem(dbName, Json.stringify(dbJson));
 		if (DEBUG)
 			console.log(dbJson);
 	}
