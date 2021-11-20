@@ -86,7 +86,7 @@ class MonkeeDBTest {
 		this.DEBUG = true;
 		this.isDebug = true;
 		if(this.DEBUG) {
-			$global.console.log("[Monkee-Z]" + " - MonkeeDBTest - " + "2021-11-20 12:55:38");
+			$global.console.log("[Monkee-Z]" + " - MonkeeDBTest - " + "2021-11-20 13:23:00");
 		}
 		this.init1();
 	}

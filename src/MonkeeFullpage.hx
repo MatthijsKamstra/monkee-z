@@ -1,5 +1,8 @@
 package;
 
+import js.Syntax;
+import haxe.Timer;
+import js.html.svg.Element;
 import js.Lib;
 import js.Browser.*;
 import js.html.*;
@@ -25,12 +28,31 @@ class MonkeeFullpage {
 	var isVertical = true;
 
 	public function new() {
+		console.info(App.callIn('Fullpage ${utils.Emoji.monkeeFullpage}', VERSION));
+
 		document.addEventListener('DOMContentLoaded', (event) -> {
-			console.info(App.callIn('Fullpage', VERSION));
 			setupStyle();
 			init();
 			// initToggle();
+			// Timer.delay(function() {
+			// 	getData();
+			// }, 1000);
 		});
+	}
+
+	function getData() {
+		var ul:Element = cast document.querySelector('[monkee-fullpage-slides]');
+		ul.classList.add('monkee-fullpage-list');
+
+		// slides
+		var lis = ul.getElementsByTagName('li');
+		trace(lis[0].scrollHeight);
+		// for (i in 0...lis.length) {
+		// 	// slide
+		// 	var li:LIElement = cast lis[i];
+		// 	// trace(li);
+		// 	trace(li.scrollHeight);
+		// }
 	}
 
 	function init() {
@@ -43,6 +65,18 @@ class MonkeeFullpage {
 		for (i in 0...lis.length) {
 			// slide
 			var li = lis[i];
+
+			if (i == 0) {
+				// only listen to the first element (the rest has the same size)
+				var resizeObserver = Syntax.construct('ResizeObserver', () -> {
+					// console.log("The element was resized");
+					getData();
+				});
+				resizeObserver.observe(li);
+			}
+
+			// Syntax.construct('foo', 'app');
+
 			li.classList.add('monkee-fullpage-slide');
 			if (DEBUG)
 				li.setAttribute('style', 'background-color: ${colors[i]}');
@@ -67,8 +101,12 @@ class MonkeeFullpage {
 		}
 	}
 
+	var scrolltracker = document.getElementById('js-scroll-tracker');
+
 	function onScrollHandler(e:MouseScrollEvent) {
-		trace(e);
+		scrolltracker.innerHTML = '${untyped e.currentTarget.scrollTop}';
+
+		// trace(untyped e.currentTarget.scrollTop);
 		// document.getElementById('showScroll').innerHTML = window.pageYOffset + 'px';
 	}
 
