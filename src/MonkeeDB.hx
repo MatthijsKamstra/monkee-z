@@ -1,10 +1,7 @@
 package;
 
 import haxe.Json;
-import haxe.Constraints.Function;
-import gui.*;
 import js.Browser.*;
-import js.html.*;
 
 @:expose
 class MonkeeDB {
