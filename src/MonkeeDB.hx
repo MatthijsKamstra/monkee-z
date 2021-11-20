@@ -8,11 +8,19 @@ import js.html.*;
 
 @:expose
 class MonkeeDB {
-	static var isDebug = true;
-	static var json:Dynamic;
+	static var dbJson:Dynamic;
+
+	/**
+	 * 0.0.1 	initial
+	 */
+	static inline var VERSION = '0.0.1';
+
+	static inline final DEBUG = #if debug true #else false #end;
 
 	// CRUD: Create Read Update Delete
-	public function new() {}
+	public function new() {
+		console.info(App.callIn('DB ${utils.Emoji.monkeeDB}', VERSION));
+	}
 
 	// create
 
@@ -21,30 +29,30 @@ class MonkeeDB {
 	 *
 	 * if (isOverwrite == false) the 'database' is not created and not overwritten
 	 *
-	 * @param name			dataBase name
+	 * @param dbName		dataBase name
 	 * @param isOverwrite	possible to reset the database/overwrite with new default data
 	 */
-	public static function create(name:String, ?isOverwrite:Bool = false) {
-		if (isDebug)
+	public static function create(dbName:String, ?isOverwrite:Bool = false) {
+		if (DEBUG)
 			console.info("get local storage");
 
-		json = Json.parse(window.localStorage.getItem(name));
-		// if (isDebug) console.info(json);
-		if (json == null || isOverwrite) {
-			json = {
+		dbJson = dbJson.parse(window.localStorage.getItem(dbName));
+		// if (DEBUG) console.info(dbJson);
+		if (dbJson == null || isOverwrite) {
+			dbJson = {
 				_id: 'localdata-${Date.now().getTime()}',
 				version: '0.0.1',
 				created: Date.now().toString(),
 				updated: Date.now().toString(),
 			}
-			// window.localStorage.setItem(name, Json.stringify(json));
+			// window.localStorage.setItem(dbName, dbJson.stringify(dbJson));
 
-			if (isDebug) {
-				console.log('initialize database:' + Json.stringify(json));
+			if (DEBUG) {
+				console.log('initialize database:' + dbJson.stringify(dbJson));
 			}
-		}
 
-		saveData(name);
+			saveData(dbName);
+		}
 	}
 
 	// read
@@ -53,24 +61,24 @@ class MonkeeDB {
 	 * read/load data from "database", send key and get specific data
 	 *
 	 * @example
-	 * 				var json = LocalData.read('databaseName'); // get whole json
-	 * 				var version = LocalData.read('databaseName', 'version'); // version from json (untyped)
+	 * 				var dbJson = LocalData.read('databasedbName'); // get whole dbJson
+	 * 				var version = LocalData.read('databasedbName', 'version'); // version from dbJson (untyped)
 	 *
-	 * @param name			dataBase name
-	 * @param key			(optional) key to get from json
-	 * @return Dynamic		json/object or null
+	 * @param dbName		dataBase name
+	 * @param key			(optional) key to get from dbJson
+	 * @return Dynamic		dbJson/object or null
 	 */
-	public static function read(name:String, ?key:String) {
-		if (json == null) {
-			json = Json.parse(window.localStorage.getItem(name));
+	public static function read(dbName:String, ?key:String) {
+		if (dbJson == null) {
+			dbJson = dbJson.parse(window.localStorage.getItem(dbName));
 		}
 
 		if (key == null) {
-			return json;
+			return dbJson;
 		}
 
-		if (Reflect.hasField(json, key)) {
-			return Reflect.getProperty(json, key);
+		if (Reflect.hasField(dbJson, key)) {
+			return Reflect.getProperty(dbJson, key);
 		} else {
 			return null;
 		}
@@ -80,20 +88,20 @@ class MonkeeDB {
 	 * load data (syntactic sugar for read without a key param)
 	 *
 	 * @example
-	 * 				var json = LocalData.load('databaseName'); // get json
+	 * 				var dbJson = LocalData.load('databasedbName'); // get dbJson
 	 *
-	 * @param name			dataBase name
-	 * @param key			(optional) key to get from json
-	 * @return Dynamic		json/object or null
+	 * @param dbName		dataBase name
+	 * @param key			(optional) key to get from dbJson
+	 * @return Dynamic		dbJson/object or null
 	 */
-	public static function load(name:String):Dynamic {
-		if (json == null) {
-			json = Json.parse(window.localStorage.getItem(name));
+	public static function load(dbName:String):Dynamic {
+		if (dbJson == null) {
+			dbJson = dbJson.parse(window.localStorage.getItem(dbName));
 		}
-		if (json == null) {
+		if (dbJson == null) {
 			return null;
 		} else {
-			return json;
+			return dbJson;
 		}
 	}
 
@@ -105,23 +113,23 @@ class MonkeeDB {
 	 * in the process the `updated` is updated to current date
 	 *
 	 * @example
-	 * 				var json = LocalData.update('databaseName', 'test', 'foo');
+	 * 				var dbJson = LocalData.update('databasedbName', 'test', 'foo');
 	 *
-	 * @param name			dataBase name
-	 * @param key			(optional) key to get from json
+	 * @param dbName		dataBase name
+	 * @param key			(optional) key to get from dbJson
 	 * @param value
 	 */
-	public static function update(name:String, key:String, value:Dynamic) {
-		if (json == null) {
-			json = Json.parse(window.localStorage.getItem(name));
+	public static function update(dbName:String, key:String, value:Dynamic) {
+		if (dbJson == null) {
+			dbJson = dbJson.parse(window.localStorage.getItem(dbName));
 		}
 
-		// if (Reflect.hasField(json, key)) {
-		Reflect.setProperty(json, key, value);
-		Reflect.setProperty(json, 'updated', Date.now().toString());
+		// if (Reflect.hasField(dbJson, key)) {
+		Reflect.setProperty(dbJson, key, value);
+		Reflect.setProperty(dbJson, 'updated', Date.now().toString());
 		// }
 
-		saveData(name);
+		saveData(dbName);
 	}
 
 	// delete
@@ -129,40 +137,40 @@ class MonkeeDB {
 	/**
 	 * [Description]
 	 * @example
-	 * 				var json = LocalData.delete('databaseName', 'test');
+	 * 				var dbJson = LocalData.delete('databasedbName', 'test');
 	 *
-	 * @param name			dataBase name
-	 * @param key			(optional) key to get from json
+	 * @param dbName		dataBase name
+	 * @param key			(optional) key to get from dbJson
 	 */
-	public static function delete(name:String, key:String) {
-		if (json == null) {
-			json = Json.parse(window.localStorage.getItem(name));
+	public static function delete(dbName:String, key:String) {
+		if (dbJson == null) {
+			dbJson = dbJson.parse(window.localStorage.getItem(dbName));
 		}
 
-		if (Reflect.hasField(json, key)) {
-			Reflect.deleteField(json, key);
+		if (Reflect.hasField(dbJson, key)) {
+			Reflect.deleteField(dbJson, key);
 		}
 
-		saveData(name);
+		saveData(dbName);
 	}
 
 	/**
-	 * remove localStorage with (db)Name
+	 * remove localStorage with ddbName
 	 *
-	 * @param name			dataBase name
+	 * @param dbName		dataBase name
 	 */
-	public static function clear(name:String) {
-		json = null;
-		window.localStorage.removeItem(name);
-		if (isDebug)
-			console.log('cleared data "$name"');
+	public static function clear(dbName:String) {
+		dbJson = null;
+		window.localStorage.removeItem(dbName);
+		if (DEBUG)
+			console.log('cleared data "$dbName"');
 	}
 
 	// ____________________________________ private ____________________________________
 
-	private static function saveData(name:String) {
-		window.localStorage.setItem(name, Json.stringify(json));
-		if (isDebug)
-			console.log(json);
+	private static function saveData(dbName:String) {
+		window.localStorage.setItem(dbName, dbJson.stringify(dbJson));
+		if (DEBUG)
+			console.log(dbJson);
 	}
 }

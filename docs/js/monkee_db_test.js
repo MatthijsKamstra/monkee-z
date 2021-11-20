@@ -14,20 +14,19 @@ class HxOverrides {
 }
 class MonkeeDB {
 	constructor() {
+		let _version = "0.0.1";
+		_version = "2021-11-19 10:02:49";
+		$global.console.info("[Monkee-Z]" + " " + ("DB " + "☢️") + " - version: " + _version);
 	}
 	static create(name,isOverwrite) {
 		if(isOverwrite == null) {
 			isOverwrite = false;
 		}
-		if(MonkeeDB.isDebug) {
-			$global.console.info("get local storage");
-		}
+		$global.console.info("get local storage");
 		MonkeeDB.json = JSON.parse(window.localStorage.getItem(name));
 		if(MonkeeDB.json == null || isOverwrite) {
 			MonkeeDB.json = { _id : "localdata-" + new Date().getTime(), version : "0.0.1", created : HxOverrides.dateStr(new Date()), updated : HxOverrides.dateStr(new Date())};
-			if(MonkeeDB.isDebug) {
-				$global.console.log("initialize database:" + JSON.stringify(MonkeeDB.json));
-			}
+			$global.console.log("initialize database:" + JSON.stringify(MonkeeDB.json));
 		}
 		MonkeeDB.saveData(name);
 	}
@@ -74,15 +73,11 @@ class MonkeeDB {
 	static clear(name) {
 		MonkeeDB.json = null;
 		window.localStorage.removeItem(name);
-		if(MonkeeDB.isDebug) {
-			$global.console.log("cleared data \"" + name + "\"");
-		}
+		$global.console.log("cleared data \"" + name + "\"");
 	}
 	static saveData(name) {
 		window.localStorage.setItem(name,JSON.stringify(MonkeeDB.json));
-		if(MonkeeDB.isDebug) {
-			$global.console.log(MonkeeDB.json);
-		}
+		$global.console.log(MonkeeDB.json);
 	}
 }
 $hx_exports["MonkeeDB"] = MonkeeDB;
@@ -91,7 +86,7 @@ class MonkeeDBTest {
 		this.DEBUG = true;
 		this.isDebug = true;
 		if(this.DEBUG) {
-			$global.console.log("[Monkee-Z]" + " - MonkeeDBTest - " + "2021-11-19 22:17:51");
+			$global.console.log("[Monkee-Z]" + " - MonkeeDBTest - " + "2021-11-20 11:40:10");
 		}
 		this.init1();
 	}
@@ -193,7 +188,8 @@ if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : 
 }
 {
 }
-MonkeeDB.isDebug = true;
+MonkeeDB.VERSION = "0.0.1";
+MonkeeDB.DEBUG = true;
 MonkeeDBTest.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
 
