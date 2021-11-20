@@ -1,11 +1,17 @@
 (function ($global) { "use strict";
 class MonkeeFullpage {
 	constructor() {
-		this.scrolltracker = window.document.getElementById("js-scroll-tracker");
+		this.map = new haxe_ds_IntMap();
+		this.timer = null;
+		this.dirPos = 0;
+		this.previousPos = 0.0;
+		this.currentPos = 0.0;
+		this.slideHeight = 0;
 		this.linkArray = [];
 		this.colors = ["#7fdbff","#39cccc","#3d9970","#2ecc40","#01ff70","#ffdc00","#ff851b","#ff4136","#f012be","#b10dc9","#85144b","#ffffff","#dddddd","#aaaaaa","#111111","#001f3f","#0074d9"];
-		this.DEBUG = false;
+		this.DEBUG = true;
 		let _version = "0.0.1";
+		_version = "2021-11-19 10:02:49";
 		$global.console.info("[Monkee-Z]" + " " + ("Fullpage " + "📃") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
@@ -17,7 +23,15 @@ class MonkeeFullpage {
 		let ul = window.document.querySelector("[monkee-fullpage-slides]");
 		ul.classList.add("monkee-fullpage-list");
 		let lis = ul.getElementsByTagName("li");
-		console.log("src/MonkeeFullpage.hx:49:",lis[0].scrollHeight);
+		this.slideHeight = lis[0].scrollHeight;
+		let _g = 0;
+		let _g1 = lis.length;
+		while(_g < _g1) {
+			let i = _g++;
+			let li = lis[i];
+			let t = Math.round(i * this.slideHeight + this.slideHeight * 0.5);
+			this.map.h[t] = li.id;
+		}
 	}
 	init() {
 		let ul = window.document.querySelector("[monkee-fullpage-slides]");
@@ -58,8 +72,36 @@ class MonkeeFullpage {
 			}
 		}
 	}
+	onScrollStop() {
+		$global.console.log("stopped scrolling");
+		let key = this.map.keys();
+		while(key.hasNext()) {
+			let key1 = key.next();
+			if(this.currentPos >= key1) {
+				console.log("src/MonkeeFullpage.hx:127:",key1);
+				let nextKey = key1 + this.slideHeight;
+				console.log("src/MonkeeFullpage.hx:129:",nextKey);
+				console.log("src/MonkeeFullpage.hx:131:","" + this.map.h[key1]);
+				console.log("src/MonkeeFullpage.hx:132:","scroll to");
+				console.log("src/MonkeeFullpage.hx:133:","" + this.map.h[nextKey]);
+			}
+		}
+	}
 	onScrollHandler(e) {
-		this.scrolltracker.innerHTML = "" + e.currentTarget.scrollTop;
+		if(this.timer != null) {
+			window.clearTimeout(this.timer);
+		}
+		let _gthis = this;
+		this.timer = window.setTimeout(function() {
+			_gthis.onScrollStop();
+		},150);
+		this.currentPos = e.currentTarget.scrollTop;
+		if(this.currentPos > this.previousPos) {
+			this.dirPos = 1;
+		} else {
+			this.dirPos = -1;
+		}
+		this.previousPos = this.currentPos;
 	}
 	onclickHandler(e) {
 		let _g = 0;
@@ -78,6 +120,16 @@ class MonkeeFullpage {
 	}
 	static main() {
 		let app = new MonkeeFullpage();
+	}
+}
+class haxe_ds_IntMap {
+	constructor() {
+		this.h = { };
+	}
+	keys() {
+		let a = [];
+		for( var key in this.h ) if(this.h.hasOwnProperty(key)) a.push(+key);
+		return new haxe_iterators_ArrayIterator(a);
 	}
 }
 class haxe_iterators_ArrayIterator {
@@ -99,3 +151,5 @@ $global.$haxeUID |= 0;
 }
 MonkeeFullpage.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
+
+//# sourceMappingURL=monkee_fullpage.js.map

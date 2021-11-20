@@ -6,7 +6,6 @@ import js.html.svg.Element;
 import js.Lib;
 import js.Browser.*;
 import js.html.*;
-import utils.Emoji;
 
 using StringTools;
 
@@ -26,6 +25,14 @@ class MonkeeFullpage {
 
 	var linkArray = [];
 	var isVertical = true;
+	var slideHeight = 0;
+	var scrolltracker = document.getElementById('js-scroll-tracker');
+
+	var currentPos = 0.0;
+	var previousPos = 0.0;
+	var dirPos = 0;
+	var timer = null;
+	var map = new Map<Int, String>();
 
 	public function new() {
 		console.info(App.callIn('Fullpage ${utils.Emoji.monkeeFullpage}', VERSION));
@@ -46,13 +53,20 @@ class MonkeeFullpage {
 
 		// slides
 		var lis = ul.getElementsByTagName('li');
-		trace(lis[0].scrollHeight);
-		// for (i in 0...lis.length) {
-		// 	// slide
-		// 	var li:LIElement = cast lis[i];
-		// 	// trace(li);
-		// 	trace(li.scrollHeight);
-		// }
+		// trace(lis[0].scrollHeight);
+		slideHeight = lis[0].scrollHeight;
+
+		// slides
+		for (i in 0...lis.length) {
+			// slide
+			var li:LIElement = cast lis[i];
+			// trace(li);
+			// trace(li.scrollHeight);
+			var t = Math.round((i * slideHeight) + (slideHeight * 0.5));
+			map.set(t, li.id);
+		}
+
+		// console.warn(map);
 	}
 
 	function init() {
@@ -101,11 +115,47 @@ class MonkeeFullpage {
 		}
 	}
 
-	var scrolltracker = document.getElementById('js-scroll-tracker');
+	function onScrollStop() {
+		console.log('stopped scrolling');
+		// if (currentPos >= (slideHeight * 0.5)) {
+		// 	trace('next');
+		// }
+
+		for (key in map.keys()) {
+			// your code
+			if (currentPos >= key) {
+				trace(key);
+				var nextKey = (key + slideHeight);
+				trace(nextKey);
+
+				trace('${map[key]}');
+				trace('scroll to');
+				trace('${map[nextKey]}');
+			}
+		}
+	}
 
 	function onScrollHandler(e:MouseScrollEvent) {
-		scrolltracker.innerHTML = '${untyped e.currentTarget.scrollTop}';
+		// scrolltracker.innerHTML = '${untyped e.currentTarget.scrollTop}';
+		if (timer != null) {
+			window.clearTimeout(timer);
+		}
+		timer = window.setTimeout(function() {
+			// do something
+			onScrollStop();
+		}, 150);
 
+		currentPos = untyped e.currentTarget.scrollTop;
+
+		if (currentPos > previousPos) {
+			dirPos = 1;
+		} else {
+			dirPos = -1;
+		}
+
+		// trace(dirPos);
+
+		previousPos = currentPos;
 		// trace(untyped e.currentTarget.scrollTop);
 		// document.getElementById('showScroll').innerHTML = window.pageYOffset + 'px';
 	}

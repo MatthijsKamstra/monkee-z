@@ -10,17 +10,17 @@
 
 --each
 
---cmd echo MonkeeDB
-MonkeeDB
--js docs/js/monkee_db.js
+# --cmd echo MonkeeDB
+# MonkeeDB
+# -js docs/js/monkee_db.js
 
---next
+# --next
 
---cmd echo MonkeeDBTest
--main MonkeeDBTest
--js docs/js/monkee_db_test.js
+# --cmd echo MonkeeDBTest
+# -main MonkeeDBTest
+# -js docs/js/monkee_db_test.js
 
---next
+# --next
 
 --cmd echo MonkeeFullpage
 -main MonkeeFullpage
