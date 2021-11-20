@@ -15,69 +15,64 @@ class HxOverrides {
 class MonkeeDB {
 	constructor() {
 		let _version = "0.0.1";
-		_version = "2021-11-19 10:02:49";
 		$global.console.info("[Monkee-Z]" + " " + ("DB " + "☢️") + " - version: " + _version);
 	}
-	static create(name,isOverwrite) {
+	static create(dbName,isOverwrite) {
 		if(isOverwrite == null) {
 			isOverwrite = false;
 		}
-		$global.console.info("get local storage");
-		MonkeeDB.json = JSON.parse(window.localStorage.getItem(name));
-		if(MonkeeDB.json == null || isOverwrite) {
-			MonkeeDB.json = { _id : "localdata-" + new Date().getTime(), version : "0.0.1", created : HxOverrides.dateStr(new Date()), updated : HxOverrides.dateStr(new Date())};
-			$global.console.log("initialize database:" + JSON.stringify(MonkeeDB.json));
+		MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
+		if(MonkeeDB.dbJson == null || isOverwrite) {
+			MonkeeDB.dbJson = { _id : "localdata-" + new Date().getTime(), version : "0.0.1", created : HxOverrides.dateStr(new Date()), updated : HxOverrides.dateStr(new Date())};
+			MonkeeDB.saveData(dbName);
 		}
-		MonkeeDB.saveData(name);
 	}
-	static read(name,key) {
-		if(MonkeeDB.json == null) {
-			MonkeeDB.json = JSON.parse(window.localStorage.getItem(name));
+	static read(dbName,key) {
+		if(MonkeeDB.dbJson == null) {
+			MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
 		}
 		if(key == null) {
-			return MonkeeDB.json;
+			return MonkeeDB.dbJson;
 		}
-		if(Object.prototype.hasOwnProperty.call(MonkeeDB.json,key)) {
-			return Reflect.getProperty(MonkeeDB.json,key);
+		if(Object.prototype.hasOwnProperty.call(MonkeeDB.dbJson,key)) {
+			return Reflect.getProperty(MonkeeDB.dbJson,key);
 		} else {
 			return null;
 		}
 	}
-	static load(name) {
-		if(MonkeeDB.json == null) {
-			MonkeeDB.json = JSON.parse(window.localStorage.getItem(name));
+	static load(dbName) {
+		if(MonkeeDB.dbJson == null) {
+			MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
 		}
-		if(MonkeeDB.json == null) {
+		if(MonkeeDB.dbJson == null) {
 			return null;
 		} else {
-			return MonkeeDB.json;
+			return MonkeeDB.dbJson;
 		}
 	}
-	static update(name,key,value) {
-		if(MonkeeDB.json == null) {
-			MonkeeDB.json = JSON.parse(window.localStorage.getItem(name));
+	static update(dbName,key,value) {
+		if(MonkeeDB.dbJson == null) {
+			MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
 		}
-		Reflect.setProperty(MonkeeDB.json,key,value);
-		Reflect.setProperty(MonkeeDB.json,"updated",HxOverrides.dateStr(new Date()));
-		MonkeeDB.saveData(name);
+		Reflect.setProperty(MonkeeDB.dbJson,key,value);
+		Reflect.setProperty(MonkeeDB.dbJson,"updated",HxOverrides.dateStr(new Date()));
+		MonkeeDB.saveData(dbName);
 	}
-	static delete(name,key) {
-		if(MonkeeDB.json == null) {
-			MonkeeDB.json = JSON.parse(window.localStorage.getItem(name));
+	static delete(dbName,key) {
+		if(MonkeeDB.dbJson == null) {
+			MonkeeDB.dbJson = MonkeeDB.dbJson.parse(window.localStorage.getItem(dbName));
 		}
-		if(Object.prototype.hasOwnProperty.call(MonkeeDB.json,key)) {
-			Reflect.deleteField(MonkeeDB.json,key);
+		if(Object.prototype.hasOwnProperty.call(MonkeeDB.dbJson,key)) {
+			Reflect.deleteField(MonkeeDB.dbJson,key);
 		}
-		MonkeeDB.saveData(name);
+		MonkeeDB.saveData(dbName);
 	}
-	static clear(name) {
-		MonkeeDB.json = null;
-		window.localStorage.removeItem(name);
-		$global.console.log("cleared data \"" + name + "\"");
+	static clear(dbName) {
+		MonkeeDB.dbJson = null;
+		window.localStorage.removeItem(dbName);
 	}
-	static saveData(name) {
-		window.localStorage.setItem(name,JSON.stringify(MonkeeDB.json));
-		$global.console.log(MonkeeDB.json);
+	static saveData(dbName) {
+		window.localStorage.setItem(dbName,MonkeeDB.dbJson.stringify(MonkeeDB.dbJson));
 	}
 }
 $hx_exports["MonkeeDB"] = MonkeeDB;
@@ -142,7 +137,5 @@ if(typeof(performance) != "undefined" ? typeof(performance.now) == "function" : 
 {
 }
 MonkeeDB.VERSION = "0.0.1";
-MonkeeDB.DEBUG = true;
+MonkeeDB.DEBUG = false;
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_db.js.map
