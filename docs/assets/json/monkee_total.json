@@ -88,9 +88,9 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_z.min.js"
     },
     "size": {
-      "original": "39.972Kb",
-      "minified": "25.836Kb",
-      "uglifyjs": "25.979Kb"
+      "original": "39.946Kb",
+      "minified": "25.823Kb",
+      "uglifyjs": "25.965Kb"
     },
     "updated": "2021-11-20"
   },

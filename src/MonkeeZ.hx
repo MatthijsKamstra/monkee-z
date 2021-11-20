@@ -9,9 +9,10 @@ using StringTools;
 @:keep
 class MonkeeZ {
 	/**
+	 * 0.0.2 	added more to the collection
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.1';
+	static inline var VERSION = '0.0.2';
 
 	public static var bugger:MonkeeBugger = new MonkeeBugger();
 	// public static var chain:MonkeeChain = new MonkeeChain();
@@ -24,7 +25,7 @@ class MonkeeZ {
 	public static var wrench:MonkeeWrench = new MonkeeWrench();
 
 	public function new() {
-		console.info(App.callIn('MonkeeZ', VERSION));
+		console.info(App.callIn('MonkeeZ ${utils.Emoji.monkee}', VERSION));
 	}
 
 	static public function main() {

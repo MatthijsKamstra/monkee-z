@@ -950,8 +950,8 @@ class utils_Throbber {
 utils_Throbber.__name__ = true;
 class MonkeeZ {
 	constructor() {
-		let _version = "0.0.1";
-		$global.console.info("[Monkee-Z]" + " " + "MonkeeZ" + " - version: " + _version);
+		let _version = "0.0.2";
+		$global.console.info("[Monkee-Z]" + " " + ("MonkeeZ " + "🐵") + " - version: " + _version);
 	}
 	static main() {
 		let app = new MonkeeZ();
@@ -1303,13 +1303,12 @@ MonkeeRoute.previousLocationHref = "";
 MonkeeUtil.VERSION = "0.0.9";
 MonkeeWrench.VERSION = "0.0.2";
 MonkeeWrench.DEBUG = false;
-MonkeeZ.VERSION = "0.0.1";
-MonkeeZ.load = new MonkeeLoad();
+MonkeeZ.VERSION = "0.0.2";
 MonkeeZ.bugger = new MonkeeBugger();
 MonkeeZ.db = new MonkeeDB();
 MonkeeZ.fullpage = new MonkeeFullpage();
 MonkeeZ.route = new MonkeeRoute();
-MonkeeZ.loading = new MonkeeLoad();
+MonkeeZ.load = new MonkeeLoad();
 MonkeeZ.util = new MonkeeUtil();
 MonkeeZ.wrench = new MonkeeWrench();
 MonkeeZ.main();
