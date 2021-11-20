@@ -14,6 +14,7 @@ import externs.MonkeeChain;
 @:keep
 class MonkeeUtil {
 	/**
+	 * 0.0.9	fix bug
 	 * 0.0.8	auto embedCode
 	 * 0.0.7	simplere version embedCode
 	 * 0.0.6	version and debug
@@ -23,7 +24,7 @@ class MonkeeUtil {
 	 * 0.0.2	embedCode
 	 * 0.0.1 	initial, data-escape on dataload
 	 */
-	static inline var VERSION = '0.0.8';
+	static inline var VERSION = '0.0.9';
 
 	var DEBUG = #if debug true #else false #end;
 
@@ -402,7 +403,9 @@ class MonkeeUtil {
 			script.onload = function(e) {
 				console.log(e);
 				//	Lib.nativeThis.remove();
-				Reflect.callMethod(callback, callback, []);
+				if (callback != null) {
+					Reflect.callMethod(callback, callback, []);
+				}
 			};
 			script.src = src;
 			document.body.appendChild(script);
