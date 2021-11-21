@@ -32,7 +32,9 @@ class MonkeeFullpage {
 	var previousPos = 0.0;
 	var dirPos = 0;
 	var timer = null;
-	var map = new Map<Int, String>();
+	var arr:Array<SlideObj> = [];
+
+	var isAutoScroll = false;
 
 	public function new() {
 		console.info(App.callIn('Fullpage ${utils.Emoji.monkeeFullpage}', VERSION));
@@ -53,21 +55,22 @@ class MonkeeFullpage {
 
 		// slides
 		var lis = ul.getElementsByTagName('li');
-		// trace(lis[0].scrollHeight);
 		slideHeight = Math.floor(lis[0].scrollHeight);
 
-		map = [];
+		arr = [];
 		// set up break points slides
 		for (i in 0...lis.length) {
 			// slide
 			var li:LIElement = cast lis[i];
-			// trace(li);
-			// trace(li.scrollHeight);
-			var t:Int = Math.floor((i * slideHeight) + (slideHeight * 0.5));
-			map.set(t, li.id);
+			arr.push({
+				el: li,
+				id: li.id,
+				start: Math.floor((i * slideHeight)),
+				middle: Math.floor((i * slideHeight) + (slideHeight * 0.5)),
+				end: Math.floor((i * slideHeight) + (slideHeight * 1)),
+			});
 		}
-
-		console.warn(map);
+		console.warn(arr);
 	}
 
 	function init() {
@@ -118,72 +121,63 @@ class MonkeeFullpage {
 
 	function onScrollStop() {
 		console.group('stopped scrolling');
-		// if (currentPos >= (slideHeight * 0.5)) {
-		// 	trace('next');
-		// }
+		// isAutoScroll = !isAutoScroll;
 
-		var gotoKey:Int = 0;
 		var id:String = '';
 
-		for (key in map.keys()) {
-			// your code
-			if (currentPos >= key) {
+		for (i in 0...arr.length) {
+			var slideObj:SlideObj = arr[i];
+			if (currentPos >= slideObj.middle) {
 				console.log('dirPos: ${dirPos} ');
 				console.log('currentPos: ${currentPos} ');
-				console.log('key: ${key} // ${map[key]}');
-				var prevKey = (key - slideHeight);
-				var nextKey = (key + slideHeight);
+				var prevKey = i - 1;
+				var nextKey = i + 1;
 				if (prevKey < 0)
-					prevKey = Math.floor(slideHeight * 0.5);
-				console.log('prevKey: ${prevKey} // ${map[prevKey]]}');
-				console.log('nextKey: ${nextKey} // ${map[nextKey]}');
+					prevKey = 0;
+				if (nextKey > arr.length)
+					nextKey = arr.length;
+
+				console.log('prevKey: ${prevKey} // ${arr[prevKey]]}');
+				console.log('nextKey: ${nextKey} // ${arr[nextKey]}');
 				console.log('>> scroll to');
 				if (dirPos > 0) {
-					console.log('next-id: ${map[nextKey]}');
-					gotoKey = nextKey;
-					id = map[nextKey];
+					console.log('next-id: ${arr[nextKey]}');
+					id = arr[nextKey].id;
 				} else {
-					console.log('next-id: ${map[prevKey]]}');
-					gotoKey = prevKey;
-					id = map[prevKey];
+					console.log('next-id: ${arr[prevKey]]}');
+					id = arr[prevKey].id;
 				}
 				console.log('-------');
-				// break;
 			}
 		}
 		console.groupEnd();
-
-		// var ul:Element = cast document.querySelector('[monkee-fullpage-slides]');
-		// ul.scrollTo(map.get(gotoKey));
-		// ul.scrollTo();
-
-		// trace(map.get(gotoKey));
 		document.getElementById(id).scrollIntoView();
 	}
 
 	function onScrollHandler(e:MouseScrollEvent) {
 		// scrolltracker.innerHTML = '${untyped e.currentTarget.scrollTop}';
-		if (timer != null) {
-			window.clearTimeout(timer);
+
+		if (!isAutoScroll) {
+			if (timer != null) {
+				window.clearTimeout(timer);
+			}
+			timer = window.setTimeout(function() {
+				// do something
+				onScrollStop();
+			}, 150);
+
+			currentPos = untyped e.currentTarget.scrollTop;
+
+			if (currentPos > previousPos) {
+				dirPos = 1;
+			} else {
+				dirPos = -1;
+			}
+
+			// trace(dirPos);
+
+			previousPos = currentPos;
 		}
-		timer = window.setTimeout(function() {
-			// do something
-			onScrollStop();
-		}, 150);
-
-		currentPos = untyped e.currentTarget.scrollTop;
-
-		if (currentPos > previousPos) {
-			dirPos = 1;
-		} else {
-			dirPos = -1;
-		}
-
-		// trace(dirPos);
-
-		previousPos = currentPos;
-		// trace(untyped e.currentTarget.scrollTop);
-		// document.getElementById('showScroll').innerHTML = window.pageYOffset + 'px';
 	}
 
 	/**
@@ -227,7 +221,6 @@ class MonkeeFullpage {
 	function setupStyle() {
 		var style = document.createElement('style');
 		style.innerHTML = '
-
 .monkee-fullpage-list {
   display: inline-block;
   margin: 0;
@@ -249,14 +242,19 @@ class MonkeeFullpage {
   align-items: center;
   justify-content: center;
 }
-  ';
-
+';
 		document.head.appendChild(style);
-
-		// trace('injectStyle');
 	}
 
 	static public function main() {
 		var app = new MonkeeFullpage();
 	}
+}
+
+typedef SlideObj = {
+	var el:Dynamic;
+	var id:String;
+	var start:Int;
+	var middle:Int;
+	var end:Int;
 }
