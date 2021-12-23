@@ -56,8 +56,10 @@ class MonkeeWrenchLite {
 		var urlParams = new URLSearchParams(window.location.search);
 		var myParam = urlParams.get('monkeewrench');
 
-		if (myParam != null)
+		if (myParam != null) {
 			validateElementsOnPage();
+			window.onkeydown = null; // remove listener
+		}
 	}
 
 	/**

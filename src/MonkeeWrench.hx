@@ -70,6 +70,7 @@ class MonkeeWrench {
 		if (myParam != null) {
 			buildIcon();
 			validateElementsOnPage();
+			window.onkeydown = null; // remove listener
 		}
 	}
 
