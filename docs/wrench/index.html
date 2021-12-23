@@ -68,6 +68,26 @@
 
     <div class="container my-5">
         <div class="row">
+            <div class="col-6">
+                <h3>Monkee-Wrench-Lite 🔧</h3>
+                <a class="float-right btn btn-outline-dark btn-sm" href="wrench/">more</a>
+                <p>A library for fixing broken (background)images and visualize broken/missing links <i>(~ 3KB)</i></p>
+            </div>
+            <div class="col-6">
+                <h3>Monkee-Wrench 🔧</h3>
+                <a class="float-right btn btn-outline-dark btn-sm" href="wrench/">more</a>
+                <p>A library for fixing broken (background)images and visualize broken/missing links <i>(~ 5KB)</i></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div id="app_markdown"></div>
+    </div>
+
+
+    <div class="container my-5">
+        <div class="row">
             <div class="col">
                 <h1>Monkee Wrench 🔧</h1>
                 <p>fix some issues I have when working on front end. this fixes the images with dummy images and lets
@@ -92,7 +112,9 @@
                     <li>
 
                         or use
-                        <script>document.write(`${window.location.href}`);</script>?monkeewrench
+                        <a href="?monkeewrench">
+                            <script>document.write(`${window.location.href}`);</script>?monkeewrench
+                        </a>
 
                     </li>
                 </ol>
@@ -100,20 +122,7 @@
                 <img src="../assets/img/monkee-wrench-console.png" class="img-fluid">
             </div>
         </div>
-        <div class="row">
-            <div class="col-6">
 
-                <h3>Monkee-Wrench-Lite</h3>
-                <a class="float-right btn btn-outline-dark btn-sm" href="wrench.html">more</a>
-                <p>A library for fixing broken (background)images and visualize broken/missing links <i>(~ 3KB)</i></p>
-
-            </div>
-            <div class="col-6">
-                <h3>Monkee-Wrench</h3>
-                <a class="float-right btn btn-outline-dark btn-sm" href="wrench.html">more</a>
-                <p>A library for fixing broken (background)images and visualize broken/missing links <i>(~ 4KB)</i></p>
-            </div>
-        </div>
 
 
 
@@ -183,6 +192,7 @@
             <div class="col-6">
                 <p>normal links</p>
                 <ul>
+                    <li><a name="foo"></a>empty link with name(anchor)</li>
                     <li><a href="https://github.com/MatthijsKamstra/monkee-z">monkee-z</a></li>
                     <li><a href="https://ah.nl">ah</a></li>
                     <li><a href="https://github.com/MatthijsKamstra/monkee-z" class='btn btn-primary'>btn-primary</a>
@@ -198,6 +208,7 @@
                 <p>missing links, hightlighted by script</p>
                 <ul>
                     <li><a href="">missing/empty link</a></li>
+                    <li><a id="foo"></a>empty link with id(anchor wrong?)</li>
                     <li><a href="#">#</a></li>
                     <li><a href="#" class='btn btn-primary'>btn-primary</a></li>
                     <li><a href="/not" class='btn btn-primary'>/not</a></li>
@@ -276,14 +287,73 @@
     <script src="../js/monkee_chain.min.min.js"></script>
 
     <script src="../js/monkee_util.js"></script>
-    <script src="../js/monkee_wrench_lite.js"></script>
-    <!-- <script src="../js/monkee_wrench.js"></script> -->
+    <!-- <script src="../js/monkee_wrench_lite.js"></script> -->
+    <script src="../js/monkee_wrench.js"></script>
 
     <script>
         MonkeeUtil.embedSpecs('#js-specs-wrench', '../assets/json/monkee_wrench.json');
         MonkeeUtil.embedSpecs('#js-specs-wrench-lite', '../assets/json/monkee_wrench_lite.json');
         MonkeeUtil.embedCode('#js-twig-snippet');
         MonkeeUtil.embedCode('#js-embed-snippet');
+
+        // Setup the component
+        var app_markdown = new MonkeeChain("#app_markdown", {
+            data: {
+                md: "",
+                arr: [],
+            },
+            template: function (props) {
+                return `
+            <div>${table(props.arr)}</div>
+            `;
+            },
+        });
+
+
+        function table(arr) {
+            var html = '<table class="table table-striped table-sm">';
+            for (let i = 0; i < arr.length; i++) {
+                const row = arr[i];
+                html += `<tr>`;
+                for (let j = 0; j < row.length; j++) {
+                    const col = row[j];
+                    html += `<td>${col}<td>`;
+                }
+                html += `</tr>`;
+            }
+            html += "<table>";
+            return html;
+        }
+
+        // Fetch API data
+        fetch("../assets/md/monkee_wrench.md")
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (data) {
+                // console.log(data);
+                var arr = [];
+                var linesArr = data.split("\n");
+                for (let i = 0; i < linesArr.length; i++) {
+                    if (i == 1) continue;
+                    const line = linesArr[i];
+                    // console.log(line);
+                    var col = line.split(" | ");
+                    // console.log(col.length);
+                    if (col.length <= 1) continue;
+                    var tempColArr = [];
+                    for (let j = 0; j < col.length; j++) {
+                        const val = col[j].replaceAll("| ", "").replaceAll(" |", "").replaceAll('', "");
+                        // console.log(val);
+                        tempColArr.push(val);
+                    }
+                    arr.push(tempColArr);
+                }
+                console.log(arr);
+                app_markdown.data.md = data;
+                app_markdown.data.arr = arr;
+                app_markdown.render();
+            });
     </script>
 
 </body>

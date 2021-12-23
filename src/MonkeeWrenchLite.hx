@@ -17,6 +17,7 @@ using StringTools;
 @:keep
 class MonkeeWrenchLite {
 	/**
+	 * 0.0.7	remove listener after first trigger
 	 * 0.0.6	minify
 	 * 0.0.5	cleaning up
 	 * 0.0.4 	href == null?
@@ -24,7 +25,7 @@ class MonkeeWrenchLite {
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.6';
+	static inline var VERSION = '0.0.7';
 
 	static inline final DEBUG = #if debug true #else false #end;
 
@@ -68,6 +69,7 @@ class MonkeeWrenchLite {
 		if (e.key == 'm') {
 			// console.info('${utils.Emoji.monkeeWrench} Start checking document');
 			validateElementsOnPage();
+			window.onkeydown = null; // remove listener
 		}
 	}
 

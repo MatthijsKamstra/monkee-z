@@ -1,5 +1,6 @@
 package;
 
+import js.html.DivElement;
 import haxe.Constraints.Function;
 import utils.Emoji;
 import js.html.LinkElement;
@@ -20,10 +21,11 @@ using StringTools;
 @:keep
 class MonkeeWrench {
 	/**
+	 * 0.0.3 	sync with lite, snackbar added, href == null
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.2';
+	static inline var VERSION = '0.0.3';
 
 	static inline final DEBUG = #if debug true #else false #end;
 
@@ -34,6 +36,8 @@ class MonkeeWrench {
 	];
 
 	final ROOT = window.location.host;
+
+	var snackbar:DivElement;
 
 	public function new() {
 		console.info(App.callIn('Wrench ${utils.Emoji.monkeeWrench}', VERSION));
@@ -53,49 +57,197 @@ class MonkeeWrench {
 	}
 
 	/**
-	 * Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user’s experience. For more help http://xhr.spec.whatwg.org/
-	 * @param url
+	 * Set up key listener, and check if we can start checking page
 	 */
-	function UrlExists(url) {
-		var http = new XMLHttpRequest();
-		http.open('HEAD', url, false);
-		http.send();
-		// console.log(http.status);
-		return http.status != 404;
+	function init() {
+		window.onkeydown = (e) -> getkey(e);
+
+		var urlParams = new URLSearchParams(window.location.search);
+		var myParam = urlParams.get('monkeewrench');
+
+		buildSnackbar();
+
+		if (myParam != null) {
+			buildIcon();
+			validateElementsOnPage();
+		}
 	}
 
-	function isUrlValid(url, cb:js.lib.Function) {
-		var request = new js.html.XMLHttpRequest();
-		request.open('GET', url, true);
-
-		request.onload = function() {
-			if (request.status >= 200 && request.status < 400) {
-				// Success!
-				var json = request.responseText;
-				trace("json: " + json);
-
-				cb.apply(this, []);
-			} else {
-				// We reached our target server, but it returned an error
-				trace("oeps: status: " + request.status + " // json: " + request.responseText);
-			}
-		};
-
-		request.onerror = function() {
-			// There was a connection error of some sort
-			trace("error");
-		};
-
-		request.send();
-	}
-
+	/**
+	 * Listen to `m`
+	 * @param e
+	 */
 	function getkey(e) {
 		// console.log(e);
 		if (e.key == 'm') {
 			buildIcon();
-			replaceMissingAssets();
+			validateElementsOnPage();
+			window.onkeydown = null; // remove listener
 		}
 	}
+
+	function validateElementsOnPage() {
+		// <video autoplay="" muted="" loop="" playsinline="" poster="/content/homepage/BPFD_home_still.jpeg" width="100%">
+		// <source type="video/mp4" src="/content/videos/BPFD_home_animation.mp4">
+
+		// <div class="bg__image" style="background-image: url(/content/homepage/Home_table_Stocksy_txpa94ad9e7aIv200_Small_2907611.jpg)"></div>
+
+		// <img class="d-block w-100" src="/content/homepage/Home_carroussel_Fotograaf-Lize-Kraan.jpg" alt="image in carousel">
+
+		// check all images
+		var elementsImg = document.getElementsByTagName("img");
+
+		snackbarInfo('Checking images');
+
+		for (i in 0...elementsImg.length) {
+			snackbarInfo('Check image ' + i);
+
+			var el:ImageElement = cast elementsImg[i];
+			var url = el.src;
+			var w = el.width;
+			var h = el.height;
+			if (!UrlExists(url)) {
+				// image doesn't exists
+
+				snackbarInfo('Replacing image: ' + url);
+
+				// https://picsum.photos/500/500
+				el.dataset.monkeeWrenchImageReplace = 'true';
+				el.src = DEBUG_IMAGES[0];
+				addImageLabel(el);
+
+				if (el.getAttribute('width') != null && el.getAttribute('height') != null) {
+					el.style.width = '${w}px';
+					el.style.display = 'block';
+					el.style.width = '500px';
+					el.style.height = '250px';
+					el.style.objectFit = 'cover';
+
+					// calculate new image height
+
+					// el.height = Math.round(h * (h / w));
+					el.style.height = '${Math.round(el.width * (h / w))}px';
+				}
+			}
+		}
+
+		// check all elements for background images
+		var elementsWithBG = document.getElementsByTagName("*");
+		snackbarInfo('Checking background-images');
+		for (i in 0...elementsWithBG.length) {
+			var element:Element = cast elementsWithBG[i];
+			var url = element.style.backgroundImage.replace('\'', '').replace('\"', '').replace('url(', "").replace(')', '');
+			if (element.style.backgroundImage != "") {
+				snackbarInfo('Check background-image ' + i);
+				element.dataset.monkeeWrenchCheck = 'true';
+			}
+			// if (element.style.backgroundImage != "") {
+			// 	console.log(element.style.backgroundImage);
+			// 	console.log(url);
+			// 	console.log('-------------' + UrlExists(url));
+			// }
+			// try {
+			if (!UrlExists(url)) {
+				// console.log('xxx');
+				snackbarInfo('Replacing background-image: ' + url);
+
+				element.dataset.monkeeWrenchCheck = 'true';
+				element.dataset.monkeeWrenchBgImageReplace = 'true';
+				element.style.backgroundImage = 'url(${DEBUG_IMAGES[1]})';
+				addBGImageLabel(element);
+			}
+			// } catch (e) {
+			// 	trace(e);
+			// }
+		}
+
+		// check all video `<video>`
+		var elementsVideo = document.getElementsByTagName("video");
+		snackbarInfo('Checking video');
+		for (i in 0...elementsVideo.length) {
+			var element:VideoElement = cast elementsVideo[i];
+			element.dataset.monkeeWrenchCheck = 'true';
+			var url = element.poster;
+			// console.log(url);
+			if (!UrlExists(url)) {
+				snackbarInfo('Replacing video: ' + url);
+				// https://picsum.photos/500/500
+				element.dataset.monkeeWrenchPosterImageReplace = 'true';
+				element.poster = DEBUG_IMAGES[2];
+			}
+		}
+		// check all links `<a>`
+		var elementsLinks = document.getElementsByTagName("a");
+		snackbarInfo('Checking links');
+		for (i in 0...elementsLinks.length) {
+			var el:LinkElement = cast elementsLinks[i];
+			el.dataset.monkeeWrenchCheck = 'true';
+			var url = el.href;
+			var href = el.getAttribute('href');
+			var id = el.id;
+			if (el.getAttribute('name') != null)
+				continue;
+			// console.log(url);
+			if (href == '' || href == '#' || href == null) {
+				snackbarInfo('Checking empty links');
+				el.dataset.monkeWrenchEmptyLink = 'true';
+				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
+			}
+			if (href == null)
+				continue;
+			if (href.startsWith('/') || href.indexOf(ROOT) != -1) {
+				if (!UrlExists(url)) {
+					snackbarInfo('Checking dead links ' + url);
+					// https://picsum.photos/500/500
+					el.dataset.monkeeWrenchDeadlink = 'true';
+					el.innerHTML = '${utils.Emoji.x} ${el.innerHTML}';
+				}
+			}
+		}
+
+		// var video = document.querySelectorAll('video')[0];
+		// if (video != null) {
+		// 	// console.log(video);
+		// 	var source = video.querySelectorAll('source')[0];
+		// 	// console.log(source);
+		// 	source.src = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+		// }
+
+		isSnackbarVisible(false);
+	}
+
+	// ____________________________________ snackbar ____________________________________
+
+	function buildSnackbar() {
+		snackbar = cast document.createElement('div');
+		snackbar.innerHTML = "some text";
+		snackbar.id = 'snackbar';
+		snackbar.setAttribute('style',
+			'visibility: hidden;min-width: 250px;transform: translate(-50%,0);background-color: #333;color: #fff;text-align: center;border-radius: 2px;padding: 16px; position: fixed;z-index: 1;left: 50%;bottom: 30px;');
+		document.body.appendChild(snackbar);
+	}
+
+	function snackbarInfo(msg:String) {
+		isSnackbarVisible(true);
+		snackbar.innerHTML = msg;
+	}
+
+	function isSnackbarVisible(isVisible:Bool = true) {
+		if (isVisible) {
+			snackbar.style.visibility = 'visible';
+		} else {
+			snackbar.style.visibility = 'hidden';
+		}
+
+		// snackbar.classList.add("show");
+
+		// // After 3 seconds, remove the show class from DIV
+		// window.setTimeout(function() {
+		// 	snackbar.classList.remove('show');
+		// }, 3000);
+	}
+
+	// ____________________________________ builds ____________________________________
 
 	function buildIcon() {
 		var btn = document.createElement('div');
@@ -103,20 +255,8 @@ class MonkeeWrench {
 		btn.className = 'btn btn-outline-dark';
 		btn.title = 'Monkee Wrench is used';
 		btn.setAttribute('style', 'position: fixed;bottom: 10px;left: 10px;');
-		btn.onclick = () -> replaceMissingAssets();
+		btn.onclick = () -> validateElementsOnPage();
 		document.body.appendChild(btn);
-	}
-
-	function init() {
-		window.onkeydown = (e) -> getkey(e);
-
-		var urlParams = new URLSearchParams(window.location.search);
-		var myParam = urlParams.get('monkeewrench');
-
-		if (myParam != null) {
-			buildIcon();
-			replaceMissingAssets();
-		}
 	}
 
 	function addImageLabel(el:Element) {
@@ -161,113 +301,47 @@ class MonkeeWrench {
 		el.style.position = 'relative';
 	}
 
-	function replaceMissingAssets() {
-		// <video autoplay="" muted="" loop="" playsinline="" poster="/content/homepage/BPFD_home_still.jpeg" width="100%">
-		// <source type="video/mp4" src="/content/videos/BPFD_home_animation.mp4">
+	/**
+	 * Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user’s experience. For more help http://xhr.spec.whatwg.org/
+	 * @param url
+	 */
+	function UrlExists(url) {
+		var http = new XMLHttpRequest();
+		http.open('HEAD', url, false);
+		http.send();
+		// console.log(http.status);
+		return http.status != 404;
+	}
 
-		// <div class="bg__image" style="background-image: url(/content/homepage/Home_table_Stocksy_txpa94ad9e7aIv200_Small_2907611.jpg)"></div>
+	/**
+	 * [Description]
+	 * @param url
+	 * @param cb
+	 * @param arr
+	 */
+	function isUrlValid(url, cb:js.lib.Function) {
+		var request = new js.html.XMLHttpRequest();
+		request.open('GET', url, true);
 
-		// <img class="d-block w-100" src="/content/homepage/Home_carroussel_Fotograaf-Lize-Kraan.jpg" alt="image in carousel">
+		request.onload = function() {
+			if (request.status >= 200 && request.status < 400) {
+				// Success!
+				var json = request.responseText;
+				trace("json: " + json);
 
-		// check all images
-		var elementsImg = document.getElementsByTagName("img");
-		for (i in 0...elementsImg.length) {
-			var el:ImageElement = cast elementsImg[i];
-			var url = el.src;
-			var w = el.width;
-			var h = el.height;
-			if (!UrlExists(url)) {
-				// image doesn't exists
-
-				// https://picsum.photos/500/500
-				el.dataset.monkeeWrenchImageReplace = 'true';
-				el.src = DEBUG_IMAGES[0];
-				addImageLabel(el);
-
-				if (el.getAttribute('width') != null && el.getAttribute('height') != null) {
-					el.style.width = '${w}px';
-					el.style.display = 'block';
-					el.style.width = '500px';
-					el.style.height = '250px';
-					el.style.objectFit = 'cover';
-
-					// calculate new image height
-
-					// el.height = Math.round(h * (h / w));
-					el.style.height = '${Math.round(el.width * (h / w))}px';
-				}
+				cb.apply(this, []);
+			} else {
+				// We reached our target server, but it returned an error
+				trace("oeps: status: " + request.status + " // json: " + request.responseText);
 			}
-		}
+		};
 
-		// check all elements for background images
-		var elementsWithBG = document.getElementsByTagName("*");
-		for (i in 0...elementsWithBG.length) {
-			var element:Element = cast elementsWithBG[i];
-			var url = element.style.backgroundImage.replace('\'', '').replace('\"', '').replace('url(', "").replace(')', '');
-			if (element.style.backgroundImage != "") {
-				element.dataset.monkeeWrenchCheck = 'true';
-			}
-			// if (element.style.backgroundImage != "") {
-			// 	console.log(element.style.backgroundImage);
-			// 	console.log(url);
-			// 	console.log('-------------' + UrlExists(url));
-			// }
-			// try {
-			if (!UrlExists(url)) {
-				// console.log('xxx');
-				element.dataset.monkeeWrenchCheck = 'true';
-				element.dataset.monkeeWrenchBgImageReplace = 'true';
-				element.style.backgroundImage = 'url(${DEBUG_IMAGES[1]})';
-				addBGImageLabel(element);
-			}
-			// } catch (e) {
-			// 	trace(e);
-			// }
-		}
+		request.onerror = function() {
+			// There was a connection error of some sort
+			trace("error");
+		};
 
-		// check all video
-		var elementsVideo = document.getElementsByTagName("video");
-		for (i in 0...elementsVideo.length) {
-			var element:VideoElement = cast elementsVideo[i];
-			element.dataset.monkeeWrenchCheck = 'true';
-			var url = element.poster;
-			// console.log(url);
-			if (!UrlExists(url)) {
-				// https://picsum.photos/500/500
-				element.dataset.monkeeWrenchPosterImageReplace = 'true';
-				element.poster = DEBUG_IMAGES[2];
-			}
-		}
-		// check all links
-		var elementsLinks = document.getElementsByTagName("a");
-		for (i in 0...elementsLinks.length) {
-			var el:LinkElement = cast elementsLinks[i];
-			el.dataset.monkeeWrenchCheck = 'true';
-			var url = el.href;
-			var href = el.getAttribute('href');
-			var id = el.id;
-			// console.log(url);
-			if (href == '' || href == '#') {
-				el.dataset.monkeeWrenchEmptyLink = 'true';
-				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
-			}
-
-			if (href.startsWith('/') || href.indexOf(ROOT) != -1) {
-				if (!UrlExists(url)) {
-					// https://picsum.photos/500/500
-					el.dataset.monkeeWrenchDeadlink = 'true';
-					el.innerHTML = '${utils.Emoji.x} ${el.innerHTML}';
-				}
-			}
-		}
-
-		// var video = document.querySelectorAll('video')[0];
-		// if (video != null) {
-		// 	// console.log(video);
-		// 	var source = video.querySelectorAll('source')[0];
-		// 	// console.log(source);
-		// 	source.src = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
-		// }
+		request.send();
 	}
 
 	static public function main() {
