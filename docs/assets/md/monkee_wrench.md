@@ -2,10 +2,10 @@
 | ------------------------- | ---------------- | ------------ |
 | Images                    | ✅               | ✅           |
 | Background images         | ✅               | ✅           |
-| deadlinks                 | ✅               | ✅           |
+| Deadlinks 404             | ✅               | ✅           |
 | a href check              | ✅               | ✅           |
 | Video                     | ❌               | ✅           |
 | Progress                  | ❌               | ✅           |
 | Snackbar                  | ❌               | ✅           |
-| labels for missing images | ❌               | ✅           |
-| KB                        | < 1KB            | ~ 4KB        |
+| Labels for missing images | ❌               | ✅           |
+| KB                        | ~ 2.5KB          | ~ 5.5KB      |
