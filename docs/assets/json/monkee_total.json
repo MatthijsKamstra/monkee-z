@@ -88,9 +88,9 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_z.min.js"
     },
     "size": {
-      "original": "43.769Kb",
-      "minified": "28.572Kb",
-      "uglifyjs": "28.714Kb"
+      "original": "43.654Kb",
+      "minified": "28.518Kb",
+      "uglifyjs": "28.661Kb"
     },
     "updated": "2021-12-23"
   },
@@ -268,8 +268,8 @@
   "monkee_wrench.js": {
     "compression": {
       "original": "100% smaller",
-      "minified": "144% smaller",
-      "uglifyjs": "142% smaller"
+      "minified": "143% smaller",
+      "uglifyjs": "141% smaller"
     },
     "name": "monkee_wrench.js",
     "url": {
@@ -278,9 +278,9 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_wrench.min.js"
     },
     "size": {
-      "original": "8.212Kb",
-      "minified": "5.681Kb",
-      "uglifyjs": "5.775Kb"
+      "original": "8.097Kb",
+      "minified": "5.627Kb",
+      "uglifyjs": "5.721Kb"
     },
     "updated": "2021-12-23"
   },

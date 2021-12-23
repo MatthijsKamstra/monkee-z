@@ -40,7 +40,7 @@ class MonkeeWrench {
 	var snackbar:DivElement;
 
 	public function new() {
-		console.info(App.callIn('Wrench ${utils.Emoji.monkeeWrench}', VERSION));
+		// console.info(App.callIn('Wrench ${utils.Emoji.monkeeWrench}', VERSION));
 
 		// console.log(ROOT);
 
