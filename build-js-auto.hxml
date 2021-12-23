@@ -22,9 +22,9 @@
 
 # --next
 
---cmd echo MonkeeFullpage
--main MonkeeFullpage
--js docs/js/monkee_fullpage.js
+# --cmd echo MonkeeFullpage
+# -main MonkeeFullpage
+# -js docs/js/monkee_fullpage.js
 
 
 # MonkeeChain
@@ -55,11 +55,12 @@
 # -js docs/js/monkee_gui_test.js
 # --cmd echo MonkeeGuiTest
 
-# -main MonkeeWrench
-# -js docs/js/monkee_wrench.js
-# --cmd echo MonkeeWrench
+-main MonkeeWrench
+-js docs/js/monkee_wrench.js
+--cmd echo MonkeeWrench
 
+--next
 
-# -main MonkeeWrenchLite
-# -js docs/js/monkee_wrench_lite.js
-# --cmd echo MonkeeWrenchLite
+-main MonkeeWrenchLite
+-js docs/js/monkee_wrench_lite.js
+--cmd echo MonkeeWrenchLite
