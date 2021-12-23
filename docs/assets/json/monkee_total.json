@@ -88,9 +88,9 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_z.min.js"
     },
     "size": {
-      "original": "43.765Kb",
-      "minified": "28.568Kb",
-      "uglifyjs": "28.71Kb"
+      "original": "43.769Kb",
+      "minified": "28.572Kb",
+      "uglifyjs": "28.714Kb"
     },
     "updated": "2021-12-23"
   },
@@ -278,9 +278,9 @@
       "uglifyjs": "https://matthijskamstra.github.io/monkee-z/js/monkee_wrench.min.js"
     },
     "size": {
-      "original": "8.208Kb",
-      "minified": "5.677Kb",
-      "uglifyjs": "5.771Kb"
+      "original": "8.212Kb",
+      "minified": "5.681Kb",
+      "uglifyjs": "5.775Kb"
     },
     "updated": "2021-12-23"
   },
