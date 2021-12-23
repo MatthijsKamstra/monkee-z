@@ -11,9 +11,8 @@ class MonkeeFullpage {
 		this.slideHeight = 0;
 		this.linkArray = [];
 		this.colors = ["#7fdbff","#39cccc","#3d9970","#2ecc40","#01ff70","#ffdc00","#ff851b","#ff4136","#f012be","#b10dc9","#85144b","#ffffff","#dddddd","#aaaaaa","#111111","#001f3f","#0074d9"];
-		this.DEBUG = true;
+		this.DEBUG = false;
 		let _version = "0.0.1";
-		_version = "2021-11-18 21:26:53";
 		$global.console.info("[Monkee-Z]" + " " + ("Fullpage " + "📃") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
@@ -244,5 +243,3 @@ $global.$haxeUID |= 0;
 js_Boot.__toStr = ({ }).toString;
 MonkeeFullpage.main();
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);
-
-//# sourceMappingURL=monkee_fullpage.js.map

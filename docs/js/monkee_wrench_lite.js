@@ -4,7 +4,7 @@ class MonkeeWrenchLite {
 		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg"];
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.6");
+			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.7");
 			$global.console.log("Monkee Wrench Lite is a JavaScript tool to replace missing (background)images, and show broken links");
 			$global.console.log("Use by focussing the browser and press \"m\"");
 			$global.console.log("Or use " + window.location.href + "?monkeewrench");
@@ -22,11 +22,13 @@ class MonkeeWrenchLite {
 		let myParam = urlParams.get("monkeewrench");
 		if(myParam != null) {
 			this.validateElementsOnPage();
+			window.onkeydown = null;
 		}
 	}
 	getkey(e) {
 		if(e.key == "m") {
 			this.validateElementsOnPage();
+			window.onkeydown = null;
 		}
 	}
 	validateElementsOnPage() {
@@ -118,7 +120,7 @@ function $bind(o,m) { if( m == null ) return null; if( m.__id__ == null ) m.__id
 $global.$haxeUID |= 0;
 {
 }
-MonkeeWrenchLite.VERSION = "0.0.6";
+MonkeeWrenchLite.VERSION = "0.0.7";
 MonkeeWrenchLite.DEBUG = false;
 MonkeeWrenchLite.main();
 })(typeof exports != "undefined" ? exports : typeof window != "undefined" ? window : typeof self != "undefined" ? self : this, typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

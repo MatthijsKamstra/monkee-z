@@ -195,7 +195,13 @@ $hx_exports["MonkeeDB"] = MonkeeDB;
 MonkeeDB.__name__ = true;
 class MonkeeFullpage {
 	constructor() {
-		this.scrolltracker = window.document.getElementById("js-scroll-tracker");
+		this.isAutoScroll = false;
+		this.arr = [];
+		this.timer = null;
+		this.dirPos = 0;
+		this.previousPos = 0.0;
+		this.currentPos = 0.0;
+		this.slideHeight = 0;
 		this.linkArray = [];
 		this.colors = ["#7fdbff","#39cccc","#3d9970","#2ecc40","#01ff70","#ffdc00","#ff851b","#ff4136","#f012be","#b10dc9","#85144b","#ffffff","#dddddd","#aaaaaa","#111111","#001f3f","#0074d9"];
 		this.DEBUG = false;
@@ -211,7 +217,16 @@ class MonkeeFullpage {
 		let ul = window.document.querySelector("[monkee-fullpage-slides]");
 		ul.classList.add("monkee-fullpage-list");
 		let lis = ul.getElementsByTagName("li");
-		console.log("src/MonkeeFullpage.hx:49:",lis[0].scrollHeight);
+		this.slideHeight = Math.floor(lis[0].scrollHeight);
+		this.arr = [];
+		let _g = 0;
+		let _g1 = lis.length;
+		while(_g < _g1) {
+			let i = _g++;
+			let li = lis[i];
+			this.arr.push({ el : li, id : li.id, start : Math.floor(i * this.slideHeight), middle : Math.floor(i * this.slideHeight + this.slideHeight * 0.5), end : Math.floor(i * this.slideHeight + this.slideHeight)});
+		}
+		$global.console.warn(this.arr);
 	}
 	init() {
 		let ul = window.document.querySelector("[monkee-fullpage-slides]");
@@ -252,8 +267,58 @@ class MonkeeFullpage {
 			}
 		}
 	}
+	onScrollStop() {
+		$global.console.group("stopped scrolling");
+		let id = "";
+		let _g = 0;
+		let _g1 = this.arr.length;
+		while(_g < _g1) {
+			let i = _g++;
+			let slideObj = this.arr[i];
+			if(this.currentPos >= slideObj.middle) {
+				$global.console.log("dirPos: " + this.dirPos + " ");
+				$global.console.log("currentPos: " + this.currentPos + " ");
+				let prevKey = i - 1;
+				let nextKey = i + 1;
+				if(prevKey < 0) {
+					prevKey = 0;
+				}
+				if(nextKey > this.arr.length) {
+					nextKey = this.arr.length;
+				}
+				$global.console.log("prevKey: " + prevKey + " // " + Std.string(this.arr[prevKey]));
+				$global.console.log("nextKey: " + nextKey + " // " + Std.string(this.arr[nextKey]));
+				$global.console.log(">> scroll to");
+				if(this.dirPos > 0) {
+					$global.console.log("next-id: " + Std.string(this.arr[nextKey]));
+					id = this.arr[nextKey].id;
+				} else {
+					$global.console.log("next-id: " + Std.string(this.arr[prevKey]));
+					id = this.arr[prevKey].id;
+				}
+				$global.console.log("-------");
+			}
+		}
+		$global.console.groupEnd();
+		window.document.getElementById(id).scrollIntoView();
+	}
 	onScrollHandler(e) {
-		this.scrolltracker.innerHTML = "" + e.currentTarget.scrollTop;
+		let _gthis = this;
+		if(!this.isAutoScroll) {
+			if(this.timer != null) {
+				window.clearTimeout(this.timer);
+			}
+			this.timer = window.setTimeout(function() {
+				_gthis.onScrollStop();
+			},150);
+			this.currentPos = e.currentTarget.scrollTop;
+			if(this.currentPos > this.previousPos) {
+				this.dirPos = 1;
+			} else {
+				this.dirPos = -1;
+			}
+			this.previousPos = this.currentPos;
+		}
 	}
 	onclickHandler(e) {
 		let _g = 0;
@@ -267,7 +332,7 @@ class MonkeeFullpage {
 	}
 	setupStyle() {
 		let style = window.document.createElement("style");
-		style.innerHTML = "\n\n.monkee-fullpage-list {\n  display: inline-block;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  list-style-type: none;\n  overflow: auto;\n  scroll-behavior: smooth;\n}\n.monkee-fullpage-list-horizontal {\n  display: block ruby;\n}\n.monkee-fullpage-slide {\n  border: 0px solid pink;\n  width: 100%;\n  height: 100%;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n}\n  ";
+		style.innerHTML = "\n.monkee-fullpage-list {\n  display: inline-block;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  list-style-type: none;\n  overflow: auto;\n  scroll-behavior: smooth;\n}\n.monkee-fullpage-list-horizontal {\n  display: block ruby;\n}\n.monkee-fullpage-slide {\n  border: 0px solid pink;\n  width: 100%;\n  height: 100%;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n}\n";
 		window.document.head.appendChild(style);
 	}
 }
@@ -741,11 +806,11 @@ class MonkeeWrench {
 	constructor() {
 		this.ROOT = window.location.host;
 		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
-		let _version = "0.0.2";
+		let _version = "0.0.3";
 		$global.console.info("[Monkee-Z]" + " " + ("Wrench " + "🔧") + " - version: " + _version);
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.2");
+			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.3");
 			$global.console.log("Monkee Wrench is a JavaScript tool to replace missing (background)images, and show brokken links");
 			$global.console.log("Use by focussing the browser and press \"m\"");
 			$global.console.log("Or use " + window.location.href + "?monkeewrench");
@@ -754,34 +819,140 @@ class MonkeeWrench {
 			_gthis.init();
 		});
 	}
-	UrlExists(url) {
-		let http = new XMLHttpRequest();
-		http.open("HEAD",url,false);
-		http.send();
-		return http.status != 404;
-	}
-	isUrlValid(url,cb) {
-		let request = new XMLHttpRequest();
-		request.open("GET",url,true);
+	init() {
 		let _gthis = this;
-		request.onload = function() {
-			if(request.status >= 200 && request.status < 400) {
-				let json = request.responseText;
-				console.log("src/MonkeeWrench.hx:75:","json: " + json);
-				cb.apply(_gthis,[]);
-			} else {
-				console.log("src/MonkeeWrench.hx:80:","oeps: status: " + request.status + " // json: " + request.responseText);
-			}
+		window.onkeydown = function(e) {
+			_gthis.getkey(e);
 		};
-		request.onerror = function() {
-			console.log("src/MonkeeWrench.hx:86:","error");
-		};
-		request.send();
+		let urlParams = new URLSearchParams(window.location.search);
+		let myParam = urlParams.get("monkeewrench");
+		this.buildSnackbar();
+		if(myParam != null) {
+			this.buildIcon();
+			this.validateElementsOnPage();
+			window.onkeydown = null;
+		}
 	}
 	getkey(e) {
 		if(e.key == "m") {
 			this.buildIcon();
-			this.replaceMissingAssets();
+			this.validateElementsOnPage();
+			window.onkeydown = null;
+		}
+	}
+	validateElementsOnPage() {
+		let elementsImg = window.document.getElementsByTagName("img");
+		this.snackbarInfo("Checking images");
+		let _g = 0;
+		let _g1 = elementsImg.length;
+		while(_g < _g1) {
+			let i = _g++;
+			this.snackbarInfo("Check image " + i);
+			let el = elementsImg[i];
+			let url = el.src;
+			let w = el.width;
+			let h = el.height;
+			if(!this.UrlExists(url)) {
+				this.snackbarInfo("Replacing image: " + url);
+				el.dataset.monkeeWrenchImageReplace = "true";
+				el.src = this.DEBUG_IMAGES[0];
+				this.addImageLabel(el);
+				if(el.getAttribute("width") != null && el.getAttribute("height") != null) {
+					el.style.width = "" + w + "px";
+					el.style.display = "block";
+					el.style.width = "500px";
+					el.style.height = "250px";
+					el.style.objectFit = "cover";
+					el.style.height = "" + Math.round(el.width * (h / w)) + "px";
+				}
+			}
+		}
+		let elementsWithBG = window.document.getElementsByTagName("*");
+		this.snackbarInfo("Checking background-images");
+		let _g2 = 0;
+		let _g3 = elementsWithBG.length;
+		while(_g2 < _g3) {
+			let i = _g2++;
+			let element = elementsWithBG[i];
+			let url = StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(element.style.backgroundImage,"'",""),"\"",""),"url(",""),")","");
+			if(element.style.backgroundImage != "") {
+				this.snackbarInfo("Check background-image " + i);
+				element.dataset.monkeeWrenchCheck = "true";
+			}
+			if(!this.UrlExists(url)) {
+				this.snackbarInfo("Replacing background-image: " + url);
+				element.dataset.monkeeWrenchCheck = "true";
+				element.dataset.monkeeWrenchBgImageReplace = "true";
+				element.style.backgroundImage = "url(" + this.DEBUG_IMAGES[1] + ")";
+				this.addBGImageLabel(element);
+			}
+		}
+		let elementsVideo = window.document.getElementsByTagName("video");
+		this.snackbarInfo("Checking video");
+		let _g4 = 0;
+		let _g5 = elementsVideo.length;
+		while(_g4 < _g5) {
+			let i = _g4++;
+			let element = elementsVideo[i];
+			element.dataset.monkeeWrenchCheck = "true";
+			let url = element.poster;
+			if(!this.UrlExists(url)) {
+				this.snackbarInfo("Replacing video: " + url);
+				element.dataset.monkeeWrenchPosterImageReplace = "true";
+				element.poster = this.DEBUG_IMAGES[2];
+			}
+		}
+		let elementsLinks = window.document.getElementsByTagName("a");
+		this.snackbarInfo("Checking links");
+		let _g6 = 0;
+		let _g7 = elementsLinks.length;
+		while(_g6 < _g7) {
+			let i = _g6++;
+			let el = elementsLinks[i];
+			el.dataset.monkeeWrenchCheck = "true";
+			let url = el.href;
+			let href = el.getAttribute("href");
+			let id = el.id;
+			if(el.getAttribute("name") != null) {
+				continue;
+			}
+			if(href == "" || href == "#" || href == null) {
+				this.snackbarInfo("Checking empty links");
+				el.dataset.monkeWrenchEmptyLink = "true";
+				el.innerHTML = "🔧" + " " + el.innerHTML;
+			}
+			if(href == null) {
+				continue;
+			}
+			if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {
+				if(!this.UrlExists(url)) {
+					this.snackbarInfo("Checking dead links " + url);
+					el.dataset.monkeeWrenchDeadlink = "true";
+					el.innerHTML = "❌" + " " + el.innerHTML;
+				}
+			}
+		}
+		this.isSnackbarVisible(false);
+	}
+	buildSnackbar() {
+		this.snackbar = window.document.createElement("div");
+		this.snackbar.innerHTML = "some text";
+		this.snackbar.id = "snackbar";
+		this.snackbar.setAttribute("style","visibility: hidden;min-width: 250px;transform: translate(-50%,0);background-color: #333;color: #fff;text-align: center;border-radius: 2px;padding: 16px; position: fixed;z-index: 1;left: 50%;bottom: 30px;");
+		window.document.body.appendChild(this.snackbar);
+	}
+	snackbarInfo(msg) {
+		this.isSnackbarVisible(true);
+		this.snackbar.innerHTML = msg;
+	}
+	isSnackbarVisible(isVisible) {
+		if(isVisible == null) {
+			isVisible = true;
+		}
+		if(isVisible) {
+			this.snackbar.style.visibility = "visible";
+		} else {
+			this.snackbar.style.visibility = "hidden";
 		}
 	}
 	buildIcon() {
@@ -792,21 +963,9 @@ class MonkeeWrench {
 		btn.setAttribute("style","position: fixed;bottom: 10px;left: 10px;");
 		let _gthis = this;
 		btn.onclick = function() {
-			_gthis.replaceMissingAssets();
+			_gthis.validateElementsOnPage();
 		};
 		window.document.body.appendChild(btn);
-	}
-	init() {
-		let _gthis = this;
-		window.onkeydown = function(e) {
-			_gthis.getkey(e);
-		};
-		let urlParams = new URLSearchParams(window.location.search);
-		let myParam = urlParams.get("monkeewrench");
-		if(myParam != null) {
-			this.buildIcon();
-			this.replaceMissingAssets();
-		}
 	}
 	addImageLabel(el) {
 		let div = window.document.createElement("div");
@@ -843,81 +1002,29 @@ class MonkeeWrench {
 		el.appendChild(div);
 		el.style.position = "relative";
 	}
-	replaceMissingAssets() {
-		let elementsImg = window.document.getElementsByTagName("img");
-		let _g = 0;
-		let _g1 = elementsImg.length;
-		while(_g < _g1) {
-			let i = _g++;
-			let el = elementsImg[i];
-			let url = el.src;
-			let w = el.width;
-			let h = el.height;
-			if(!this.UrlExists(url)) {
-				el.dataset.monkeeWrenchImageReplace = "true";
-				el.src = this.DEBUG_IMAGES[0];
-				this.addImageLabel(el);
-				if(el.getAttribute("width") != null && el.getAttribute("height") != null) {
-					el.style.width = "" + w + "px";
-					el.style.display = "block";
-					el.style.width = "500px";
-					el.style.height = "250px";
-					el.style.objectFit = "cover";
-					el.style.height = "" + Math.round(el.width * (h / w)) + "px";
-				}
+	UrlExists(url) {
+		let http = new XMLHttpRequest();
+		http.open("HEAD",url,false);
+		http.send();
+		return http.status != 404;
+	}
+	isUrlValid(url,cb) {
+		let request = new XMLHttpRequest();
+		request.open("GET",url,true);
+		let _gthis = this;
+		request.onload = function() {
+			if(request.status >= 200 && request.status < 400) {
+				let json = request.responseText;
+				console.log("src/MonkeeWrench.hx:331:","json: " + json);
+				cb.apply(_gthis,[]);
+			} else {
+				console.log("src/MonkeeWrench.hx:336:","oeps: status: " + request.status + " // json: " + request.responseText);
 			}
-		}
-		let elementsWithBG = window.document.getElementsByTagName("*");
-		let _g2 = 0;
-		let _g3 = elementsWithBG.length;
-		while(_g2 < _g3) {
-			let i = _g2++;
-			let element = elementsWithBG[i];
-			let url = StringTools.replace(StringTools.replace(StringTools.replace(StringTools.replace(element.style.backgroundImage,"'",""),"\"",""),"url(",""),")","");
-			if(element.style.backgroundImage != "") {
-				element.dataset.monkeeWrenchCheck = "true";
-			}
-			if(!this.UrlExists(url)) {
-				element.dataset.monkeeWrenchCheck = "true";
-				element.dataset.monkeeWrenchBgImageReplace = "true";
-				element.style.backgroundImage = "url(" + this.DEBUG_IMAGES[1] + ")";
-				this.addBGImageLabel(element);
-			}
-		}
-		let elementsVideo = window.document.getElementsByTagName("video");
-		let _g4 = 0;
-		let _g5 = elementsVideo.length;
-		while(_g4 < _g5) {
-			let i = _g4++;
-			let element = elementsVideo[i];
-			element.dataset.monkeeWrenchCheck = "true";
-			let url = element.poster;
-			if(!this.UrlExists(url)) {
-				element.dataset.monkeeWrenchPosterImageReplace = "true";
-				element.poster = this.DEBUG_IMAGES[2];
-			}
-		}
-		let elementsLinks = window.document.getElementsByTagName("a");
-		let _g6 = 0;
-		let _g7 = elementsLinks.length;
-		while(_g6 < _g7) {
-			let i = _g6++;
-			let el = elementsLinks[i];
-			el.dataset.monkeeWrenchCheck = "true";
-			let url = el.href;
-			let href = el.getAttribute("href");
-			let id = el.id;
-			if(href == "" || href == "#") {
-				el.dataset.monkeeWrenchEmptyLink = "true";
-				el.innerHTML = "🔧" + " " + el.innerHTML;
-			}
-			if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {
-				if(!this.UrlExists(url)) {
-					el.dataset.monkeeWrenchDeadlink = "true";
-					el.innerHTML = "❌" + " " + el.innerHTML;
-				}
-			}
-		}
+		};
+		request.onerror = function() {
+			console.log("src/MonkeeWrench.hx:342:","error");
+		};
+		request.send();
 	}
 	static main() {
 		let app = new MonkeeWrench();
@@ -1315,7 +1422,7 @@ MonkeeRoute.defaultTitle = "";
 MonkeeRoute.defaultUrl = "";
 MonkeeRoute.previousLocationHref = "";
 MonkeeUtil.VERSION = "0.0.9";
-MonkeeWrench.VERSION = "0.0.2";
+MonkeeWrench.VERSION = "0.0.3";
 MonkeeWrench.DEBUG = false;
 MonkeeZ.VERSION = "0.0.2";
 MonkeeZ.bugger = new MonkeeBugger();
