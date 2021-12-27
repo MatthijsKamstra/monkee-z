@@ -116,7 +116,7 @@ class MonkeeWrench {
 				el.dataset.monkeWrenchEmptyLink = "true";
 				el.innerHTML = "🔧" + " " + el.innerHTML;
 			}
-			if(href == null || href.indexOf("javascript") != -1) {
+			if(href == null || href.indexOf("javascript") != -1 || href.indexOf("mailto:") != -1 || href.indexOf("tel:") != -1) {
 				continue;
 			}
 			if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {

@@ -21,7 +21,7 @@ using StringTools;
 @:keep
 class MonkeeWrench {
 	/**
-	 * 0.0.4 	stop when href has javascript, remove lite from description
+	 * 0.0.4 	stop when href has javascript/mailto/tel, remove lite from description
 	 * 0.0.3 	sync with lite, snackbar added, href == null
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
@@ -195,7 +195,7 @@ class MonkeeWrench {
 				el.dataset.monkeWrenchEmptyLink = 'true';
 				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
 			}
-			if (href == null || href.indexOf('javascript') != -1) {
+			if (href == null || href.indexOf('javascript') != -1 || href.indexOf('mailto:') != -1 || href.indexOf('tel:') != -1) {
 				// trace('ignore this href: ' + href);
 				continue;
 			}
