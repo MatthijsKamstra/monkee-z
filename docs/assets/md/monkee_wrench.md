@@ -8,4 +8,4 @@
 | Info about progress       | ❌               | ✅           |
 | Snackbar                  | ❌               | ✅           |
 | Labels for missing images | ❌               | ✅           |
-| KB                        | ~ 2.5KB          | ~ 5.5KB      |
+| KB                        | ~ 2.6KB          | ~ 5.7KB      |
