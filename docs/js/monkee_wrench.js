@@ -5,8 +5,8 @@ class MonkeeWrench {
 		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.groupCollapsed("🔧" + " Monkee-Wrench-Lite - v" + "0.0.4");
-			$global.console.log("Monkee Wrench Lite is a JavaScript tool to replace missing (background)images, and show broken links");
+			$global.console.groupCollapsed("🔧" + " Monkee-Wrench - v" + "0.0.4");
+			$global.console.log("Monkee Wrench is a JavaScript tool to replace missing (background)images, and show broken links");
 			$global.console.log("Use by focussing the browser and press \"m\"");
 			$global.console.log("Or use " + window.location.href + "?monkeewrench");
 			$global.console.log("WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/");

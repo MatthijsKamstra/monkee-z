@@ -46,8 +46,8 @@ class MonkeeWrench {
 		// console.log(ROOT);
 
 		document.addEventListener("DOMContentLoaded", function(event) {
-			console.groupCollapsed('${utils.Emoji.monkeeWrench} Monkee-Wrench-Lite - v${VERSION}');
-			console.log('Monkee Wrench Lite is a JavaScript tool to replace missing (background)images, and show broken links');
+			console.groupCollapsed('${utils.Emoji.monkeeWrench} Monkee-Wrench - v${VERSION}');
+			console.log('Monkee Wrench is a JavaScript tool to replace missing (background)images, and show broken links');
 			console.log('Use by focussing the browser and press "m"');
 			console.log('Or use ${window.location.href}?monkeewrench');
 			console.log('WIP documentation https://matthijskamstra.github.io/monkee-z/wrench/');
