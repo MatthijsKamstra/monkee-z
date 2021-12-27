@@ -194,7 +194,7 @@ class MonkeeWrench {
 				el.dataset.monkeWrenchEmptyLink = 'true';
 				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
 			}
-			if (href == null)
+			if (href == null || href.indexOf('javascript') != -1)
 				continue;
 			if (href.startsWith('/') || href.indexOf(ROOT) != -1) {
 				if (!UrlExists(url)) {

@@ -919,7 +919,7 @@ class MonkeeWrench {
 				el.dataset.monkeWrenchEmptyLink = "true";
 				el.innerHTML = "🔧" + " " + el.innerHTML;
 			}
-			if(href == null) {
+			if(href == null || href.indexOf("javascript") != -1) {
 				continue;
 			}
 			if(href.startsWith("/") || href.indexOf(this.ROOT) != -1) {
