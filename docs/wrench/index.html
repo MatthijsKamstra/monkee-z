@@ -84,18 +84,12 @@
                 <h2>usage</h2>
 
                 <ol>
+                    <li>focus browser and press "m"</li>
                     <li>
-
-                        focus browser and press "m"
-
-                    </li>
-                    <li>
-
                         or use
                         <a href="?monkeewrench">
-                            ?monkeewrench
+                            <script>document.write(`${window.location.href}`);</script>?monkeewrench
                         </a>
-
                     </li>
                 </ol>
 
@@ -124,22 +118,12 @@
             <div id="app_markdown"></div>
         </div>
 
-
-
-
-
-
-
         <div class="container-bookmark">
             <p>Drag this to Bookmarks Bar → <a class="bookmark-btn"
                     href="javascript:(function(){script=document.createElement('script');script.type='text/javascript';script.src='https://matthijskamstra.github.io/monkee-z/js/monkee_wrench_lite.min.min.js';script.onload=function(){console.log(MonkeeWrenchLite.VERSION);};document.body.appendChild(script);})()">Monkee-Wrench-Lite</a>
             </p>
         </div>
-
     </div>
-
-
-
 
     <div id="examples" class="container">
 
@@ -177,7 +161,6 @@
                 <img src='foo/bar/missing.jpg' class="img-fluid" />
             </div>
         </div>
-
 
         <div class="row mt-4">
             <div class="col-6">
@@ -224,16 +207,9 @@
                 </ul>
             </div>
         </div>
-
-
     </div>
 
-
-
-
     <div class="container my-5">
-
-
         <div class="row">
             <div class="col-6">
                 <div id="js-specs-wrench-lite"></div>

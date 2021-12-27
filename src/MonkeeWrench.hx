@@ -21,7 +21,7 @@ using StringTools;
 @:keep
 class MonkeeWrench {
 	/**
-	 * 0.0.4 	stop when href has javascript
+	 * 0.0.4 	stop when href has javascript, remove lite from description
 	 * 0.0.3 	sync with lite, snackbar added, href == null
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
@@ -195,8 +195,10 @@ class MonkeeWrench {
 				el.dataset.monkeWrenchEmptyLink = 'true';
 				el.innerHTML = '${utils.Emoji.monkeeWrench} ${el.innerHTML}';
 			}
-			if (href == null || href.indexOf('javascript') != -1)
+			if (href == null || href.indexOf('javascript') != -1) {
+				// trace('ignore this href: ' + href);
 				continue;
+			}
 			if (href.startsWith('/') || href.indexOf(ROOT) != -1) {
 				if (!UrlExists(url)) {
 					snackbarInfo('Checking dead links ' + url);
