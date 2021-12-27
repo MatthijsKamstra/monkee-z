@@ -21,11 +21,12 @@ using StringTools;
 @:keep
 class MonkeeWrench {
 	/**
+	 * 0.0.4 	stop when href has javascript
 	 * 0.0.3 	sync with lite, snackbar added, href == null
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.3';
+	static inline var VERSION = '0.0.4';
 
 	static inline final DEBUG = #if debug true #else false #end;
 
