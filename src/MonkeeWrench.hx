@@ -21,12 +21,13 @@ using StringTools;
 @:keep
 class MonkeeWrench {
 	/**
+	 * 0.0.5 	visual fix for "content security policy" not loading image via gradient
 	 * 0.0.4 	stop when href has javascript/mailto/tel, remove lite from description
 	 * 0.0.3 	sync with lite, snackbar added, href == null
 	 * 0.0.2 	absolute images paths
 	 * 0.0.1 	initial
 	 */
-	static inline var VERSION = '0.0.4';
+	static inline var VERSION = '0.0.5';
 
 	static inline final DEBUG = #if debug true #else false #end;
 
@@ -142,6 +143,7 @@ class MonkeeWrench {
 			if (element.style.backgroundImage != "") {
 				snackbarInfo('Check background-image ' + i);
 				element.dataset.monkeeWrenchCheck = 'true';
+				// element.style.background = "#f953c6";
 			}
 			// if (element.style.backgroundImage != "") {
 			// 	console.log(element.style.backgroundImage);
@@ -155,6 +157,8 @@ class MonkeeWrench {
 
 				element.dataset.monkeeWrenchCheck = 'true';
 				element.dataset.monkeeWrenchBgImageReplace = 'true';
+				element.style.background = "#f953c6";
+				element.style.backgroundImage = "linear-gradient(to right, #b91d73, #f953c6)";
 				element.style.backgroundImage = 'url(${DEBUG_IMAGES[1]})';
 				addBGImageLabel(element);
 			}
