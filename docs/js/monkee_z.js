@@ -808,7 +808,7 @@ class MonkeeWrench {
 		this.DEBUG_IMAGES = ["https://matthijskamstra.github.io/monkee-z/assets/img/debug/146-500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/500x500.jpg","https://matthijskamstra.github.io/monkee-z/assets/img/debug/1031-500x500.jpg"];
 		let _gthis = this;
 		window.document.addEventListener("DOMContentLoaded",function(event) {
-			$global.console.groupCollapsed("🔧" + " Monkee-Wrench - v" + "0.0.4");
+			$global.console.groupCollapsed("🔧" + " Monkee-Wrench - v" + "0.0.5");
 			$global.console.log("Monkee Wrench is a JavaScript tool to replace missing (background)images, and show broken links");
 			$global.console.log("Use by focussing the browser and press \"m\"");
 			$global.console.log("Or use " + window.location.href + "?monkeewrench");
@@ -881,6 +881,8 @@ class MonkeeWrench {
 				this.snackbarInfo("Replacing background-image: " + url);
 				element.dataset.monkeeWrenchCheck = "true";
 				element.dataset.monkeeWrenchBgImageReplace = "true";
+				element.style.background = "#f953c6";
+				element.style.backgroundImage = "linear-gradient(to right, #b91d73, #f953c6)";
 				element.style.backgroundImage = "url(" + this.DEBUG_IMAGES[1] + ")";
 				this.addBGImageLabel(element);
 			}
@@ -1013,14 +1015,14 @@ class MonkeeWrench {
 		request.onload = function() {
 			if(request.status >= 200 && request.status < 400) {
 				let json = request.responseText;
-				console.log("src/MonkeeWrench.hx:334:","json: " + json);
+				console.log("src/MonkeeWrench.hx:338:","json: " + json);
 				cb.apply(_gthis,[]);
 			} else {
-				console.log("src/MonkeeWrench.hx:339:","oeps: status: " + request.status + " // json: " + request.responseText);
+				console.log("src/MonkeeWrench.hx:343:","oeps: status: " + request.status + " // json: " + request.responseText);
 			}
 		};
 		request.onerror = function() {
-			console.log("src/MonkeeWrench.hx:345:","error");
+			console.log("src/MonkeeWrench.hx:349:","error");
 		};
 		request.send();
 	}
@@ -1420,7 +1422,7 @@ MonkeeRoute.defaultTitle = "";
 MonkeeRoute.defaultUrl = "";
 MonkeeRoute.previousLocationHref = "";
 MonkeeUtil.VERSION = "0.0.9";
-MonkeeWrench.VERSION = "0.0.4";
+MonkeeWrench.VERSION = "0.0.5";
 MonkeeWrench.DEBUG = false;
 MonkeeZ.VERSION = "0.0.2";
 MonkeeZ.bugger = new MonkeeBugger();
